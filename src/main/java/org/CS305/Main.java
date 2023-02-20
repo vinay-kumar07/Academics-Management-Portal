@@ -78,6 +78,7 @@ public class Main {
             Integer Choice = sc.nextInt(); garbage = sc.nextLine();
             if(Choice==1){
                 admin.createAccount();
+                //hello
             }
             else if(Choice==2){
                 admin.editCourseCatalog();
