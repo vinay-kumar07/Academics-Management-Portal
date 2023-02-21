@@ -40,63 +40,72 @@ public class Main {
 //        viewGrades v = new viewGrades();
 //        v.view("2020csb1141");
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please what is your role: ");
-        Integer loginChoice = sc.nextInt(); String garbage = sc.nextLine();
-        if(loginChoice==1){
-            System.out.println("give id");
-            String inputID = sc.nextLine();
-            System.out.println("give password");
-            String inputPass = sc.nextLine();
-
-            String check_query = "Select * from Users;";
-            try {
-                ResultSet rs = st.executeQuery(check_query);
-                while(rs.next()){
-                    String user = rs.getString(1);
-                    String code = rs.getString(3);
-                    if(user.equals(inputID) && code.equals(inputPass)){
-                        System.out.println("Logged in Successfully :)");
-                    }
-                    else{
-                        return;
-                    }
-                }
-            }
-            catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-            System.out.println("What do you want to do?");
-            System.out.println("1. Create users account");
-            System.out.println("2. Edit Course Catalog");
-            System.out.println("3. View Grades");
-            System.out.println("4. Generate Transcript");
-            System.out.println("5. LogOut");
-
-            Admin admin = new Admin (inputID,"Admin","Admin",2008);
-            Integer Choice = sc.nextInt(); garbage = sc.nextLine();
-            if(Choice==1){
-                admin.createAccount();
-                //hello
-            }
-            else if(Choice==2){
-                admin.editCourseCatalog();
-            }
-            else{
-                System.out.println("Please Choose a valid choice!!");
-            }
-
+        {
+            Admin admin = new Admin ("Admin","Admin","Admin",2008);
+            admin.editCourseCatalog();
+            return;
         }
-        else if(loginChoice==2){
-            //faculty
-        }
-        else if(loginChoice==3){
-            //student
-        }
-        else{
-            System.out.println("Please enter a valid choice!!");
-        }
+
+//        Scanner sc = new Scanner(System.in);
+//        System.out.println("Please what is your role: ");
+//        Integer loginChoice = sc.nextInt(); String garbage = sc.nextLine();
+//        if(loginChoice==1){
+//            System.out.println("give id");
+//            String inputID = sc.nextLine();
+//            System.out.println("give password");
+//            String inputPass = sc.nextLine();
+//
+//            String check_query = "Select * from Users;";
+//            try {
+//                ResultSet rs = st.executeQuery(check_query);
+//                while(rs.next()){
+//                    String user = rs.getString(1);
+//                    String code = rs.getString(3);
+//                    if(user.equals(inputID) && code.equals(inputPass)){
+//                        System.out.println("Logged in Successfully :)");
+//                    }
+//                    else{
+//                        return;
+//                    }
+//                }
+//            }
+//            catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            System.out.println("What do you want to do?");
+//            System.out.println("1. Create users account");
+//            System.out.println("2. Edit Course Catalog");
+//            System.out.println("3. View Grades");
+//            System.out.println("4. Generate Transcript");
+//            System.out.println("5. LogOut");
+//
+//            Admin admin = new Admin (inputID,"Admin","Admin",2008);
+//            Integer Choice = sc.nextInt(); garbage = sc.nextLine();
+//            if(Choice==1){
+//                admin.createAccount();
+//                //hello
+//            }
+//            else if(Choice==2){
+//                admin.editCourseCatalog();
+//            }
+//            else if(Choice==5){
+//                return;
+//            }
+//            else{
+//                System.out.println("Please Choose a valid choice!!");
+//            }
+//
+//        }
+//        else if(loginChoice==2){
+//            //faculty
+//        }
+//        else if(loginChoice==3){
+//            //student
+//        }
+//        else{
+//            System.out.println("Please enter a valid choice!!");
+//        }
 
     }
 }
