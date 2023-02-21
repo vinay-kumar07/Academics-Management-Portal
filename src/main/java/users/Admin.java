@@ -61,6 +61,46 @@ public class Admin extends User{
 
     }
 
+    public void editCourseCatalog(){
+        Integer currYear = null;
+        String info = "Select currYear from info;";
+        try {
+            ResultSet rs = st.executeQuery(info);
+            rs.next();
+            currYear = rs.getInt(1);
+            System.out.println("The current academic year is "+currYear);
+            System.out.println("Following courses are available in the Course Catalog:-");
+            viewCourseCatalog();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Make choice:-");
+        System.out.println("1. Add new course");
+        System.out.println("2. Delete course");
+        System.out.println("3. Edit existing course");
+
+        Scanner sc = new Scanner(System.in);
+        Integer choice  = sc.nextInt();
+        if(choice==1){
+            addcourse();
+        }
+        else if(choice==2){
+            deletecourse();
+        }
+        else if (choice==3) {
+            editcourse();
+        } else{
+            System.out.println("Please choose a valid choice!!");
+        }
+    }
+
+    public void changeAcademicYearSem(){
+        System.out.println("need to implement");
+    }
+
+    // -----------Private functions----------------------//
+
     private void viewCourseCatalog(){
         String viewQuery = "select * from coursecatalog;";
         try {
@@ -92,13 +132,13 @@ public class Admin extends User{
         String addQuery = "insert into coursecatalog values('"+course+"',"+L+","+T+","+P+",'"+prereq+"','"+core+"','"+elec+"',"+year+")";
 //        System.out.println(addQuery);
         try {
-            st.executeQuery(addQuery);
+            st.executeUpdate(addQuery);
         } catch (SQLException e) {
             System.out.println(e);
         }
         String makeTable = "create table "+course+"_"+Integer.toString(year)+"(StudentId varchar(20) NOT NULL, enrollyear INTEGER NOT NULL, grade float NOT NULL, PRIMARY KEY(StudentId));";
         try {
-            st.executeQuery(makeTable);
+            st.executeUpdate(makeTable);
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -124,34 +164,24 @@ public class Admin extends User{
             System.out.println(e);
         }
     }
-    public void editCourseCatalog(){
-        Integer currYear = null;
-        String info = "Select currYear from info;";
+
+    private void editcourse(){
+        //give more edit access to admin
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter course and course year which you want to edit:");
+        String course = sc.nextLine();
+        Integer year = sc.nextInt(); String garbage = sc.nextLine();
+
+        System.out.println("Now enter updated core branches");
+        String updatedcore = sc.nextLine();
+
+        String updateQuery = "UPDATE coursecatalog SET core = '"+updatedcore+"' WHERE courseid = '"+course+"' and year = '"+year+"';";
+//        System.out.println(updateQuery);
         try {
-            ResultSet rs = st.executeQuery(info);
-            rs.next();
-            currYear = rs.getInt(1);
-            System.out.println("The current academic year is "+currYear);
-            System.out.println("Following courses are available in the Course Catalog:-");
-            viewCourseCatalog();
+            st.executeUpdate(updateQuery);
         } catch (SQLException e) {
             System.out.println(e);
         }
 
-        System.out.println("Make choice:-");
-        System.out.println("1. Add new course");
-        System.out.println("2. Delete course");
-
-        Scanner sc = new Scanner(System.in);
-        Integer choice  = sc.nextInt();
-        if(choice==1){
-            addcourse();
-        }
-        else if(choice==2){
-            deletecourse();
-        }
-        else{
-            System.out.println("Please choose a valid choice!!");
-        }
     }
 }
