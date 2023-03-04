@@ -4,6 +4,7 @@ import student.CourseRegistration;
 import student.UserRegistration;
 import student.viewGrades;
 import users.Admin;
+import users.Instructor;
 import users.User;
 
 import java.util.Scanner;
@@ -41,8 +42,8 @@ public class Main {
 //        v.view("2020csb1141");
 
         {
-            Admin admin = new Admin ("Admin","Admin","Admin",2008);
-            admin.editCourseCatalog();
+            Instructor balwinder = new Instructor ("cs001","faculty","iit",2015);
+            balwinder.deFloatCourse();
             return;
         }
 
@@ -63,6 +64,7 @@ public class Main {
 //                    String code = rs.getString(3);
 //                    if(user.equals(inputID) && code.equals(inputPass)){
 //                        System.out.println("Logged in Successfully :)");
+//                        break;
 //                    }
 //                    else{
 //                        return;
