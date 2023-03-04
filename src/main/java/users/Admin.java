@@ -122,26 +122,26 @@ public class Admin extends User{
         String prereq = sc.nextLine();
         String core = sc.nextLine();
         String elec = sc.nextLine();
-        Integer year = sc.nextInt();
+//        Integer year = sc.nextInt();
 
         String[] tokens = lpt.split("-");
         Integer L = Integer.parseInt(tokens[0]);
         Integer T = Integer.parseInt(tokens[1]);
         Integer P = Integer.parseInt(tokens[2]);
 
-        String addQuery = "insert into coursecatalog values('"+course+"',"+L+","+T+","+P+",'"+prereq+"','"+core+"','"+elec+"',"+year+")";
+        String addQuery = "insert into coursecatalog values('"+course+"',"+L+","+T+","+P+",'"+prereq+"','"+core+"','"+elec+"')";
 //        System.out.println(addQuery);
         try {
             st.executeUpdate(addQuery);
         } catch (SQLException e) {
             System.out.println(e);
         }
-        String makeTable = "create table "+course+"_"+Integer.toString(year)+"(StudentId varchar(20) NOT NULL, enrollyear INTEGER NOT NULL, grade float NOT NULL, PRIMARY KEY(StudentId));";
-        try {
-            st.executeUpdate(makeTable);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+//        String makeTable = "create table "+course+"_"+Integer.toString(year)+"(StudentId varchar(20) NOT NULL, enrollyear INTEGER NOT NULL, grade float NOT NULL, PRIMARY KEY(StudentId));";
+//        try {
+//            st.executeUpdate(makeTable);
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
 
     }
 
@@ -150,15 +150,15 @@ public class Admin extends User{
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter details of the course you want to delete:-");
         String course = sc.nextLine();
-        Integer year = sc.nextInt();
+//        Integer year = sc.nextInt();
 
-        String delQuery = "delete from coursecatalog where courseid = '"+course+"' and year = "+Integer.toString(year)+";";
-        String dropTable = "drop table "+course+"_"+Integer.toString(year)+";";
+        String delQuery = "delete from coursecatalog where courseid = '"+course+"';";
+//        String dropTable = "drop table "+course+"_"+Integer.toString(year)+";";
         System.out.println(delQuery);
-        System.out.println(dropTable);
+//        System.out.println(dropTable);
         try {
             st.executeUpdate(delQuery);
-            st.executeUpdate(dropTable);
+//            st.executeUpdate(dropTable);
             System.out.println("course deleted successfully");
         } catch (SQLException e) {
             System.out.println(e);
@@ -168,14 +168,14 @@ public class Admin extends User{
     private void editcourse(){
         //give more edit access to admin
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter course and course year which you want to edit:");
+        System.out.println("Enter Course ID which you want to edit:");
         String course = sc.nextLine();
-        Integer year = sc.nextInt(); String garbage = sc.nextLine();
+//        Integer year = sc.nextInt(); String garbage = sc.nextLine();
 
         System.out.println("Now enter updated core branches");
         String updatedcore = sc.nextLine();
 
-        String updateQuery = "UPDATE coursecatalog SET core = '"+updatedcore+"' WHERE courseid = '"+course+"' and year = '"+year+"';";
+        String updateQuery = "UPDATE coursecatalog SET core = '"+updatedcore+"' WHERE courseid = '"+course+"';";
 //        System.out.println(updateQuery);
         try {
             st.executeUpdate(updateQuery);

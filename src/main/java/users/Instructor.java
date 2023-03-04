@@ -27,11 +27,11 @@ public class Instructor extends User{
         }
     }
 
-    public void registerCourse(){
+    public void floatCourse(){
 
     }
 
-    public void deRegisterCourse(){
+    public void deFloatCourse(){
 
     }
 }
