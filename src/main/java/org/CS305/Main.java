@@ -44,20 +44,20 @@ public class Main {
 
 //        {
 //            Admin admin = new Admin ("Admin","Admin","admin",2008);
-////            admin.editCourseCatalog();
-//            admin.createAccount();
+//            admin.editCourseCatalog();
+////            admin.createAccount();
 //            return;
 //        }
 
 //        {
-//            Instructor balwinder = new Instructor ("ee001","faculty","iit",2017);
+//            Instructor balwinder = new Instructor ("ma001","faculty","iit",2019);
 //            balwinder.floatCourse();
 //            return;
 //        }
 
         {
             Student vinay = new Student ("mc001","student","iit",2022);
-            vinay.courseRegister();
+            vinay.courseWithdraw();
             return;
         }
 
