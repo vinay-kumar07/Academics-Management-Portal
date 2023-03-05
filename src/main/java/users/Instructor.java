@@ -29,14 +29,14 @@ public class Instructor extends User{
             String batch = sc.nextLine();
 
             String addQuery = "insert into courseoffering values('"+course+"','"+UserID+"',"+cg+","+currYear+","+currSem+",'"+batch+"');";
-            System.out.println(addQuery);
+//            System.out.println(addQuery);
             try {
                 st.executeUpdate(addQuery);
             } catch (SQLException e) {
                 System.out.println(e);
             }
             Float credit = calculateCredit(course);
-            System.out.println(credit);
+//            System.out.println(credit);
             addQuery = "insert into faculty_"+UserID+" values('"+course+"',"+currYear+","+currSem+","+credit+");";
 //        System.out.println(addQuery);
             try {

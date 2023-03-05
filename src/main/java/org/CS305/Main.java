@@ -5,6 +5,7 @@ import student.UserRegistration;
 import student.viewGrades;
 import users.Admin;
 import users.Instructor;
+import users.Student;
 import users.User;
 
 import java.util.Scanner;
@@ -41,9 +42,22 @@ public class Main {
 //        viewGrades v = new viewGrades();
 //        v.view("2020csb1141");
 
+//        {
+//            Admin admin = new Admin ("Admin","Admin","admin",2008);
+////            admin.editCourseCatalog();
+//            admin.createAccount();
+//            return;
+//        }
+
+//        {
+//            Instructor balwinder = new Instructor ("ee001","faculty","iit",2017);
+//            balwinder.floatCourse();
+//            return;
+//        }
+
         {
-            Instructor balwinder = new Instructor ("cs001","faculty","iit",2015);
-            balwinder.deFloatCourse();
+            Student vinay = new Student ("mc001","student","iit",2022);
+            vinay.courseRegister();
             return;
         }
 
