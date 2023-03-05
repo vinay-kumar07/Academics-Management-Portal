@@ -44,22 +44,22 @@ public class Main {
 
 //        {
 //            Admin admin = new Admin ("Admin","Admin","admin",2008);
-//            admin.editCourseCatalog();
-////            admin.createAccount();
-//            return;
-//        }
-
-//        {
-//            Instructor balwinder = new Instructor ("ma001","faculty","iit",2019);
-//            balwinder.floatCourse();
+////            admin.editCourseCatalog();
+//            admin.createAccount();
 //            return;
 //        }
 
         {
-            Student vinay = new Student ("mc001","student","iit",2022);
-            vinay.courseWithdraw();
+            Instructor balwinder = new Instructor ("cs001","faculty","iit",2015);
+            balwinder.updateGrades();
             return;
         }
+
+//        {
+//            Student vinay = new Student ("cs1135","student","iit",2022);
+//            vinay.courseRegister();
+//            return;
+//        }
 
 //        Scanner sc = new Scanner(System.in);
 //        System.out.println("Please what is your role: ");

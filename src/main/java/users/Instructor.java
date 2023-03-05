@@ -3,6 +3,10 @@ package users;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import static org.CS305.Main.st;
 
@@ -92,6 +96,30 @@ public class Instructor extends User{
             st.executeUpdate(delFromOffering);
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+
+    public void updateGrades(){
+        getInfo();
+        String CID = "cs101";
+        CSVReader csvReader = null;
+        try {
+            csvReader = new CSVReader(new FileReader("C:/Users/DELL/Downloads/cs101_2022_1.csv"));
+            String[] line;
+            while ((line = csvReader.readNext()) != null) {
+                String tokens[] = line[0].split("\t");
+
+                String student = "Update student_"+tokens[0]+" set grade = "+tokens[2]+" where courseid = '"+CID+"' and year = "+currYear+" and sem = "+currSem+";";
+                String course = "Update "+CID+"_"+currYear+"_"+currSem+" set grade = "+tokens[2]+" where studentid = '"+tokens[0]+"';";
+                try {
+                    st.executeUpdate(student);
+                    st.executeUpdate(course);
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+            }
+        } catch (IOException | CsvValidationException e) {
+            e.printStackTrace();
         }
     }
 
