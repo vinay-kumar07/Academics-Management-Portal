@@ -1,9 +1,7 @@
 package users;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.imageio.IIOException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,46 +14,34 @@ import java.sql.Statement;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AdminTest {
-
-    @Test
-    void createAccountStudent() throws SQLException, IOException, ClassNotFoundException {
-
-        Admin admin = new Admin ("Admin","Admin","admin",2008);
-
-        String input = "TS1\nstudent\niit\n2020\n";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r1 = admin.createAccount();
-        assertEquals("User with ID = TS1 registered successfully.",r1);
-
-        input = "TS1\nstudent\niit\n2020\n";
-        inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r2 = admin.createAccount();
-        assertEquals("User Already Registered.",r2);
-
-        String s1 = "Drop table student_TS1;";
-        String s2 = "Delete from users where userid = 'TS1';";
-
+    Connection TestConnection = null;
+    Statement TestStatement = null;
+    void makeConnetion() throws ClassNotFoundException, SQLException {
         String TestURL = "jdbc:postgresql://localhost:5433/";
         String TestUserName = "postgres";
         String TestPassword = "dbms";
         Class.forName("org.postgresql.Driver");
         Connection TestConnection = DriverManager.getConnection(TestURL, TestUserName, TestPassword);
         Statement TestStatement = TestConnection.createStatement();
+    }
+
+    @Test
+    void createAccountStudent() throws SQLException, IOException, ClassNotFoundException {
+
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+
+        String r1 = admin.createAccount("TS1","student","iit",2020);
+        assertEquals("User with ID = TS1 registered successfully.",r1);
+
+        String r2 = admin.createAccount("TS1","student","iit",2020);
+        assertEquals("User Already Registered.",r2);
+
+        String s1 = "Drop table student_TS1;";
+        String s2 = "Delete from users where userid = 'TS1';";
+
+        makeConnetion();
         TestStatement.executeUpdate(s1);
         TestStatement.executeUpdate(s2);
-
         TestStatement.close();
         TestConnection.close();
     }
@@ -65,26 +51,13 @@ class AdminTest {
 
         Admin admin = new Admin ("Admin","Admin","admin",2008);
 
-        String input = "TS1\nfaculty\niit\n2020\n";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r1 = admin.createAccount();
+        String r1 = admin.createAccount("TS1","faculty","iit",2020);
         assertEquals("User with ID = TS1 registered successfully.",r1);
 
         String s1 = "Drop table faculty_TS1;";
         String s2 = "Delete from users where userid = 'TS1';";
 
-        String TestURL = "jdbc:postgresql://localhost:5433/";
-        String TestUserName = "postgres";
-        String TestPassword = "dbms";
-        Class.forName("org.postgresql.Driver");
-        Connection TestConnection = DriverManager.getConnection(TestURL, TestUserName, TestPassword);
-        Statement TestStatement = TestConnection.createStatement();
+        makeConnetion();
         TestStatement.executeUpdate(s1);
         TestStatement.executeUpdate(s2);
 
@@ -95,18 +68,9 @@ class AdminTest {
 
     @Test
     void createAccountForInValidUser() throws SQLException, IOException, ClassNotFoundException {
-
         Admin admin = new Admin ("Admin","Admin","admin",2008);
 
-        String input = "TS1\ngarbage\niit\n2020\n";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r1 = admin.createAccount();
+        String r1 = admin.createAccount("Admin", "Admin", "admin", 2008);
         assertEquals("Not a Valid User Info.",r1);
 
     }

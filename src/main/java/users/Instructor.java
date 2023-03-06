@@ -1,110 +1,116 @@
 package users;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
+import java.sql.*;
+
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static org.CS305.Main.st;
-
 public class Instructor extends User{
+
+    private Connection conn = null;
+    private static Statement st = null;
     public Instructor(String UserID, String Type, String Password, Integer enrollYear) {
         super(UserID, Type, Password, enrollYear);
     }
     public Integer currYear = null;
     public Integer currSem = null;
 
-    public void floatCourse(){
+    private void makeConnection() throws ClassNotFoundException, SQLException {
+        String url = "jdbc:postgresql://localhost:5433/";
+        String username = "postgres";
+        String password = "dbms";
+        Class.forName("org.postgresql.Driver");
+        conn = DriverManager.getConnection(url, username, password);
+        st = conn.createStatement();
+    }
+
+    public String floatCourse(String course, Float cg, String batch) throws SQLException, IOException, ClassNotFoundException {
         if(getInfo()==0){
-            System.out.println("Course add is off. Contact Admin.");
+            return "Course add is off. Contact Admin.";
         }
 
         else {
+            makeConnection();
             viewCourseCatalog();
-            System.out.println("\n\n");
-            //check if a course already exist
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Enter course details:-");
-            String course = sc.nextLine();
-            Float cg = sc.nextFloat(); String garbage = sc.nextLine();
-            String batch = sc.nextLine();
+
+            String check = "select count(*) from courseoffering where courseid = '"+course+"' and year = "+currYear+" and sem = "+currSem+";";
+            ResultSet rs = st.executeQuery(check);
+            rs.next();
+            if(rs.getInt(1)==1) return "The course has been already offered.";
 
             String addQuery = "insert into courseoffering values('"+course+"','"+UserID+"',"+cg+","+currYear+","+currSem+",'"+batch+"');";
-//            System.out.println(addQuery);
-            try {
-                st.executeUpdate(addQuery);
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+            st.executeUpdate(addQuery);
+
             Float credit = calculateCredit(course);
-//            System.out.println(credit);
             addQuery = "insert into faculty_"+UserID+" values('"+course+"',"+currYear+","+currSem+","+credit+");";
-//        System.out.println(addQuery);
-            try {
-                st.executeUpdate(addQuery);
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+            st.executeUpdate(addQuery);
+
             String makeTable = "create table "+course+"_"+Integer.toString(currYear)+"_"+Integer.toString(currSem)+"(StudentId varchar(20) NOT NULL, enrollyear INTEGER NOT NULL, grade float NOT NULL, PRIMARY KEY(StudentId), FOREIGN KEY(StudentID) REFERENCES Users(userID));";
-            try {
-                st.executeUpdate(makeTable);
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+            st.executeUpdate(makeTable);
+
+            st.close();
+            conn.close();
+
+            return "Course Offered Successfully.";
         }
     }
 
-    public void deFloatCourse(){
-        getInfo();
-        System.out.println("These are the courses you have floated:-");
-
-        String fetchQuery = "Select courseid from courseoffering where facultyid = '"+UserID+"';";
-        try {
+    public String deFloatCourse(String CID, Integer y, Integer s) throws SQLException, ClassNotFoundException {
+        if(getInfo()==0){
+            return "Course delete is off. Contact Admin.";
+        }
+        else {
+            makeConnection();
+            System.out.println("These are the courses you have floated:-");
+            String fetchQuery = "Select courseid from courseoffering where facultyid = '" + UserID + "';";
             ResultSet rs = st.executeQuery(fetchQuery);
-            while (rs.next()){
+            while (rs.next()) {
                 System.out.println(rs.getString(1));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
-        System.out.println("Enter details of the course you want to delete");
-        Scanner sc = new Scanner(System.in);
-        String CID = sc.nextLine();
-        Integer y = sc.nextInt();
-        Integer s = sc.nextInt();
+            String check = "select count(*) from courseoffering where courseid = '" + CID + "' and year = " + y + " and sem = " + s + ";";
+            rs = st.executeQuery(check);
+            rs.next();
+            if (rs.getInt(1) == 0) return "Choose a valid course to delete.";
 
-        String deleteTable = "drop table "+CID+"_"+Integer.toString(currYear)+"_"+Integer.toString(currSem)+";";
-        try {
+            String deleteTable = "drop table " + CID + "_" + y + "_" + s + ";";
             st.executeUpdate(deleteTable);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
 
-        String delFromFacultyTable = "delete from faculty_"+UserID+" where courseid = '"+CID+"' and year = "+y+" and sem = "+s+";";
-        try {
+            String delFromFacultyTable = "delete from faculty_" + UserID + " where courseid = '" + CID + "' and year = " + y + " and sem = " + s + ";";
             st.executeUpdate(delFromFacultyTable);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
 
-        String delFromOffering = "delete from courseoffering where courseid = '"+CID+"' and year = "+y+" and sem = "+s+";";
-        try {
+            String delFromOffering = "delete from courseoffering where courseid = '" + CID + "' and year = " + y + " and sem = " + s + ";";
             st.executeUpdate(delFromOffering);
-        } catch (SQLException e) {
-            System.out.println(e);
+
+            st.close();
+            conn.close();
+
+            return "Course Removed Successfully from Offerings.";
         }
     }
 
-    public void updateGrades(){
+    public String updateGrades(String CID, String name) throws SQLException, ClassNotFoundException {
         getInfo();
-        String CID = "cs101";
+        makeConnection();
+        System.out.println("These are the courses you have floated:-");
+        String fetchQuery = "Select courseid from courseoffering where facultyid = '" + UserID + "';";
+        ResultSet rs = st.executeQuery(fetchQuery);
+        while (rs.next()) {
+            System.out.println(rs.getString(1));
+        }
+
+        String check = "select count(*) from courseoffering where courseid = '" + CID + "' and year = " + currYear + " and sem = " + currSem + ";";
+        rs = st.executeQuery(check);
+        rs.next();
+        if (rs.getInt(1) == 0) return "Choose a valid course.";
+
+        String path = "D:/Java/AIMS_Portal_CS305/Files/CSV Files/"+name;
+
         CSVReader csvReader = null;
         try {
-            csvReader = new CSVReader(new FileReader("C:/Users/DELL/Downloads/cs101_2022_1.csv"));
+            csvReader = new CSVReader(new FileReader(path));
             String[] line;
             while ((line = csvReader.readNext()) != null) {
                 String tokens[] = line[0].split("\t");
@@ -121,9 +127,12 @@ public class Instructor extends User{
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
+
+        return "Grades Updated Successfully";
     }
 
-    private Integer getInfo(){
+    private Integer getInfo() throws SQLException, ClassNotFoundException {
+        makeConnection();
         Integer bool = null;
         String info = "Select * from info;";
         try {
@@ -136,19 +145,25 @@ public class Instructor extends User{
         } catch (SQLException e) {
             System.out.println(e);
         }
+        st.close();
+        conn.close();
         return bool;
     }
 
-    private void viewCourseCatalog(){
+    private void viewCourseCatalog() throws SQLException, IOException{
         String viewQuery = "select * from coursecatalog;";
-        try {
-            ResultSet rs = st.executeQuery(viewQuery);
-            System.out.println("Following courses are available in the Course Catalog:-");
-            while (rs.next()){
-                System.out.println(rs.getString(1) + " " + rs.getString(5) + " " +rs.getString(6) + " " + rs.getString(7));
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
+        ResultSet rs = st.executeQuery(viewQuery);
+        System.out.println("COURSEID \t L \t T \t P \t PREREQUISITE \t OFFERED AS CORE \t OFFERED AS ELECTIVE");
+        while (rs.next()) {
+            System.out.println(
+                    rs.getString(1) + " \t " +
+                            rs.getString(2) + " \t " +
+                            rs.getString(3) + " \t " +
+                            rs.getString(4) + " \t " +
+                            rs.getString(5) + " \t " +
+                            rs.getString(6) + " \t " +
+                            rs.getString(7)
+            );
         }
     }
 
