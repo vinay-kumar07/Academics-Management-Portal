@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Instructor extends User{
 
     private Connection conn = null;
-    private static Statement st = null;
+    private Statement st = null;
     public Instructor(String UserID, String Type, String Password, Integer enrollYear) {
         super(UserID, Type, Password, enrollYear);
     }

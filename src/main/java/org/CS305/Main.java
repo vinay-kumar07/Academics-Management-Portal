@@ -31,12 +31,12 @@ public class Main {
             System.out.println(e);
         }
 
-        {
-            Admin admin = new Admin ("Admin","Admin","admin",2008);
-            System.out.println(admin.createAccount("TS1","student","iit",2020));
-//            admin.createAccount();
-            return;
-        }
+//        {
+//            Admin admin = new Admin ("Admin","Admin","admin",2008);
+//            System.out.println(admin.createAccount("TS1","student","iit",2020));
+////            admin.createAccount();
+//            return;
+//        }
 
 //        {
 //            Instructor balwinder = new Instructor ("cs001","faculty","iit",2015);
@@ -46,7 +46,7 @@ public class Main {
 
 //        {
 //            Student vinay = new Student ("cs1135","student","iit",2022);
-//            vinay.courseRegister();
+//            System.out.println((vinay.courseRegister("jh")));
 //            return;
 //        }
 

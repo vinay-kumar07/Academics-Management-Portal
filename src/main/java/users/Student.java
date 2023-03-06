@@ -1,40 +1,41 @@
 package users;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
-import static org.CS305.Main.st;
-
 public class Student extends User{
-
+    private Connection conn = null;
+    private Statement st = null;
+    Float CGPA = null;
+    Integer currYear = null;
+    Integer currSem = null;
     public Student(String UserID, String Type, String Password, Integer enrollYear) {
         super(UserID, Type, Password, enrollYear);
     }
 
-    Float CGPA = null;
-    Integer currYear = null;
-    Integer currSem = null;
+    private void makeConnection() throws ClassNotFoundException, SQLException {
+        String url = "jdbc:postgresql://localhost:5433/";
+        String username = "postgres";
+        String password = "dbms";
+        Class.forName("org.postgresql.Driver");
+        conn = DriverManager.getConnection(url, username, password);
+        st = conn.createStatement();
+    }
 
-    public void courseRegister(){
+    public String courseRegister(String optedCourse) throws SQLException, ClassNotFoundException {
 
+        makeConnection();
         initiate();
+
+        viewCourseOfferings();
 
         ArrayList<String> courses = new ArrayList<String>();
 
         String selectQuery = "Select * from courseOffering where year = "+currYear+" and sem = "+currSem+";";
-        System.out.println("The following courses are available for enrollment: ");
-        ResultSet rs = null;
-        try {
-            rs = st.executeQuery(selectQuery);
-            while(rs.next()){
-                String course = rs.getString(1);
-                System.out.println(course);
-                courses.add(rs.getString(1));
-            }
-        }
-        catch (SQLException e) {
-            System.out.println(e);
+        ResultSet rs = st.executeQuery(selectQuery);
+        while(rs.next()){
+            String course = rs.getString(1);
+            courses.add(rs.getString(1));
         }
 
         Float creditLimit = 21*1f;
@@ -45,148 +46,144 @@ public class Student extends User{
 
         Float regCredit = calRegCredit();
 
-        Scanner sc=new Scanner(System.in);
-        System.out.print("Opt Course: ");
-        String optedCourse = sc.nextLine();
-
         Float cgreq = 0f;
         if(sem>1){
             String cgquery = "select cgcriteria from courseoffering where courseid = '"+optedCourse+"' and year = "+currYear+" and sem = "+currSem+";";
-            try {
-                rs = st.executeQuery(cgquery);
-                rs.next();
-                cgreq = rs.getFloat(1);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            rs = st.executeQuery(cgquery);
+            rs.next();
+            cgreq = rs.getFloat(1);
         }
 
-        Float credit = calculateCredit(optedCourse);
+        if(courses.contains(optedCourse)) {
+            Float credit = calculateCredit(optedCourse);
+            if(regCredit + credit <= creditLimit) {
 
-        if(courses.contains(optedCourse) && regCredit + credit <= creditLimit){
-            if((sem>1 && CGPA>=cgreq) || sem==1) {
-                String courseType = getCourseType(optedCourse);
+                if((sem>1 && CGPA>=cgreq)) {
 
-                String addQuery = "insert into Student_" + UserID + " values('" + optedCourse + "'," + currYear + "," + currSem + ",-1," + credit + ",'" + courseType + "');";
-                try {
+                    if(preReqSatisfy(optedCourse)){
+                        String courseType = getCourseType(optedCourse);
+
+                        String addQuery = "insert into Student_" + UserID + " values('" + optedCourse + "'," + currYear + "," + currSem + ",-1," + credit + ",'" + courseType + "');";
+                        st.executeUpdate(addQuery);
+
+                        addQuery = "insert into " + optedCourse + "_" + currYear + "_" + currSem + " values('" + UserID + "'," + enrollYear + ",-1);";
+                        st.executeUpdate(addQuery);
+
+                        return "Registered Successfully!!";
+                    }
+
+                    else {
+                        return "Pre Requisite Not Satisfied.";
+                    }
+
+                } else if (sem==1) {
+                    String courseType = getCourseType(optedCourse);
+
+                    String addQuery = "insert into Student_" + UserID + " values('" + optedCourse + "'," + currYear + "," + currSem + ",-1," + credit + ",'" + courseType + "');";
                     st.executeUpdate(addQuery);
-                } catch (SQLException e) {
-                    System.out.println(e);
+
+                    addQuery = "insert into " + optedCourse + "_" + currYear + "_" + currSem + " values('" + UserID + "'," + enrollYear + ",-1);";
+                    st.executeUpdate(addQuery);
+
+                    return "Registered Successfully!!";
+                } else{
+                    return "Cg criteria not matched.";
                 }
 
-                addQuery = "insert into " + optedCourse + "_" + currYear + "_" + currSem + " values('" + UserID + "'," + enrollYear + ",-1);";
-                try {
-                    st.executeUpdate(addQuery);
-                } catch (SQLException e) {
-                    System.out.println(e);
-                }
-
-                System.out.println("Registered Successfully!!");
+            }else {
+                return "Credit Limit exceeds.";
             }
-        }
-        else{
-            System.out.println("Can not add course!!");
+
+        }else {
+            return "Choose a valid course.";
         }
     }
 
-    public void courseWithdraw(){
+    public String courseWithdraw(String selectedCourse) throws SQLException, ClassNotFoundException {
+        makeConnection();
         initiate();
-        System.out.println("For the following courses you have registered:-");
         ArrayList<String> courses = new ArrayList<String>();
 
         String fetchCourse = "Select courseid from student_"+UserID+" where year = "+currYear+" and sem = "+currSem+";";
-        try {
-            ResultSet rs = st.executeQuery(fetchCourse);
-            while(rs.next()){
-                System.out.println(rs.getString(1));
-                courses.add(rs.getString(1));
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
+        ResultSet rs = st.executeQuery(fetchCourse);
+        while(rs.next()){
+            courses.add(rs.getString(1));
         }
-
-        System.out.println("Select the course");
-        Scanner sc = new Scanner(System.in);
-        String selectedCourse = sc.nextLine();
 
         if(courses.contains(selectedCourse)){
             String delFromCourseTable = "delete from " + selectedCourse + "_" + currYear + "_" + currSem + " where studentid = '"+UserID+"';";
-            try {
-                st.executeUpdate(delFromCourseTable);
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+            st.executeUpdate(delFromCourseTable);
 
             String delFromStudentTable = "delete from student_"+UserID+" where courseid = '"+selectedCourse+"' and year = "+currYear+" and sem = "+currSem+";";
-            try {
-                st.executeUpdate(delFromStudentTable);
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+            st.executeUpdate(delFromStudentTable);
+
+            st.close();
+            conn.close();
+            return "Withdraw Successful";
         }
         else{
-            System.out.println("Please Choose a valid course");
+            st.close();
+            conn.close();
+            return "Please Choose a valid course";
         }
     }
 
-    private Float computeCPGA(){
+    public void viewCourseOfferings() throws SQLException {
+        String selectQuery = "Select * from courseOffering where year = "+currYear+" and sem = "+currSem+";";
+        System.out.println("The following courses are available for enrollment: ");
+        ResultSet rs = st.executeQuery(selectQuery);
+        while(rs.next()){
+            String course = rs.getString(1);
+            System.out.println(course);
+        }
+    }
+
+    public Float computeCPGA() throws SQLException, ClassNotFoundException {
         Float cg = 0*1.f;
         Float totalcredit = 0*1.f;
         String getCredit = "Select credit,grade from student_"+UserID+";";
-        try {
-            ResultSet rs = st.executeQuery(getCredit);
-            while(rs.next()){
-                Float c = rs.getFloat(1);
-                Integer g = rs.getInt(2);
-                if(g!=-1){
-                    totalcredit += c;
-                    cg += (c*g);
-                }
+        ResultSet rs = st.executeQuery(getCredit);
+        while(rs.next()){
+            Float c = rs.getFloat(1);
+            Integer g = rs.getInt(2);
+            if(g!=-1){
+                totalcredit += c;
+                cg += (c*g);
             }
-        } catch (SQLException e) {
-            System.out.println(e);
         }
         float ans = 0f;
         if(totalcredit!=0) ans = cg/totalcredit;
         return ans;
     }
 
-    private Float calRegCredit(){
+    private Float calRegCredit() throws SQLException {
 
         Float redcr = 0*1.f;
 
         String getCredit = "Select credit from student_"+UserID+" where year ="+currYear+" and sem = "+currSem+";";
-        try {
-            ResultSet r = st.executeQuery(getCredit);
-            while(r.next()){
-                redcr += r.getFloat(1);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
+        ResultSet r = st.executeQuery(getCredit);
+        while(r.next()){
+            redcr += r.getFloat(1);
         }
 
         return redcr;
     }
 
-    private Float calculateCredit(String cId){
+    private Float calculateCredit(String cId) throws SQLException {
         Float credit = null;
 
         String fetchQuery = "select l,p from coursecatalog where courseid = '"+cId+"';";
+        ResultSet rs = st.executeQuery(fetchQuery);
+        rs.next();
+        Integer l = rs.getInt(1);
+        Integer p = rs.getInt(2);
+        credit = l + (p/(2*1f));
 
-        try {
-            ResultSet rs = st.executeQuery(fetchQuery);
-            rs.next();
-            Integer l = rs.getInt(1);
-            Integer p = rs.getInt(2);
-            credit = l + (p/(2*1f));
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
 
         return credit;
     }
 
-    private Float avgOfPrevSems(){
+    private Float avgOfPrevSems() throws SQLException {
         Integer pyear = null;
         Integer ppyear = null;
         Integer psem = null;
@@ -204,79 +201,86 @@ public class Student extends User{
             ppyear = currYear-1;
         }
 
-        Float credit = null;
-        Integer n = null;
+        Float credit = 0f;
+        Integer n = 0;
 
         String getQuery = "select credit,year,sem from student_"+UserID+";";
-        try {
-            ResultSet rs =st.executeQuery(getQuery);
-            while (rs.next()){
-                if((rs.getInt(2)==pyear && rs.getInt(3)==psem) || (rs.getInt(2)==ppyear && rs.getInt(3)==ppsem)){
-                    credit+=(rs.getInt(1));
-                    n++;
-                }
+        ResultSet rs =st.executeQuery(getQuery);
+        while (rs.next()){
+            if((rs.getInt(2)==pyear && rs.getInt(3)==psem) || (rs.getInt(2)==ppyear && rs.getInt(3)==ppsem)){
+                credit+=(rs.getInt(1));
+                n++;
             }
-        } catch (SQLException e) {
-            System.out.println(e);
         }
 
         return 1.25f*(credit/n);
 
     }
 
-    private String getCourseType(String cid){
+    private String getCourseType(String cid) throws SQLException {
         String type = null;
         String fetchCourse = "select core,elective from coursecatalog where courseid = '"+cid+"';";
-        try {
-            ResultSet rs = st.executeQuery(fetchCourse);
-            rs.next();
-            String[] core = rs.getString(1).split(",");
-            String[] elec = rs.getString(2).split(",");
-            String branch = UserID.substring(0,2);
-            if(Arrays.asList(core).contains(branch)){
-                type = "core";
-            }
-            else if(Arrays.asList(elec).contains(branch)){
-                type = "elective";
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
+        ResultSet rs = st.executeQuery(fetchCourse);
+        rs.next();
+        String[] core = rs.getString(1).split(",");
+        String[] elec = rs.getString(2).split(",");
+        String branch = UserID.substring(0,2);
+        if(Arrays.asList(core).contains(branch)){
+            type = "core";
+        }
+        else if(Arrays.asList(elec).contains(branch)){
+            type = "elective";
         }
         return type;
     }
 
-    private Integer yearInfo(){
+    private Integer yearInfo() throws SQLException {
 
         String info = "select curryear from info;";
         Integer y = null;
-        try {
-            ResultSet rs = st.executeQuery(info);
-            rs.next();
-            y = rs.getInt(1);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+        ResultSet rs = st.executeQuery(info);
+        rs.next();
+        y = rs.getInt(1);
         return y;
 
     }
 
-    private Integer semInfo(){
+    private Integer semInfo() throws SQLException {
 
         String info = "select currsem from info;";
         Integer s = null;
-        try {
-            ResultSet rs = st.executeQuery(info);
-            rs.next();
-            s = rs.getInt(1);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+        ResultSet rs = st.executeQuery(info);
+        rs.next();
+        s = rs.getInt(1);
         return s;
 
     }
 
-    private void initiate(){
+    public Boolean preReqSatisfy(String cid) throws SQLException, ClassNotFoundException {
+        String getPreReq = "select prereq from coursecatalog where courseid = '"+cid+"';";
+        ResultSet rs = st.executeQuery(getPreReq);
+        rs.next();
+        String prereq = rs.getString(1);
+        if (prereq=="-") return true;
+        else {
+            String tokens[] = prereq.split(",");
+            ArrayList<String> tokens_aslist= new ArrayList<String>(Arrays.asList(tokens));
+            ArrayList<String> done = new ArrayList<String>();
+            String coursesDone = "select courseid from student_"+UserID+";";
+            rs = st.executeQuery(coursesDone);
+            while (rs.next()){
+                done.add(rs.getString(1));
+            }
+            for(int i=0;i<tokens_aslist.size();i++){
+                if(!done.contains(tokens_aslist.get(i))){
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    private void initiate() throws SQLException, ClassNotFoundException {
         CGPA = computeCPGA();
         currYear = yearInfo();
         currSem = semInfo();

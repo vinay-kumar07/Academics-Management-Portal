@@ -23,6 +23,11 @@ public class Admin_UI {
 
     public void callEditCourseCatalog() throws SQLException, IOException, ClassNotFoundException {
         Admin admin = new Admin ("Admin","Admin","admin",2008);
+
+        System.out.println("Following courses are available in the Course Catalog:-");
+        admin.viewCourseCatalog();
+        System.out.println("-----------------------------");
+
         System.out.println("1. Add new course");
         System.out.println("2. Delete course");
         System.out.println("3. Edit existing course");

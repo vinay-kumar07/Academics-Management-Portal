@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class Admin extends User{
     private Connection conn = null;
-    private static Statement st = null;
+    private Statement st = null;
     public Admin(String UserID, String Type, String Password, Integer enrollYear) {
         super(UserID, Type, Password, enrollYear);
     }
@@ -67,9 +67,6 @@ public class Admin extends User{
 
     public String addcourse(String course, String lpt, String prereq, String core, String elec) throws SQLException, IOException, ClassNotFoundException {
         makeConnection();
-        System.out.println("Following courses are available in the Course Catalog:-");
-        viewCourseCatalog();
-        System.out.println("-----------------------------");
 
         String check = "select count(*) from coursecatalog where courseid = '"+course+"';";
         ResultSet rs = st.executeQuery(check);
@@ -91,9 +88,6 @@ public class Admin extends User{
 
     public String deletecourse(String course) throws SQLException, IOException, ClassNotFoundException {
         makeConnection();
-        System.out.println("Following courses are available in the Course Catalog:-");
-        viewCourseCatalog();
-        System.out.println("-----------------------------");
 
         String check = "select count(*) from coursecatalog where courseid = '"+course+"';";
         ResultSet rs = st.executeQuery(check);
@@ -112,9 +106,6 @@ public class Admin extends User{
     public String editcourse(String course, String updatedcore) throws SQLException, IOException, ClassNotFoundException {
         //give more edit access to admin
         makeConnection();
-        System.out.println("Following courses are available in the Course Catalog:-");
-        viewCourseCatalog();
-        System.out.println("-----------------------------");
 
         String check = "select count(*) from coursecatalog where courseid = '"+course+"';";
         ResultSet rs = st.executeQuery(check);
@@ -130,7 +121,7 @@ public class Admin extends User{
         return "Course Updated Successfully.";
     }
 
-    private void viewCourseCatalog() throws SQLException, IOException{
+    public void viewCourseCatalog() throws SQLException, IOException{
         String viewQuery = "select * from coursecatalog;";
         ResultSet rs = st.executeQuery(viewQuery);
         System.out.println("COURSEID \t L \t T \t P \t PREREQUISITE \t OFFERED AS CORE \t OFFERED AS ELECTIVE");
