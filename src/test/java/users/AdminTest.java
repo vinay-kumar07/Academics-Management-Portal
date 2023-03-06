@@ -21,8 +21,8 @@ class AdminTest {
         String TestUserName = "postgres";
         String TestPassword = "dbms";
         Class.forName("org.postgresql.Driver");
-        Connection TestConnection = DriverManager.getConnection(TestURL, TestUserName, TestPassword);
-        Statement TestStatement = TestConnection.createStatement();
+        TestConnection = DriverManager.getConnection(TestURL, TestUserName, TestPassword);
+        TestStatement = TestConnection.createStatement();
     }
 
     @Test
@@ -51,11 +51,11 @@ class AdminTest {
 
         Admin admin = new Admin ("Admin","Admin","admin",2008);
 
-        String r1 = admin.createAccount("TS1","faculty","iit",2020);
-        assertEquals("User with ID = TS1 registered successfully.",r1);
+        String r1 = admin.createAccount("TF1","faculty","iit",2020);
+        assertEquals("User with ID = TF1 registered successfully.",r1);
 
-        String s1 = "Drop table faculty_TS1;";
-        String s2 = "Delete from users where userid = 'TS1';";
+        String s1 = "Drop table faculty_TF1;";
+        String s2 = "Delete from users where userid = 'TF1';";
 
         makeConnetion();
         TestStatement.executeUpdate(s1);
@@ -70,105 +70,45 @@ class AdminTest {
     void createAccountForInValidUser() throws SQLException, IOException, ClassNotFoundException {
         Admin admin = new Admin ("Admin","Admin","admin",2008);
 
-        String r1 = admin.createAccount("Admin", "Admin", "admin", 2008);
+        String r1 = admin.createAccount("TS1", "svd", "admin",2022);
         assertEquals("Not a Valid User Info.",r1);
 
     }
 
     @Test
-    void editCourseCatalog() throws SQLException, IOException, ClassNotFoundException {
-
+    void addcourse() throws SQLException, IOException, ClassNotFoundException {
         Admin admin = new Admin ("Admin","Admin","admin",2008);
-
-        String input = "2 \nTC1\n";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r1 = admin.editCourseCatalog();
-        assertEquals("The Course does not exist. Please choose a valid course.",r1);
-
-
-        input = "1\nTC1\n3-0-0\nPR1\ncs,mc\nee,ep\n";
-        inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r2 = admin.editCourseCatalog();
-        assertEquals("Course Added Successfully",r2);
-
-
-        input = "1\nTC1\n3-0-0\nPR1\ncs,mc\nee,ep\n";
-        inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r3 = admin.editCourseCatalog();
-        assertEquals("The course already exist.",r3);
-
-
-        input = "3\nTC2\n";
-        inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r4 = admin.editCourseCatalog();
-        assertEquals("The Course does not exist. Please choose a valid course.",r4);
-
-
-        input = "3\nTC1\ncs,mc,me\n";
-        inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r5 = admin.editCourseCatalog();
-        assertEquals("Course Updated Successfully.",r5);
-
-
-        input = "2\nTC1\n";
-        inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r6 = admin.editCourseCatalog();
-        assertEquals("Course Deleted Successfully",r6);
+        String r1 = admin.addcourse("TC101","3-0-0","TC102","cs,mc","ee,me");
+        assertEquals("Course Added Successfully",r1);
+        String r2 = admin.addcourse("TC101","3-0-0","TC102","cs,mc","ee,me");
+        assertEquals("The course already exist.",r2);
+        admin.deletecourse("TC101");
     }
 
     @Test
+    void deletecourse() throws SQLException, IOException, ClassNotFoundException {
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        String r1 = admin.deletecourse("TC101");
+        assertEquals("The Course does not exist. Please choose a valid course.",r1);
+        admin.addcourse("TC101","3-0-0","TC102","cs,mc","ee,me");
+        String r2 = admin.deletecourse("TC101");
+        assertEquals("Course Deleted Successfully",r2);
+    }
+    @Test
     void editCourseCatalogForInvalidChoice() throws SQLException, IOException, ClassNotFoundException {
         Admin admin = new Admin ("Admin","Admin","admin",2008);
-
-        String input = "4\n";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(byteArrayOutputStream);
-        System.setOut(ps);
-
-        String r1 = admin.editCourseCatalog();
-        assertEquals("Please choose a valid choice!!",r1);
+        String r1 = admin.editcourse("TC101","cs,ee");
+        assertEquals("The Course does not exist. Please choose a valid course.",r1);
+        admin.addcourse("TC101","3-0-0","TC102","cs,mc","ee,me");
+        String r2 = admin.editcourse("TC101","cs,ep");
+        assertEquals("Course Updated Successfully.",r2);
+        admin.deletecourse("TC101");
     }
-//
-//    @Test
-//    void changeAcademicYearSem() {
-//    }
+    @Test
+    void changeAcademicYearSem() throws SQLException, ClassNotFoundException {
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        String s1 = admin.changeAcademicYearSem(2022,1,0);
+        assertEquals("Updated",s1);
+        admin.changeAcademicYearSem(2022,2,1);
+    }
 }

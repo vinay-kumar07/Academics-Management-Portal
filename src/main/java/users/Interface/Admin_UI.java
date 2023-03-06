@@ -1,5 +1,6 @@
 package users.Interface;
 
+import org.postgresql.gss.GSSOutputStream;
 import users.Admin;
 
 import java.io.IOException;
@@ -7,13 +8,14 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Admin_UI {
+
     public void callCreateAccount() throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Enter Account Details:");
         Scanner sc = new Scanner(System.in);
         System.out.print("UserID: "); String ID = sc.nextLine();
         System.out.print("User Type(student/faculty): "); String type = sc.nextLine();
         System.out.print("Password: "); String pass = sc.nextLine();
-        System.out.print("Enrollment Year: "); String enrollyear = sc.nextLine();
+        System.out.print("Enrollment Year: "); Integer enrollyear = sc.nextInt();
 
         Admin admin = new Admin ("Admin","Admin","admin",2008);
         admin.createAccount(ID,type,pass,enrollyear);
@@ -50,5 +52,14 @@ public class Admin_UI {
         } else {
             System.out.println("Please choose a valid choice!!");
         }
+    }
+
+    public void callChangeAcademicYearSem() throws SQLException, ClassNotFoundException {
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        Scanner sc = new Scanner(System.in);
+        System.out.print("What is the current academic year?"); Integer y = sc.nextInt();
+        System.out.print("What is the current sem?"); Integer s = sc.nextInt();
+        System.out.print("Is course add/drop allowed?(0/1)"); Integer o = sc.nextInt();
+        admin.changeAcademicYearSem(y,s,o);
     }
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Instuctor_UI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">AIMS_Portal_CS305</a> &gt; <a href="index.source.html" class="el_package">users.Interface</a> &gt; <span class="el_source">Instuctor_UI.java</span></div><h1>Instuctor_UI.java</h1><pre class="source lang-java linenums">package users.Interface;
+
+import users.Instructor;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+<span class="nc" id="L9">public class Instuctor_UI {</span>
+    public void callFloatCourse() throws SQLException, IOException, ClassNotFoundException {
+<span class="nc" id="L11">        Instructor instructor = new Instructor (&quot;TS1&quot;,&quot;faculty&quot;,&quot;iit&quot;,2020);</span>
+<span class="nc" id="L12">        Scanner sc = new Scanner(System.in);</span>
+<span class="nc" id="L13">        System.out.println(&quot;Enter course details:-&quot;);</span>
+<span class="nc" id="L14">        System.out.print(&quot;Course ID: &quot;); String course = sc.nextLine();</span>
+<span class="nc" id="L15">        System.out.print(&quot;CGPA Requirement: &quot;); Float cg = sc.nextFloat(); String garbage = sc.nextLine();</span>
+<span class="nc" id="L16">        System.out.print(&quot;Allowed Batches: &quot;); String batch = sc.nextLine();</span>
+<span class="nc" id="L17">        instructor.floatCourse(course,cg,batch);</span>
+<span class="nc" id="L18">    }</span>
+
+    public void callDefloatCourse() throws SQLException, IOException, ClassNotFoundException {
+<span class="nc" id="L21">        Instructor instructor = new Instructor (&quot;TS1&quot;,&quot;faculty&quot;,&quot;iit&quot;,2020);</span>
+<span class="nc" id="L22">        System.out.println(&quot;Enter details of the course you want to delete:-&quot;);</span>
+<span class="nc" id="L23">        Scanner sc = new Scanner(System.in);</span>
+<span class="nc" id="L24">        System.out.print(&quot;Course ID: &quot;); String CID = sc.nextLine();</span>
+<span class="nc" id="L25">        System.out.print(&quot;Year: &quot;); Integer y = sc.nextInt();</span>
+<span class="nc" id="L26">        System.out.print(&quot;Sem: &quot;); Integer s = sc.nextInt();</span>
+<span class="nc" id="L27">        instructor.deFloatCourse(CID,y,s);</span>
+<span class="nc" id="L28">    }</span>
+
+    public void callUpdateGrades() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L31">        Instructor instructor = new Instructor (&quot;TS1&quot;,&quot;faculty&quot;,&quot;iit&quot;,2020);</span>
+<span class="nc" id="L32">        System.out.println(&quot;Enter Course ID:-&quot;);</span>
+<span class="nc" id="L33">        Scanner sc = new Scanner(System.in);</span>
+<span class="nc" id="L34">        System.out.print(&quot;Course ID: &quot;); String CID = sc.nextLine();</span>
+<span class="nc" id="L35">        System.out.print(&quot;CSV File Name: &quot;); String name = sc.nextLine();</span>
+<span class="nc" id="L36">        instructor.updateGrades(CID,name);</span>
+<span class="nc" id="L37">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

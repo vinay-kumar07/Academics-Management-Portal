@@ -33,7 +33,7 @@ public class Main {
 
         {
             Admin admin = new Admin ("Admin","Admin","admin",2008);
-            System.out.println(admin.editCourseCatalog());
+            System.out.println(admin.createAccount("TS1","student","iit",2020));
 //            admin.createAccount();
             return;
         }

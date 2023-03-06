@@ -135,16 +135,12 @@ public class Instructor extends User{
         makeConnection();
         Integer bool = null;
         String info = "Select * from info;";
-        try {
-            ResultSet rs = st.executeQuery(info);
-            rs.next();
-            currYear = rs.getInt(1);
-            currSem = rs.getInt(2);
-            bool = rs.getInt(3);
-            System.out.println(currYear+" "+currSem+" "+bool);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+        ResultSet rs = st.executeQuery(info);
+        rs.next();
+        currYear = rs.getInt(1);
+        currSem = rs.getInt(2);
+        bool = rs.getInt(3);
+        System.out.println(currYear+" "+currSem+" "+bool);
         st.close();
         conn.close();
         return bool;
@@ -167,20 +163,16 @@ public class Instructor extends User{
         }
     }
 
-    private Float calculateCredit(String cId){
+    private Float calculateCredit(String cId) throws SQLException {
         Float credit = null;
 
         String fetchQuery = "select l,p from coursecatalog where courseid = '"+cId+"';";
 
-        try {
-            ResultSet rs = st.executeQuery(fetchQuery);
-            rs.next();
-            Integer l = rs.getInt(1);
-            Integer p = rs.getInt(2);
-            credit = l + (p/(2*1f));
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+        ResultSet rs = st.executeQuery(fetchQuery);
+        rs.next();
+        Integer l = rs.getInt(1);
+        Integer p = rs.getInt(2);
+        credit = l + (p/(2*1f));
 
         return credit;
     }

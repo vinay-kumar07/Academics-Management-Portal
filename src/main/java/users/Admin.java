@@ -19,7 +19,7 @@ public class Admin extends User{
         st = conn.createStatement();
     }
 
-    public String createAccount(String ID, String type, String pass, String enrollyear) throws SQLException, IOException, ClassNotFoundException {
+    public String createAccount(String ID, String type, String pass, Integer enrollyear) throws SQLException, IOException, ClassNotFoundException {
         makeConnection();
 
         String check_query = "Select * from Users;";
@@ -45,7 +45,7 @@ public class Admin extends User{
             return "Not a Valid User Info.";
         }
 
-        String query = "INSERT INTO Users VALUES ('"+ID+"','"+type+"','"+pass+"','"+enrollyear+"');";
+        String query = "INSERT INTO Users VALUES ('"+ID+"','"+type+"','"+pass+"',"+enrollyear+");";
         st.executeUpdate(query);
 
         st.close();
@@ -54,9 +54,16 @@ public class Admin extends User{
     }
 
 
-//    public void changeAcademicYearSem(){
-//        System.out.println("need to implement");
-//    }
+    public String changeAcademicYearSem(Integer y, Integer s, Integer o) throws SQLException, ClassNotFoundException {
+        makeConnection();
+        String clear = "truncate table info;";
+        st.executeUpdate(clear);
+        String add = "insert into info values("+y+","+s+","+o+");";
+        st.executeUpdate(add);
+        st.close();
+        conn.close();
+        return "Updated";
+    }
 
     public String addcourse(String course, String lpt, String prereq, String core, String elec) throws SQLException, IOException, ClassNotFoundException {
         makeConnection();
