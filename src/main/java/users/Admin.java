@@ -1,129 +1,126 @@
 package users;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.sql.*;
 import  java.util.Scanner;
 import java.util.SortedMap;
 
 import static org.CS305.Main.st;
 public class Admin extends User{
+    private Connection conn = null;
+    private static Statement st = null;
     public Admin(String UserID, String Type, String Password, Integer enrollYear) {
         super(UserID, Type, Password, enrollYear);
     }
-//make accounts of users
 
-    public void createAccount(){
+    private void makeConnection() throws ClassNotFoundException, SQLException {
+        String url = "jdbc:postgresql://localhost:5433/";
+        String username = "postgres";
+        String password = "dbms";
+        Class.forName("org.postgresql.Driver");
+        conn = DriverManager.getConnection(url, username, password);
+        st = conn.createStatement();
+    }
+
+    public String createAccount() throws SQLException, IOException, ClassNotFoundException {
+        makeConnection();
+        System.out.println("Enter Account Details:");
         Scanner sc = new Scanner(System.in);
-        String ID = sc.nextLine();
-        String type = sc.nextLine();
-        String pass = sc.nextLine();
-        String enrollyear = sc.nextLine();
+        System.out.print("UserID: "); String ID = sc.nextLine();
+        System.out.print("User Type(student/faculty): "); String type = sc.nextLine();
+        System.out.print("Password: "); String pass = sc.nextLine();
+        System.out.print("Enrollment Year: "); String enrollyear = sc.nextLine();
 
         String check_query = "Select * from Users;";
-        try {
-            ResultSet rs = st.executeQuery(check_query);
-            while(rs.next()){
-                String user = rs.getString(1);
-                if(user.equals(ID)){
-                    System.out.println("User Already Registered. Try to login");
-                    return;
-                }
+        ResultSet rs = st.executeQuery(check_query);
+        while(rs.next()){
+            String user = rs.getString(1);
+            if(user.equals(ID)){
+                return "User Already Registered.";
             }
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        String query = "INSERT INTO Users VALUES ('"+ID+"','"+type+"','"+pass+"','"+enrollyear+"');";
-        try{
-            st.executeUpdate(query);
-        }
-        catch (Exception e){
-            System.out.println(e);
         }
 
         if(type.equals("student")){
             String makeTable = "create table Student_"+ID+"(CourseId varchar(50) NOT NULL, year INTEGER NOT NULL, sem INTEGER NOT NULL, grade INTEGER NOT NULL, credit float NOT NULL, courseType varchar(200) NOT NULL, PRIMARY KEY(CourseId,year,sem), FOREIGN KEY(CourseId,year,sem) REFERENCES CourseOffering(CourseId,year,sem));";
-            try {
-                st.executeUpdate(makeTable);
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+            st.executeUpdate(makeTable);
         }
 
         else if(type.equals("faculty")){
             String makeTable = "create table Faculty_"+ID+"(CourseId varchar(50) NOT NULL, year INTEGER NOT NULL, sem INTEGER NOT NULL, credit float NOT NULL, PRIMARY KEY(CourseId,year,sem), FOREIGN KEY(CourseId,year,sem) REFERENCES CourseOffering(CourseId,year,sem));";
-            try {
-                st.execute(makeTable);
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+            st.execute(makeTable);
         }
 
+        else {
+            return "Not a Valid User Info.";
+        }
+
+        String query = "INSERT INTO Users VALUES ('"+ID+"','"+type+"','"+pass+"','"+enrollyear+"');";
+        st.executeUpdate(query);
+
+        return "User with ID = "+ID+" registered successfully.";
     }
 
-    public void editCourseCatalog(){
-        Integer currYear = null;
-        String info = "Select currYear from info;";
-        try {
-            ResultSet rs = st.executeQuery(info);
-            rs.next();
-            currYear = rs.getInt(1);
-            System.out.println("The current academic year is "+currYear);
-            System.out.println("Following courses are available in the Course Catalog:-");
-            viewCourseCatalog();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+    public String editCourseCatalog() throws IOException, ClassNotFoundException, SQLException {
+        makeConnection();
+        System.out.println("Following courses are available in the Course Catalog:-");
+        viewCourseCatalog();
+        System.out.println("-----------------------------");
 
-        System.out.println("Make choice:-");
         System.out.println("1. Add new course");
         System.out.println("2. Delete course");
         System.out.println("3. Edit existing course");
-
+        System.out.print("Make choice: ");
         Scanner sc = new Scanner(System.in);
-        Integer choice  = sc.nextInt();
-        if(choice==1){
-            addcourse();
-        }
-        else if(choice==2){
-            deletecourse();
-        }
-        else if (choice==3) {
-            editcourse();
-        } else{
-            System.out.println("Please choose a valid choice!!");
+        int choice = sc.nextInt();
+        sc.nextLine();
+        if (choice == 1) {
+            return addcourse(sc);
+        } else if (choice == 2) {
+            return deletecourse(sc);
+        } else if (choice == 3) {
+            return editcourse(sc);
+        } else {
+            return "Please choose a valid choice!!";
         }
     }
 
-    public void changeAcademicYearSem(){
-        System.out.println("need to implement");
-    }
+
+//    public void changeAcademicYearSem(){
+//        System.out.println("need to implement");
+//    }
 
     // -----------Private functions----------------------//
 
-    private void viewCourseCatalog(){
+    private void viewCourseCatalog() throws SQLException, IOException{
         String viewQuery = "select * from coursecatalog;";
-        try {
-            ResultSet rs = st.executeQuery(viewQuery);
-            while (rs.next()){
-                System.out.println(rs.getString(1) + " " + rs.getString(5) + " " +rs.getString(6) + " " + rs.getString(7));
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
+        ResultSet rs = st.executeQuery(viewQuery);
+        System.out.println("COURSEID \t L \t T \t P \t PREREQUISITE \t OFFERED AS CORE \t OFFERED AS ELECTIVE");
+        while (rs.next()) {
+            System.out.println(
+                    rs.getString(1) + " \t " +
+                    rs.getString(2) + " \t " +
+                    rs.getString(3) + " \t " +
+                    rs.getString(4) + " \t " +
+                    rs.getString(5) + " \t " +
+                    rs.getString(6) + " \t " +
+                    rs.getString(7)
+            );
         }
     }
 
-    private void addcourse(){
-        //check if a course already exist
-        Scanner sc = new Scanner(System.in);
+    private String addcourse(Scanner sc) throws SQLException, IOException{
+//        Scanner sc = new Scanner(System.in);
         System.out.println("Enter course details:-");
-        String course = sc.nextLine();
-        String lpt = sc.nextLine();
-        String prereq = sc.nextLine();
-        String core = sc.nextLine();
-        String elec = sc.nextLine();
-//        Integer year = sc.nextInt();
+        System.out.print("Course ID: "); String course = sc.nextLine();
+        System.out.print("L-T-P: "); String lpt = sc.nextLine();
+        System.out.print("Pre Requisites: "); String prereq = sc.nextLine();
+        System.out.print("Branches for which the course is core(comma separated): "); String core = sc.nextLine();
+        System.out.print("Branches for which the course is elective(comma separated): "); String elec = sc.nextLine();
+
+        String check = "select count(*) from coursecatalog where courseid = '"+course+"';";
+        ResultSet rs = st.executeQuery(check);
+        rs.next();
+        if(rs.getInt(1)==1) return "The course already exist.";
 
         String[] tokens = lpt.split("-");
         Integer L = Integer.parseInt(tokens[0]);
@@ -131,58 +128,43 @@ public class Admin extends User{
         Integer P = Integer.parseInt(tokens[2]);
 
         String addQuery = "insert into coursecatalog values('"+course+"',"+L+","+T+","+P+",'"+prereq+"','"+core+"','"+elec+"')";
-//        System.out.println(addQuery);
-        try {
-            st.executeUpdate(addQuery);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-//        String makeTable = "create table "+course+"_"+Integer.toString(year)+"(StudentId varchar(20) NOT NULL, enrollyear INTEGER NOT NULL, grade float NOT NULL, PRIMARY KEY(StudentId));";
-//        try {
-//            st.executeUpdate(makeTable);
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        }
+        st.executeUpdate(addQuery);
 
+        return "Course Added Successfully";
     }
 
-    private void deletecourse(){
-        //check if the course details entered exit
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter details of the course you want to delete:-");
+    private String deletecourse(Scanner sc) throws SQLException, IOException {
+//        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Course you want to delete:-");
+        System.out.print("Course ID: ");
         String course = sc.nextLine();
-//        Integer year = sc.nextInt();
 
-        String delQuery = "delete from coursecatalog where courseid = '"+course+"';";
-//        String dropTable = "drop table "+course+"_"+Integer.toString(year)+";";
-        System.out.println(delQuery);
-//        System.out.println(dropTable);
-        try {
-            st.executeUpdate(delQuery);
-//            st.executeUpdate(dropTable);
-            System.out.println("course deleted successfully");
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+        String check = "select count(*) from coursecatalog where courseid = '"+course+"';";
+        ResultSet rs = st.executeQuery(check);
+        rs.next();
+        if(rs.getInt(1)==0) return "The Course does not exist. Please choose a valid course.";
+
+        String delQuery = "delete from coursecatalog where courseid = '" + course + "';";
+        st.executeUpdate(delQuery);
+        return "Course Deleted Successfully";
     }
 
-    private void editcourse(){
+    private String editcourse(Scanner sc) throws SQLException, IOException{
         //give more edit access to admin
-        Scanner sc = new Scanner(System.in);
+//        Scanner sc = new Scanner(System.in);
         System.out.println("Enter Course ID which you want to edit:");
-        String course = sc.nextLine();
-//        Integer year = sc.nextInt(); String garbage = sc.nextLine();
+        System.out.print("Course ID: "); String course = sc.nextLine();
+
+        String check = "select count(*) from coursecatalog where courseid = '"+course+"';";
+        ResultSet rs = st.executeQuery(check);
+        rs.next();
+        if(rs.getInt(1)==0) return "The Course does not exist. Please choose a valid course.";
 
         System.out.println("Now enter updated core branches");
-        String updatedcore = sc.nextLine();
+        System.out.print("Upadated Core Branches: "); String updatedcore = sc.nextLine();
 
         String updateQuery = "UPDATE coursecatalog SET core = '"+updatedcore+"' WHERE courseid = '"+course+"';";
-//        System.out.println(updateQuery);
-        try {
-            st.executeUpdate(updateQuery);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-
+        st.executeUpdate(updateQuery);
+        return "Course Updated Successfully.";
     }
 }

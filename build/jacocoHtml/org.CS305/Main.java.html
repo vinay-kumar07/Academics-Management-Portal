@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">AIMS_Portal_CS305</a> &gt; <a href="index.source.html" class="el_package">org.CS305</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package org.CS305;
+
+import users.Admin;
+import users.Instructor;
+import users.Student;
+import users.User;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+import java.sql.*;
+
+<span class="nc" id="L13">public class Main {</span>
+<span class="nc" id="L14">    public static Connection conn = null;</span>
+<span class="nc" id="L15">    public static Statement st = null;</span>
+<span class="nc" id="L16">    public static Integer currentSem = 2;</span>
+<span class="nc" id="L17">    public static Integer currentYear = 2022;</span>
+
+    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
+        try{
+<span class="nc" id="L21">            System.out.println(&quot;Trying to connect..&quot;);</span>
+<span class="nc" id="L22">            String url = &quot;jdbc:postgresql://localhost:5433/&quot;;</span>
+<span class="nc" id="L23">            String username = &quot;postgres&quot;;</span>
+<span class="nc" id="L24">            String password = &quot;dbms&quot;;</span>
+<span class="nc" id="L25">            Class.forName(&quot;org.postgresql.Driver&quot;);</span>
+<span class="nc" id="L26">            conn = DriverManager.getConnection(url, username, password);</span>
+<span class="nc" id="L27">            st = conn.createStatement();</span>
+<span class="nc" id="L28">            System.out.println(&quot;Connected To Database :)&quot;);</span>
+        }
+<span class="nc" id="L30">        catch (Exception e){</span>
+<span class="nc" id="L31">            System.out.println(e);</span>
+<span class="nc" id="L32">        }</span>
+
+        {
+<span class="nc" id="L35">            Admin admin = new Admin (&quot;Admin&quot;,&quot;Admin&quot;,&quot;admin&quot;,2008);</span>
+<span class="nc" id="L36">            System.out.println(admin.editCourseCatalog());</span>
+//            admin.createAccount();
+<span class="nc" id="L38">            return;</span>
+        }
+
+//        {
+//            Instructor balwinder = new Instructor (&quot;cs001&quot;,&quot;faculty&quot;,&quot;iit&quot;,2015);
+//            balwinder.updateGrades();
+//            return;
+//        }
+
+//        {
+//            Student vinay = new Student (&quot;cs1135&quot;,&quot;student&quot;,&quot;iit&quot;,2022);
+//            vinay.courseRegister();
+//            return;
+//        }
+
+//        Scanner sc = new Scanner(System.in);
+//        System.out.println(&quot;Please what is your role: &quot;);
+//        Integer loginChoice = sc.nextInt(); String garbage = sc.nextLine();
+//        if(loginChoice==1){
+//            System.out.println(&quot;give id&quot;);
+//            String inputID = sc.nextLine();
+//            System.out.println(&quot;give password&quot;);
+//            String inputPass = sc.nextLine();
+//
+//            String check_query = &quot;Select * from Users;&quot;;
+//            try {
+//                ResultSet rs = st.executeQuery(check_query);
+//                while(rs.next()){
+//                    String user = rs.getString(1);
+//                    String code = rs.getString(3);
+//                    if(user.equals(inputID) &amp;&amp; code.equals(inputPass)){
+//                        System.out.println(&quot;Logged in Successfully :)&quot;);
+//                        break;
+//                    }
+//                    else{
+//                        return;
+//                    }
+//                }
+//            }
+//            catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            System.out.println(&quot;What do you want to do?&quot;);
+//            System.out.println(&quot;1. Create users account&quot;);
+//            System.out.println(&quot;2. Edit Course Catalog&quot;);
+//            System.out.println(&quot;3. View Grades&quot;);
+//            System.out.println(&quot;4. Generate Transcript&quot;);
+//            System.out.println(&quot;5. LogOut&quot;);
+//
+//            Admin admin = new Admin (inputID,&quot;Admin&quot;,&quot;Admin&quot;,2008);
+//            Integer Choice = sc.nextInt(); garbage = sc.nextLine();
+//            if(Choice==1){
+//                admin.createAccount();
+//                //hello
+//            }
+//            else if(Choice==2){
+//                admin.editCourseCatalog();
+//            }
+//            else if(Choice==5){
+//                return;
+//            }
+//            else{
+//                System.out.println(&quot;Please Choose a valid choice!!&quot;);
+//            }
+//
+//        }
+//        else if(loginChoice==2){
+//            //faculty
+//        }
+//        else if(loginChoice==3){
+//            //student
+//        }
+//        else{
+//            System.out.println(&quot;Please enter a valid choice!!&quot;);
+//        }
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

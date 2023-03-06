@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="users.AdminTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-03-06T05:47:41" hostname="DESKTOP-Q07AVCP" time="0.037">
+<testsuite name="users.AdminTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-03-06T11:39:24" hostname="DESKTOP-Q07AVCP" time="2.558">
   <properties/>
-  <testcase name="createAccount()" classname="users.AdminTest" time="0.037"/>
+  <testcase name="createAccountForInValidUser()" classname="users.AdminTest" time="1.25"/>
+  <testcase name="createAccountFaculty()" classname="users.AdminTest" time="0.305"/>
+  <testcase name="editCourseCatalog()" classname="users.AdminTest" time="0.673"/>
+  <testcase name="editCourseCatalogForInvalidChoice()" classname="users.AdminTest" time="0.08"/>
+  <testcase name="createAccountStudent()" classname="users.AdminTest" time="0.239"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

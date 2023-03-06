@@ -5,6 +5,7 @@ import users.Instructor;
 import users.Student;
 import users.User;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import java.sql.*;
@@ -15,7 +16,7 @@ public class Main {
     public static Integer currentSem = 2;
     public static Integer currentYear = 2022;
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
         try{
             System.out.println("Trying to connect..");
             String url = "jdbc:postgresql://localhost:5433/";
@@ -30,18 +31,18 @@ public class Main {
             System.out.println(e);
         }
 
-//        {
-//            Admin admin = new Admin ("Admin","Admin","admin",2008);
-////            admin.editCourseCatalog();
-//            admin.createAccount();
-//            return;
-//        }
-
         {
-            Instructor balwinder = new Instructor ("cs001","faculty","iit",2015);
-            balwinder.updateGrades();
+            Admin admin = new Admin ("Admin","Admin","admin",2008);
+            System.out.println(admin.editCourseCatalog());
+//            admin.createAccount();
             return;
         }
+
+//        {
+//            Instructor balwinder = new Instructor ("cs001","faculty","iit",2015);
+//            balwinder.updateGrades();
+//            return;
+//        }
 
 //        {
 //            Student vinay = new Student ("cs1135","student","iit",2022);
