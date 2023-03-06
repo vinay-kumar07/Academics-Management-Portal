@@ -1,8 +1,5 @@
 package org.CS305;
 
-import student.CourseRegistration;
-import student.UserRegistration;
-import student.viewGrades;
 import users.Admin;
 import users.Instructor;
 import users.Student;
@@ -32,15 +29,6 @@ public class Main {
         catch (Exception e){
             System.out.println(e);
         }
-
-//        UserRegistration u = new UserRegistration();
-//        u.register("2020csb1141","Student","123");
-
-//        CourseRegistration cr = new CourseRegistration();
-//        cr.courseRegister("2020csb1141",2,3);
-
-//        viewGrades v = new viewGrades();
-//        v.view("2020csb1141");
 
 //        {
 //            Admin admin = new Admin ("Admin","Admin","admin",2008);
