@@ -1,6 +1,5 @@
 package users.Interface;
 
-import org.postgresql.gss.GSSOutputStream;
 import users.Admin;
 
 import java.io.IOException;

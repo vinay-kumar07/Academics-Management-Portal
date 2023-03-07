@@ -1,0 +1,8 @@
+Indian Institute of Technology, Ropar
+
+B.Tech Transcript
+Entry No = cs1141
+
+(Grade -1 means the course has not been graded yet)
+COURSE 		 YEAR 		 SEM 		 GRADE 		 CREDIT 		 REGISTERED AS
+cs101 		 2022 		 1 		 8 			 3 			 core

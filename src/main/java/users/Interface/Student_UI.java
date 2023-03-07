@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Student_UI {
-    public void callCourseRegister() throws SQLException, ClassNotFoundException {
-        Student vinay = new Student ("cs1141","student","iit",2022);
+    public void callCourseRegister(String id, String pass, Integer l) throws SQLException, ClassNotFoundException {
+        Student vinay = new Student (id,"student",pass,l);
         vinay.viewCourseOfferings();
 
         Scanner sc=new Scanner(System.in);
@@ -16,8 +16,8 @@ public class Student_UI {
         String optedCourse = sc.nextLine();
         System.out.println(vinay.courseRegister(optedCourse));
     }
-    public void callCourseWithdraw() throws SQLException, ClassNotFoundException {
-        Student vinay = new Student ("cs1141","student","iit",2022);
+    public void callCourseWithdraw(String id, String pass, Integer l) throws SQLException, ClassNotFoundException {
+        Student vinay = new Student (id,"student",pass,l);
         vinay.viewCourseOfferings();
 
         System.out.print("Select the course: ");
@@ -25,20 +25,20 @@ public class Student_UI {
         String selectedCourse = sc.nextLine();
         System.out.println(vinay.courseWithdraw(selectedCourse));
     }
-    public void callComputerCGPA() throws SQLException, ClassNotFoundException {
-        Student vinay = new Student ("cs1141","student","iit",2022);
+    public void callComputerCGPA(String id, String pass, Integer l) throws SQLException, ClassNotFoundException {
+        Student vinay = new Student (id,"student",pass,l);
         System.out.println("Your current CGPA is: "+ vinay.computeCPGA());
     }
-    public void callViewGrades() throws SQLException, ClassNotFoundException {
-        Student vinay = new Student ("cs1141","student","iit",2022);
+    public void callViewGrades(String id, String pass, Integer l) throws SQLException, ClassNotFoundException {
+        Student vinay = new Student (id,"student",pass,l);
         vinay.viewGrades();
     }
-    public void callGenerateTranscript() throws SQLException, IOException, ClassNotFoundException {
-        Student vinay = new Student ("cs1141","student","iit",2022);
+    public void callGenerateTranscript(String id, String pass, Integer l) throws SQLException, IOException, ClassNotFoundException {
+        Student vinay = new Student (id,"student",pass,l);
         vinay.generateTranscript();
     }
-    public void callCheckDegree() throws SQLException, ClassNotFoundException {
-        Student vinay = new Student ("cs1141","student","iit",2022);
+    public void callCheckDegree(String id, String pass, Integer l) throws SQLException, ClassNotFoundException {
+        Student vinay = new Student (id,"student",pass,l);
         System.out.println(vinay.checkDegree());
     }
 }

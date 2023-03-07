@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Instuctor_UI {
-    public void callFloatCourse() throws SQLException, IOException, ClassNotFoundException {
-        Instructor instructor = new Instructor ("TS1","faculty","iit",2020);
+    public void callFloatCourse(String id, String pass, Integer l) throws SQLException, IOException, ClassNotFoundException {
+        Instructor instructor = new Instructor (id,"faculty",pass,l);
         instructor.viewCourseCatalog();
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter course details:-");
@@ -16,8 +16,8 @@ public class Instuctor_UI {
         System.out.println(instructor.floatCourse(course,cg,batch));
     }
 
-    public void callDefloatCourse() throws SQLException, IOException, ClassNotFoundException {
-        Instructor instructor = new Instructor ("TS1","faculty","iit",2020);
+    public void callDefloatCourse(String id, String pass, Integer l) throws SQLException, IOException, ClassNotFoundException {
+        Instructor instructor = new Instructor (id,"faculty",pass,l);
         instructor.viewCourseOffering();
         System.out.println("Enter details of the course you want to delete:-");
         Scanner sc = new Scanner(System.in);
@@ -27,8 +27,8 @@ public class Instuctor_UI {
         System.out.println(instructor.deFloatCourse(CID,y,s));
     }
 
-    public void callUpdateGrades() throws SQLException, ClassNotFoundException, IOException {
-        Instructor instructor = new Instructor ("TS1","faculty","iit",2020);
+    public void callUpdateGrades(String id, String pass, Integer l) throws SQLException, ClassNotFoundException, IOException {
+        Instructor instructor = new Instructor (id,"faculty",pass,l);
         instructor.viewCourseOffering();
         System.out.println("Enter Course ID:-");
         Scanner sc = new Scanner(System.in);
@@ -37,8 +37,8 @@ public class Instuctor_UI {
         System.out.println(instructor.updateGrades(CID,name));
     }
 
-    public void callViewGrades() throws SQLException, IOException, ClassNotFoundException {
-        Instructor instructor = new Instructor ("TS1","faculty","iit",2020);
+    public void callViewGrades(String id, String pass, Integer l) throws SQLException, IOException, ClassNotFoundException {
+        Instructor instructor = new Instructor (id,"faculty",pass,l);
         instructor.viewCourseOffering();
         System.out.println("Enter Course ID:-");
         Scanner sc = new Scanner(System.in);

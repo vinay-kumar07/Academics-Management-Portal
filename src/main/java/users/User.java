@@ -1,10 +1,5 @@
 package users;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import static org.CS305.Main.st;
-
 public class User {
     public String UserID;
     public String Type;
