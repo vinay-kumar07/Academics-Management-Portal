@@ -46,7 +46,7 @@ public class Main {
 
         {
             Student vinay = new Student ("mc001","student","iit",2022);
-            vinay.generateTranscript();
+            System.out.println(vinay.checkDegree());;
             return;
         }
 

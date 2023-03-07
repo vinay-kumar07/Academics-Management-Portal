@@ -101,8 +101,8 @@ public class Instructor extends User{
             while ((line = csvReader.readNext()) != null) {
                 String tokens[] = line[0].split("\t");
 
-                String student = "Update student_"+tokens[0]+" set grade = "+tokens[2]+" where courseid = '"+CID+"' and year = "+currYear+" and sem = "+currSem+";";
-                String course = "Update "+CID+"_"+currYear+"_"+currSem+" set grade = "+tokens[2]+" where studentid = '"+tokens[0]+"';";
+                String student = "Update student_"+tokens[0]+" set grade = "+tokens[1]+" where courseid = '"+CID+"' and year = "+currYear+" and sem = "+currSem+";";
+                String course = "Update "+CID+"_"+currYear+"_"+currSem+" set grade = "+tokens[1]+" where studentid = '"+tokens[0]+"';";
                 try {
                     st.executeUpdate(student);
                     st.executeUpdate(course);
@@ -151,7 +151,6 @@ public class Instructor extends User{
         currYear = rs.getInt(1);
         currSem = rs.getInt(2);
         bool = rs.getInt(3);
-        System.out.println(currYear+" "+currSem+" "+bool);
         st.close();
         conn.close();
         return bool;

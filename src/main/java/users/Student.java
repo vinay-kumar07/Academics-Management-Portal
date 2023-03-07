@@ -222,6 +222,38 @@ public class Student extends User{
 //        System.out.println("(Grade -1 means the course has not been graded yet)");
     }
 
+    public String checkDegree() throws SQLException, ClassNotFoundException {
+        makeConnection();
+        Float pc = 0f;
+        Float ec = 0f;
+
+        String getCredit = "Select credit,coursetype from student_"+UserID+" where grade>0;";
+        ResultSet r = st.executeQuery(getCredit);
+        while(r.next()){
+            if(r.getString(2).equals("core")){
+                pc += (r.getFloat(1));
+            }
+            else if(r.getString(2).equals("elective")){
+                ec += (r.getFloat(1));
+            }
+        }
+
+        Float programCredit = 20f;
+        Float electiveCredit = 10f;
+
+        if(pc<programCredit && ec<electiveCredit){
+            return "Both Program and Elective credits are not completed.";
+        } else if (pc<programCredit && ec>=electiveCredit) {
+            return "Program credits are not completed";
+        } else if (pc>=programCredit && ec<electiveCredit) {
+            return "Elective credits are not completed";
+        } else if (pc>=programCredit && ec>=electiveCredit) {
+            return "All credits are completed.";
+        } else {
+            return "";
+        }
+    }
+
     private Float calRegCredit() throws SQLException {
 
         Float redcr = 0*1.f;

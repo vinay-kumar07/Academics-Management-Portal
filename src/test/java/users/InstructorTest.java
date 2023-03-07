@@ -140,9 +140,65 @@ class InstructorTest {
         TestConnection.close();
     }
     @Test
-    void updateGrades() {
+    void updateGradesForInvalidCourse() throws SQLException, IOException, ClassNotFoundException {
 
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
+        admin.createAccount("TF1","faculty","iit",2020);
 
+        Instructor instructor = new Instructor ("TF1","faculty","iit",2020);
+
+        String r1 = instructor.updateGrades("TC1","path");
+        assertEquals("Choose a valid course.",r1);
+
+        String s1 = "Drop table faculty_TF1;";
+        String s2 = "Delete from users where userid = 'TF1';";
+
+        makeConnetion();
+        TestStatement.executeUpdate(s1);
+        TestStatement.executeUpdate(s2);
+
+        TestStatement.close();
+        TestConnection.close();
+
+    }
+
+    @Test
+    void updateGradesForValidCourse() throws SQLException, IOException, ClassNotFoundException {
+
+        makeConnetion();
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
+        admin.addcourse("TC1","3-0-0","-","cs,mc","ee,me");
+        admin.createAccount("TF1","faculty","iit",2020);
+        admin.createAccount("TS1","student","iit",2022);
+        admin.createAccount("TS2","student","iit",2022);
+        admin.createAccount("TS3","student","iit",2022);
+
+        Instructor instructor = new Instructor ("TF1","faculty","iit",2020);
+        Student student1 = new Student("TS1","student","iit",2022);
+        Student student2 = new Student("TS2","student","iit",2022);
+        Student student3 = new Student("TS3","student","iit",2022);
+
+        instructor.floatCourse("TC1",6f,"2022");
+        student1.courseRegister("TC1");
+        student2.courseRegister("TC1");
+        student3.courseRegister("TC1");
+
+        String r1 = instructor.updateGrades("TC1","testgrades.csv");
+        assertEquals("Grades Updated Successfully",r1);
+
+        String s1 = "Drop table student_TS1, student_TS2, student_TS3;";
+        TestStatement.executeUpdate(s1);
+        instructor.deFloatCourse("TC1",2022,1);
+        admin.deletecourse("TC1");
+        String s2 = "Drop table faculty_TF1;";
+        TestStatement.executeUpdate(s2);
+        String s3 = "Delete from users where userid = 'TF1' or userid = 'TS1' or userid = 'TS2' or userid = 'TS3';";
+        TestStatement.executeUpdate(s3);
+
+        TestStatement.close();
+        TestConnection.close();
 
     }
 }

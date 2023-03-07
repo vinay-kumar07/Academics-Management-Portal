@@ -436,4 +436,177 @@ class StudentTest {
 
     }
 
+    @Test
+    void bothCreditsNotCompleted() throws SQLException, ClassNotFoundException, IOException {
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
+        admin.createAccount("TS1","student","iit",2022);
+
+        Student student = new Student("TS1","student","iit",2022);
+        String r1 = student.checkDegree();
+        assertEquals("Both Program and Elective credits are not completed.",r1);
+
+        String s1 = "Drop table student_TS1;";
+        String s2 = "Delete from users where userid = 'TS1';";
+
+        makeConnetion();
+        TestStatement.executeUpdate(s1);
+        TestStatement.executeUpdate(s2);
+
+        TestStatement.close();
+        TestConnection.close();
+
+    }
+
+    @Test
+    void programCreditsNotCompleted() throws SQLException, ClassNotFoundException, IOException {
+        makeConnetion();
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
+        admin.addcourse("TC1","15-0-0","-","mc","cs,ee,me");
+        admin.addcourse("TC2","15-0-0","-","mc","cs,ee,me");
+        admin.createAccount("TF1","faculty","iit",2020);
+        admin.createAccount("cs999","student","iit",2022);
+
+        Instructor instructor = new Instructor ("TF1","faculty","iit",2020);
+        Student student = new Student("cs999","student","iit",2022);
+
+        instructor.floatCourse("TC1",0f,"2022");
+        student.courseRegister("TC1");
+        admin.changeAcademicYearSem(2022,2,1);
+        instructor.floatCourse("TC2",0f,"2022");
+        student.courseRegister("TC2");
+
+        String s5 = "Update student_cs999 set grade = 8 where courseid = 'TC1';";
+        String s6 = "Update student_cs999 set grade = 7 where courseid = 'TC2';";
+        TestStatement.executeUpdate(s5);
+        TestStatement.executeUpdate(s6);
+
+        String r1 = student.checkDegree();
+        assertEquals("Program credits are not completed",r1);
+
+        student.courseWithdraw("TC2");
+        instructor.deFloatCourse("TC2",2022,2);
+        admin.changeAcademicYearSem(2022,1,1);
+        student.courseWithdraw("TC1");
+        instructor.deFloatCourse("TC1",2022,1);
+        admin.deletecourse("TC1");
+        admin.deletecourse("TC2");
+        String s1 = "Drop table faculty_TF1;";
+        String s2 = "Delete from users where userid = 'TF1';";
+        String s3 = "Drop table student_cs999;";
+        String s4 = "Delete from users where userid = 'cs999';";
+
+        TestStatement.executeUpdate(s1);
+        TestStatement.executeUpdate(s2);
+        TestStatement.executeUpdate(s3);
+        TestStatement.executeUpdate(s4);
+
+        TestStatement.close();
+        TestConnection.close();
+    }
+
+    @Test
+    void electiveCreditsNotCompleted() throws SQLException, ClassNotFoundException, IOException {
+        makeConnetion();
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
+        admin.addcourse("TC1","15-0-0","-","cs,mc","ee,me");
+        admin.addcourse("TC2","15-0-0","-","cs,mc","ee,me");
+        admin.createAccount("TF1","faculty","iit",2020);
+        admin.createAccount("cs999","student","iit",2022);
+
+        Instructor instructor = new Instructor ("TF1","faculty","iit",2020);
+        Student student = new Student("cs999","student","iit",2022);
+
+        instructor.floatCourse("TC1",0f,"2022");
+        student.courseRegister("TC1");
+        admin.changeAcademicYearSem(2022,2,1);
+        instructor.floatCourse("TC2",0f,"2022");
+        student.courseRegister("TC2");
+
+        String s5 = "Update student_cs999 set grade = 8 where courseid = 'TC1';";
+        String s6 = "Update student_cs999 set grade = 7 where courseid = 'TC2';";
+        TestStatement.executeUpdate(s5);
+        TestStatement.executeUpdate(s6);
+
+        String r1 = student.checkDegree();
+        assertEquals("Elective credits are not completed",r1);
+
+        student.courseWithdraw("TC2");
+        instructor.deFloatCourse("TC2",2022,2);
+        admin.changeAcademicYearSem(2022,1,1);
+        student.courseWithdraw("TC1");
+        instructor.deFloatCourse("TC1",2022,1);
+        admin.deletecourse("TC1");
+        admin.deletecourse("TC2");
+        String s1 = "Drop table faculty_TF1;";
+        String s2 = "Delete from users where userid = 'TF1';";
+        String s3 = "Drop table student_cs999;";
+        String s4 = "Delete from users where userid = 'cs999';";
+
+        TestStatement.executeUpdate(s1);
+        TestStatement.executeUpdate(s2);
+        TestStatement.executeUpdate(s3);
+        TestStatement.executeUpdate(s4);
+
+        TestStatement.close();
+        TestConnection.close();
+    }
+
+    @Test
+    void allCreditsNotCompleted() throws SQLException, ClassNotFoundException, IOException {
+        makeConnetion();
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
+        admin.addcourse("TC1","15-0-0","-","cs,mc","ee,me");
+        admin.addcourse("TC2","7-0-0","-","cs,mc","ee,me");
+        admin.addcourse("TC3","11-0-0","-","mc","cs,ee,me");
+        admin.createAccount("TF1","faculty","iit",2020);
+        admin.createAccount("cs999","student","iit",2022);
+
+        Instructor instructor = new Instructor ("TF1","faculty","iit",2020);
+        Student student = new Student("cs999","student","iit",2022);
+
+        instructor.floatCourse("TC1",0f,"2022");
+        student.courseRegister("TC1");
+        admin.changeAcademicYearSem(2022,2,1);
+        instructor.floatCourse("TC2",0f,"2022");
+        instructor.floatCourse("TC3",0f,"2022");
+        student.courseRegister("TC2");
+        student.courseRegister("TC3");
+
+        String s5 = "Update student_cs999 set grade = 8 where courseid = 'TC1';";
+        String s6 = "Update student_cs999 set grade = 7 where courseid = 'TC2';";
+        String s7 = "Update student_cs999 set grade = 7 where courseid = 'TC3';";
+        TestStatement.executeUpdate(s5);
+        TestStatement.executeUpdate(s6);
+        TestStatement.executeUpdate(s7);
+
+        String r1 = student.checkDegree();
+        assertEquals("All credits are completed.",r1);
+
+        student.courseWithdraw("TC2");
+        student.courseWithdraw("TC3");
+        instructor.deFloatCourse("TC2",2022,2);
+        instructor.deFloatCourse("TC3",2022,2);
+        admin.changeAcademicYearSem(2022,1,1);
+        student.courseWithdraw("TC1");
+        instructor.deFloatCourse("TC1",2022,1);
+        admin.deletecourse("TC1");
+        admin.deletecourse("TC2");
+        admin.deletecourse("TC3");
+        String s1 = "Drop table faculty_TF1;";
+        String s2 = "Delete from users where userid = 'TF1';";
+        String s3 = "Drop table student_cs999;";
+        String s4 = "Delete from users where userid = 'cs999';";
+
+        TestStatement.executeUpdate(s1);
+        TestStatement.executeUpdate(s2);
+        TestStatement.executeUpdate(s3);
+        TestStatement.executeUpdate(s4);
+
+        TestStatement.close();
+        TestConnection.close();
+    }
 }

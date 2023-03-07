@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="users.InstructorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-03-07T09:16:20" hostname="DESKTOP-Q07AVCP" time="3.06">
+<testsuite name="users.InstructorTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2023-03-07T10:58:21" hostname="DESKTOP-Q07AVCP" time="7.447">
   <properties/>
-  <testcase name="updateGrades()" classname="users.InstructorTest" time="0.038"/>
-  <testcase name="viewGradesValidCourse()" classname="users.InstructorTest" time="1.869"/>
-  <testcase name="viewGradesInvalidCourse()" classname="users.InstructorTest" time="0.224"/>
-  <testcase name="deFloatCourse()" classname="users.InstructorTest" time="0.474"/>
-  <testcase name="floatCourse()" classname="users.InstructorTest" time="0.447"/>
-  <system-out><![CDATA[2022 1 1
-The following courses are available for enrollment: 
+  <testcase name="updateGradesForValidCourse()" classname="users.InstructorTest" time="3.471"/>
+  <testcase name="viewGradesValidCourse()" classname="users.InstructorTest" time="1.404"/>
+  <testcase name="viewGradesInvalidCourse()" classname="users.InstructorTest" time="0.337"/>
+  <testcase name="deFloatCourse()" classname="users.InstructorTest" time="1.005"/>
+  <testcase name="updateGradesForInvalidCourse()" classname="users.InstructorTest" time="0.373"/>
+  <testcase name="floatCourse()" classname="users.InstructorTest" time="0.842"/>
+  <system-out><![CDATA[The following courses are available for enrollment: 
+TC1
 cs101
 ma201
-TC1
 The following courses are available for enrollment: 
+TC1
 cs101
 ma201
-TC1
 The following courses are available for enrollment: 
+TC1
 cs101
 ma201
+The following courses are available for enrollment: 
 TC1
+cs101
+ma201
+The following courses are available for enrollment: 
+TC1
+cs101
+ma201
+The following courses are available for enrollment: 
+TC1
+cs101
+ma201
 (Grade -1 means the course has not been graded yet)
 COURSE 	 ENROLLMENT YEAR 	 GRADE 
 TS1 	 2022 	 8
 TS2 	 2022 	 8
 TS3 	 2022 	 8
-2022 1 1
 Choose a valid course.
-2022 1 1
-2022 1 1
-2022 1 1
-2022 1 1
-2022 1 1
-2022 1 1
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
