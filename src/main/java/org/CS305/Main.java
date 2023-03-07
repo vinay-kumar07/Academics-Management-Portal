@@ -46,7 +46,7 @@ public class Main {
 
 //        {
 //            Student vinay = new Student ("cs1135","student","iit",2022);
-//            System.out.println((vinay.courseRegister("jh")));
+//            vinay.viewGrades();
 //            return;
 //        }
 

@@ -1,136 +1,65 @@
 
 2022 1 1
 MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
-%TC1 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
 #cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
 (cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
 :ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
 +ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
+%TC1 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
+%TC2 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
+%TC3 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
 6The following courses are available for enrollment: 
 cs101
 ma201
 TC1
 
 2022 1 1
+MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
+#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
+(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
+:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
++ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
+%TC1 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
+%TC2 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
+%TC3 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
+6The following courses are available for enrollment: 
+cs101
+ma201
+TC1
+TC2
+
+2022 1 1
+MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
+#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
+(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
+:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
++ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
+%TC1 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
+%TC2 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
+%TC3 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
+6The following courses are available for enrollment: 
+cs101
+ma201
+TC1
+TC2
+TC3
+5(Grade -1 means the course has not been graded yet)
+6COURSE 	 YEAR 	 SEM 	 GRADE 	 CREDIT 	 REGISTERED AS
+TC3 	 2022 	 1 	 -1 	 3 	 
+TC1 	 2022 	 1 	 8 	 3 	 
+TC2 	 2022 	 1 	 7 	 4 	 
+
+2022 1 1
 *These are the courses you have floated:-
 TC1
-
+TC2
+TC3
+
 2022 1 1
-MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
-%TC1 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
-(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
-:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
-+ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
-%TC2 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC3 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC4 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
-6The following courses are available for enrollment: 
-cs101
-ma201
-TC1
-
-2022 2 1
-MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
-%TC1 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
-(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
-:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
-+ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
-%TC2 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC3 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC4 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
-6The following courses are available for enrollment: 
-cs201
-ma201
-TC2
-
-2023 1 1
-MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
-%TC1 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
-(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
-:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
-+ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
-%TC2 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC3 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC4 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
-
-2023 1 1
-MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
-%TC1 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
-(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
-:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
-+ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
-%TC2 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC3 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC4 	 4 	 0 	 0 	 - 	 cs,mc 	 ee,me
-6The following courses are available for enrollment: 
-TC3
-TC4
-6The following courses are available for enrollment: 
-TC3
-TC4
-
+*These are the courses you have floated:-
+TC2
+TC3
+
 2022 1 1
-*These are the courses you have floated:-
-TC1
-TC2
-TC3
-TC4
-
-2022 1 1
-*These are the courses you have floated:-
-TC2
-TC3
-TC4
-
-2022 1 1
-*These are the courses you have floated:-
-TC3
-TC4
-
-2022 1 1
-*These are the courses you have floated:-
-TC4
-
-2022 1 1
-MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
-#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
-(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
-:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
-+ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
-&TC1 	 21 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC2 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-
-2022 1 1
-MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
-#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
-(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
-:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
-+ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
-&TC1 	 21 	 0 	 0 	 - 	 cs,mc 	 ee,me
-%TC2 	 3 	 0 	 0 	 - 	 cs,mc 	 ee,me
-6The following courses are available for enrollment: 
-cs101
-ma201
-TC1
-TC2
-6The following courses are available for enrollment: 
-cs101
-ma201
-TC1
-TC2
-
-2022 1 1
-*These are the courses you have floated:-
-TC1
-TC2
-
-2022 1 1
-*These are the courses you have floated:-
-TC2
-6The following courses are available for enrollment: 
-cs101
-ma201
+*These are the courses you have floated:-
+TC3

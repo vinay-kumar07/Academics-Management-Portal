@@ -69,7 +69,15 @@ public class Student extends User{
                         addQuery = "insert into " + optedCourse + "_" + currYear + "_" + currSem + " values('" + UserID + "'," + enrollYear + ",-1);";
                         st.executeUpdate(addQuery);
 
-                        return "Registered Successfully!!";
+                        if(courseType.equals("core")){
+                            return "Registered as core course.";
+                        }
+                        else if (courseType.equals("elective")){
+                            return "Registered as elective course.";
+                        }
+                        else {
+                            return "Registered Successfully!!";
+                        }
                     }
 
                     else {
@@ -85,7 +93,15 @@ public class Student extends User{
                     addQuery = "insert into " + optedCourse + "_" + currYear + "_" + currSem + " values('" + UserID + "'," + enrollYear + ",-1);";
                     st.executeUpdate(addQuery);
 
-                    return "Registered Successfully!!";
+                    if(courseType.equals("core")){
+                        return "Registered as core course.";
+                    }
+                    else if (courseType.equals("elective")){
+                        return "Registered as elective course.";
+                    }
+                    else {
+                        return "Registered Successfully!!";
+                    }
                 } else{
                     return "Cg criteria not matched.";
                 }
@@ -156,6 +172,25 @@ public class Student extends User{
         return ans;
     }
 
+    public Integer viewGrades() throws SQLException, ClassNotFoundException {
+        makeConnection();
+        String fetchGrades = "Select * from student_"+UserID+";";
+        ResultSet rs = st.executeQuery(fetchGrades);
+        System.out.println("(Grade -1 means the course has not been graded yet)");
+        System.out.println("COURSE \t YEAR \t SEM \t GRADE \t CREDIT \t REGISTERED AS");
+        while (rs.next()){
+            System.out.println(
+                    rs.getString(1) + " \t " +
+                    rs.getString(2) + " \t " +
+                    rs.getString(3) + " \t " +
+                    rs.getString(4) + " \t " +
+                    rs.getString(5) + " \t " +
+                    rs.getString(6)
+            );
+        }
+        return 1;
+    }
+
     private Float calRegCredit() throws SQLException {
 
         Float redcr = 0*1.f;
@@ -218,7 +253,7 @@ public class Student extends User{
     }
 
     private String getCourseType(String cid) throws SQLException {
-        String type = null;
+        String type = "";
         String fetchCourse = "select core,elective from coursecatalog where courseid = '"+cid+"';";
         ResultSet rs = st.executeQuery(fetchCourse);
         rs.next();
@@ -256,17 +291,19 @@ public class Student extends User{
 
     }
 
-    public Boolean preReqSatisfy(String cid) throws SQLException, ClassNotFoundException {
+    private Boolean preReqSatisfy(String cid) throws SQLException, ClassNotFoundException {
         String getPreReq = "select prereq from coursecatalog where courseid = '"+cid+"';";
         ResultSet rs = st.executeQuery(getPreReq);
         rs.next();
         String prereq = rs.getString(1);
-        if (prereq=="-") return true;
+        if (prereq.equals("-")){
+            return true;
+        }
         else {
             String tokens[] = prereq.split(",");
             ArrayList<String> tokens_aslist= new ArrayList<String>(Arrays.asList(tokens));
             ArrayList<String> done = new ArrayList<String>();
-            String coursesDone = "select courseid from student_"+UserID+";";
+            String coursesDone = "select courseid from student_"+UserID+" where grade>0;";
             rs = st.executeQuery(coursesDone);
             while (rs.next()){
                 done.add(rs.getString(1));
