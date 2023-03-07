@@ -36,32 +36,16 @@ create table CourseOffering
   facultyid varchar(50) NOT NULL,
   cgcriteria float NOT NULL,
   year INTEGER NOT NULL,
+  sem INTEGER NOT NULL,
   batch varchar(200) NOT NULL,
 
   PRIMARY KEY(CourseId,year),
   FOREIGN KEY (CourseId) REFERENCES CourseCatalog(CourseId)
 );
 
--- insert into users values('2020csb1141','Student','123');
--- insert into users values('2020csb1135','Student','123');
--- insert into users values('CSF1990','Instructor','123');
--- insert into users values('Admin','Admin','123');
+ insert into users values('Admin','Admin','Admin',2008);
+ insert into info values(2022,1,1);
 
--- insert into CourseCatalog values('CS304',3,0,0,'CS201,GE103');
--- insert into CourseCatalog values('CS305',3,0,0,'CS301');
--- insert into CourseCatalog values('CS306',3,0,0,'');
-
--- insert into CourseOffering values('dr a',7.2,'CS304');
--- insert into CourseOffering values('dr b',7.3,'CS305');
--- insert into CourseOffering values('dr c',7.0,'CS306');
-
--- select * from users;
--- select * from CourseCatalog;
--- select * from CourseOffering;
-
--- create table Student2020csb1141(CourseId varchar(50) NOT NULL, year INTEGER NOT NULL, sem INTEGER NOT NULL, grade INTEGER NOT NULL, PRIMARY KEY(CourseId,year,sem));
-
--- select * from Student2020csb1141;
 
 
 
