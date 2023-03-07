@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="users.AdminTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2023-03-07T17:04:32" hostname="DESKTOP-Q07AVCP" time="7.649">
+<testsuite name="users.AdminTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2023-03-07T18:08:06" hostname="DESKTOP-Q07AVCP" time="4.945">
   <properties/>
-  <testcase name="createAccountForInValidUser()" classname="users.AdminTest" time="1.248"/>
-  <testcase name="createAccountFaculty()" classname="users.AdminTest" time="0.33"/>
-  <testcase name="deletecourse()" classname="users.AdminTest" time="0.288"/>
-  <testcase name="viewgradesstudent()" classname="users.AdminTest" time="3.048"/>
-  <testcase name="addcourse()" classname="users.AdminTest" time="0.2"/>
-  <testcase name="viewgradescourse()" classname="users.AdminTest" time="1.67"/>
-  <testcase name="editCourseCatalogForInvalidChoice()" classname="users.AdminTest" time="0.297"/>
-  <testcase name="coverCatalogandOfferings()" classname="users.AdminTest" time="0.19"/>
-  <testcase name="changeAcademicYearSem()" classname="users.AdminTest" time="0.153"/>
-  <testcase name="createAccountStudent()" classname="users.AdminTest" time="0.208"/>
+  <testcase name="createAccountForInValidUser()" classname="users.AdminTest" time="0.696"/>
+  <testcase name="createAccountFaculty()" classname="users.AdminTest" time="0.227"/>
+  <testcase name="deletecourse()" classname="users.AdminTest" time="0.209"/>
+  <testcase name="viewgradesstudent()" classname="users.AdminTest" time="2.034"/>
+  <testcase name="addcourse()" classname="users.AdminTest" time="0.126"/>
+  <testcase name="viewgradescourse()" classname="users.AdminTest" time="1.086"/>
+  <testcase name="editCourseCatalogForInvalidChoice()" classname="users.AdminTest" time="0.202"/>
+  <testcase name="coverCatalogandOfferings()" classname="users.AdminTest" time="0.121"/>
+  <testcase name="changeAcademicYearSem()" classname="users.AdminTest" time="0.082"/>
+  <testcase name="createAccountStudent()" classname="users.AdminTest" time="0.15"/>
   <system-out><![CDATA[(Grade -1 means the course has not been graded yet)
 COURSE 	 YEAR 	 SEM 	 GRADE 	 CREDIT 	 REGISTERED AS
 TC3 	 2022 	 1 	 -1 	 3 	 

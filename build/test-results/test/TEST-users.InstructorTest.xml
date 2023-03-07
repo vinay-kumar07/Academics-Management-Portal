@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="users.InstructorTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-03-07T17:04:40" hostname="DESKTOP-Q07AVCP" time="7.01">
+<testsuite name="users.InstructorTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-03-07T18:08:11" hostname="DESKTOP-Q07AVCP" time="3.914">
   <properties/>
-  <testcase name="updateGradesForValidCourse()" classname="users.InstructorTest" time="1.916"/>
-  <testcase name="viewGradesValidCourse()" classname="users.InstructorTest" time="1.669"/>
-  <testcase name="viewGradesInvalidCourse()" classname="users.InstructorTest" time="0.563"/>
-  <testcase name="deFloatCourse()" classname="users.InstructorTest" time="1.233"/>
-  <testcase name="coverCatalogandOfferings()" classname="users.InstructorTest" time="0.45"/>
-  <testcase name="updateGradesForInvalidCourse()" classname="users.InstructorTest" time="0.391"/>
-  <testcase name="floatCourse()" classname="users.InstructorTest" time="0.775"/>
+  <testcase name="updateGradesForValidCourse()" classname="users.InstructorTest" time="1.285"/>
+  <testcase name="viewGradesValidCourse()" classname="users.InstructorTest" time="0.904"/>
+  <testcase name="viewGradesInvalidCourse()" classname="users.InstructorTest" time="0.188"/>
+  <testcase name="deFloatCourse()" classname="users.InstructorTest" time="0.495"/>
+  <testcase name="coverCatalogandOfferings()" classname="users.InstructorTest" time="0.236"/>
+  <testcase name="updateGradesForInvalidCourse()" classname="users.InstructorTest" time="0.327"/>
+  <testcase name="floatCourse()" classname="users.InstructorTest" time="0.473"/>
   <system-out><![CDATA[(Grade -1 means the course has not been graded yet)
 COURSE 	 ENROLLMENT YEAR 	 GRADE 
 TS1 	 2022 	 8
