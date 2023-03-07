@@ -3,3 +3,10 @@
 TC3 	 2022 	 1 	 -1 	 3 	 
 TC1 	 2022 	 1 	 8 	 3 	 
 TC2 	 2022 	 1 	 7 	 4 	 
+Choose a valid student
+5(Grade -1 means the course has not been graded yet)
+#COURSE 	 ENROLLMENT YEAR 	 GRADE 
+TS1 	 2022 	 8
+TS2 	 2022 	 8
+TS3 	 2022 	 8
+Choose a valid course.

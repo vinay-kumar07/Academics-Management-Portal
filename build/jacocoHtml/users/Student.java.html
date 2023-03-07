@@ -39,51 +39,51 @@ public class Student extends User{
 
 <span class="fc" id="L40">        Float creditLimit = 21*1f;</span>
 <span class="fc" id="L41">        Integer sem = 2*(currYear-enrollYear) + currSem;</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if(sem&gt;2){</span>
-<span class="fc" id="L43">            creditLimit = avgOfPrevSems();</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if(sem&gt;2){</span>
+<span class="nc" id="L43">            creditLimit = avgOfPrevSems();</span>
         }
 
 <span class="fc" id="L46">        Float regCredit = calRegCredit();</span>
 
 <span class="fc" id="L48">        Float cgreq = 0f;</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        if(sem&gt;1){</span>
-<span class="fc" id="L50">            String cgquery = &quot;select cgcriteria from courseoffering where courseid = '&quot;+optedCourse+&quot;' and year = &quot;+currYear+&quot; and sem = &quot;+currSem+&quot;;&quot;;</span>
-<span class="fc" id="L51">            rs = st.executeQuery(cgquery);</span>
-<span class="fc" id="L52">            rs.next();</span>
-<span class="fc" id="L53">            cgreq = rs.getFloat(1);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if(sem&gt;1){</span>
+<span class="nc" id="L50">            String cgquery = &quot;select cgcriteria from courseoffering where courseid = '&quot;+optedCourse+&quot;' and year = &quot;+currYear+&quot; and sem = &quot;+currSem+&quot;;&quot;;</span>
+<span class="nc" id="L51">            rs = st.executeQuery(cgquery);</span>
+<span class="nc" id="L52">            rs.next();</span>
+<span class="nc" id="L53">            cgreq = rs.getFloat(1);</span>
         }
 
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        if(courses.contains(optedCourse)) {</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if(courses.contains(optedCourse)) {</span>
 <span class="fc" id="L57">            Float credit = calculateCredit(optedCourse);</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">            if(regCredit + credit &lt;= creditLimit) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">            if(regCredit + credit &lt;= creditLimit) {</span>
 
-<span class="fc bfc" id="L60" title="All 4 branches covered.">                if((sem&gt;1 &amp;&amp; CGPA&gt;=cgreq)) {</span>
+<span class="pc bpc" id="L60" title="3 of 4 branches missed.">                if((sem&gt;1 &amp;&amp; CGPA&gt;=cgreq)) {</span>
 
-<span class="fc bfc" id="L62" title="All 2 branches covered.">                    if(preReqSatisfy(optedCourse)){</span>
-<span class="fc" id="L63">                        String courseType = getCourseType(optedCourse);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">                    if(preReqSatisfy(optedCourse)){</span>
+<span class="nc" id="L63">                        String courseType = getCourseType(optedCourse);</span>
 
-<span class="fc" id="L65">                        String addQuery = &quot;insert into Student_&quot; + UserID + &quot; values('&quot; + optedCourse + &quot;',&quot; + currYear + &quot;,&quot; + currSem + &quot;,-1,&quot; + credit + &quot;,'&quot; + courseType + &quot;');&quot;;</span>
-<span class="fc" id="L66">                        st.executeUpdate(addQuery);</span>
+<span class="nc" id="L65">                        String addQuery = &quot;insert into Student_&quot; + UserID + &quot; values('&quot; + optedCourse + &quot;',&quot; + currYear + &quot;,&quot; + currSem + &quot;,-1,&quot; + credit + &quot;,'&quot; + courseType + &quot;');&quot;;</span>
+<span class="nc" id="L66">                        st.executeUpdate(addQuery);</span>
 
-<span class="fc" id="L68">                        addQuery = &quot;insert into &quot; + optedCourse + &quot;_&quot; + currYear + &quot;_&quot; + currSem + &quot; values('&quot; + UserID + &quot;',&quot; + enrollYear + &quot;,-1);&quot;;</span>
-<span class="fc" id="L69">                        st.executeUpdate(addQuery);</span>
+<span class="nc" id="L68">                        addQuery = &quot;insert into &quot; + optedCourse + &quot;_&quot; + currYear + &quot;_&quot; + currSem + &quot; values('&quot; + UserID + &quot;',&quot; + enrollYear + &quot;,-1);&quot;;</span>
+<span class="nc" id="L69">                        st.executeUpdate(addQuery);</span>
 
-<span class="fc bfc" id="L71" title="All 2 branches covered.">                        if(courseType.equals(&quot;core&quot;)){</span>
-<span class="fc" id="L72">                            return &quot;Registered as core course.&quot;;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                        if(courseType.equals(&quot;core&quot;)){</span>
+<span class="nc" id="L72">                            return &quot;Registered as core course.&quot;;</span>
                         }
-<span class="fc bfc" id="L74" title="All 2 branches covered.">                        else if (courseType.equals(&quot;elective&quot;)){</span>
-<span class="fc" id="L75">                            return &quot;Registered as elective course.&quot;;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                        else if (courseType.equals(&quot;elective&quot;)){</span>
+<span class="nc" id="L75">                            return &quot;Registered as elective course.&quot;;</span>
                         }
                         else {
-<span class="fc" id="L78">                            return &quot;Registered Successfully!!&quot;;</span>
+<span class="nc" id="L78">                            return &quot;Registered Successfully!!&quot;;</span>
                         }
                     }
 
                     else {
-<span class="fc" id="L83">                        return &quot;Pre Requisite Not Satisfied.&quot;;</span>
+<span class="nc" id="L83">                        return &quot;Pre Requisite Not Satisfied.&quot;;</span>
                     }
 
-<span class="fc bfc" id="L86" title="All 2 branches covered.">                } else if (sem==1) {</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">                } else if (sem==1) {</span>
 <span class="fc" id="L87">                    String courseType = getCourseType(optedCourse);</span>
 
 <span class="fc" id="L89">                    String addQuery = &quot;insert into Student_&quot; + UserID + &quot; values('&quot; + optedCourse + &quot;',&quot; + currYear + &quot;,&quot; + currSem + &quot;,-1,&quot; + credit + &quot;,'&quot; + courseType + &quot;');&quot;;</span>
@@ -92,25 +92,25 @@ public class Student extends User{
 <span class="fc" id="L92">                    addQuery = &quot;insert into &quot; + optedCourse + &quot;_&quot; + currYear + &quot;_&quot; + currSem + &quot; values('&quot; + UserID + &quot;',&quot; + enrollYear + &quot;,-1);&quot;;</span>
 <span class="fc" id="L93">                    st.executeUpdate(addQuery);</span>
 
-<span class="fc bfc" id="L95" title="All 2 branches covered.">                    if(courseType.equals(&quot;core&quot;)){</span>
-<span class="fc" id="L96">                        return &quot;Registered as core course.&quot;;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">                    if(courseType.equals(&quot;core&quot;)){</span>
+<span class="nc" id="L96">                        return &quot;Registered as core course.&quot;;</span>
                     }
-<span class="fc bfc" id="L98" title="All 2 branches covered.">                    else if (courseType.equals(&quot;elective&quot;)){</span>
-<span class="fc" id="L99">                        return &quot;Registered as elective course.&quot;;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">                    else if (courseType.equals(&quot;elective&quot;)){</span>
+<span class="nc" id="L99">                        return &quot;Registered as elective course.&quot;;</span>
                     }
                     else {
 <span class="fc" id="L102">                        return &quot;Registered Successfully!!&quot;;</span>
                     }
                 } else{
-<span class="fc" id="L105">                    return &quot;Cg criteria not matched.&quot;;</span>
+<span class="nc" id="L105">                    return &quot;Cg criteria not matched.&quot;;</span>
                 }
 
             }else {
-<span class="fc" id="L109">                return &quot;Credit Limit exceeds.&quot;;</span>
+<span class="nc" id="L109">                return &quot;Credit Limit exceeds.&quot;;</span>
             }
 
         }else {
-<span class="fc" id="L113">            return &quot;Choose a valid course.&quot;;</span>
+<span class="nc" id="L113">            return &quot;Choose a valid course.&quot;;</span>
         }
     }
     public String courseWithdraw(String selectedCourse) throws SQLException, ClassNotFoundException {
@@ -124,7 +124,7 @@ public class Student extends User{
 <span class="fc" id="L124">            courses.add(rs.getString(1));</span>
         }
 
-<span class="fc bfc" id="L127" title="All 2 branches covered.">        if(courses.contains(selectedCourse)){</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if(courses.contains(selectedCourse)){</span>
 <span class="fc" id="L128">            String delFromCourseTable = &quot;delete from &quot; + selectedCourse + &quot;_&quot; + currYear + &quot;_&quot; + currSem + &quot; where studentid = '&quot;+UserID+&quot;';&quot;;</span>
 <span class="fc" id="L129">            st.executeUpdate(delFromCourseTable);</span>
 
@@ -136,9 +136,9 @@ public class Student extends User{
 <span class="fc" id="L136">            return &quot;Withdraw Successful&quot;;</span>
         }
         else{
-<span class="fc" id="L139">            st.close();</span>
-<span class="fc" id="L140">            conn.close();</span>
-<span class="fc" id="L141">            return &quot;Please Choose a valid course&quot;;</span>
+<span class="nc" id="L139">            st.close();</span>
+<span class="nc" id="L140">            conn.close();</span>
+<span class="nc" id="L141">            return &quot;Please Choose a valid course&quot;;</span>
         }
     }
     public void viewCourseOfferings() throws SQLException, ClassNotFoundException {
@@ -172,83 +172,83 @@ public class Student extends User{
 <span class="fc" id="L172">        return ans;</span>
     }
     public Integer viewGrades() throws SQLException, ClassNotFoundException {
-<span class="fc" id="L175">        makeConnection();</span>
-<span class="fc" id="L176">        String fetchGrades = &quot;Select * from student_&quot;+UserID+&quot;;&quot;;</span>
-<span class="fc" id="L177">        ResultSet rs = st.executeQuery(fetchGrades);</span>
-<span class="fc" id="L178">        System.out.println(&quot;(Grade -1 means the course has not been graded yet)&quot;);</span>
-<span class="fc" id="L179">        System.out.println(&quot;COURSE \t YEAR \t SEM \t GRADE \t CREDIT \t REGISTERED AS&quot;);</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">        while (rs.next()){</span>
-<span class="fc" id="L181">            System.out.println(</span>
-<span class="fc" id="L182">                    rs.getString(1) + &quot; \t &quot; +</span>
-<span class="fc" id="L183">                    rs.getString(2) + &quot; \t &quot; +</span>
-<span class="fc" id="L184">                    rs.getString(3) + &quot; \t &quot; +</span>
-<span class="fc" id="L185">                    rs.getString(4) + &quot; \t &quot; +</span>
-<span class="fc" id="L186">                    rs.getString(5) + &quot; \t &quot; +</span>
-<span class="fc" id="L187">                    rs.getString(6)</span>
+<span class="nc" id="L175">        makeConnection();</span>
+<span class="nc" id="L176">        String fetchGrades = &quot;Select * from student_&quot;+UserID+&quot;;&quot;;</span>
+<span class="nc" id="L177">        ResultSet rs = st.executeQuery(fetchGrades);</span>
+<span class="nc" id="L178">        System.out.println(&quot;(Grade -1 means the course has not been graded yet)&quot;);</span>
+<span class="nc" id="L179">        System.out.println(&quot;COURSE \t YEAR \t SEM \t GRADE \t CREDIT \t REGISTERED AS&quot;);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        while (rs.next()){</span>
+<span class="nc" id="L181">            System.out.println(</span>
+<span class="nc" id="L182">                    rs.getString(1) + &quot; \t &quot; +</span>
+<span class="nc" id="L183">                    rs.getString(2) + &quot; \t &quot; +</span>
+<span class="nc" id="L184">                    rs.getString(3) + &quot; \t &quot; +</span>
+<span class="nc" id="L185">                    rs.getString(4) + &quot; \t &quot; +</span>
+<span class="nc" id="L186">                    rs.getString(5) + &quot; \t &quot; +</span>
+<span class="nc" id="L187">                    rs.getString(6)</span>
             );
         }
-<span class="fc" id="L190">        st.close();</span>
-<span class="fc" id="L191">        conn.close();</span>
-<span class="fc" id="L192">        return 1;</span>
+<span class="nc" id="L190">        st.close();</span>
+<span class="nc" id="L191">        conn.close();</span>
+<span class="nc" id="L192">        return 1;</span>
     }
     public Integer generateTranscript() throws SQLException, ClassNotFoundException, IOException {
-<span class="fc" id="L195">        makeConnection();</span>
-<span class="fc" id="L196">        String fetchGrades = &quot;Select * from student_&quot;+UserID+&quot;;&quot;;</span>
-<span class="fc" id="L197">        ResultSet rs = st.executeQuery(fetchGrades);</span>
+<span class="nc" id="L195">        makeConnection();</span>
+<span class="nc" id="L196">        String fetchGrades = &quot;Select * from student_&quot;+UserID+&quot;;&quot;;</span>
+<span class="nc" id="L197">        ResultSet rs = st.executeQuery(fetchGrades);</span>
 
-<span class="fc" id="L199">        String fileName = UserID+&quot;_transcript.txt&quot;;</span>
-<span class="fc" id="L200">        FileWriter myWriter = new FileWriter(&quot;D:/Java/AIMS_Portal_CS305/Files/Transcripts/&quot;+fileName);</span>
-<span class="fc" id="L201">        myWriter.write(&quot;Indian Institute of Technology, Ropar\n\n&quot;);</span>
-<span class="fc" id="L202">        myWriter.write(&quot;B.Tech Transcript\n&quot;);</span>
-<span class="fc" id="L203">        myWriter.write(&quot;Entry No = &quot;+UserID+&quot;\n\n&quot;);</span>
-<span class="fc" id="L204">        myWriter.write(&quot;(Grade -1 means the course has not been graded yet)\n&quot;);</span>
-<span class="fc" id="L205">        myWriter.write(&quot;COURSE \t\t YEAR \t\t SEM \t\t GRADE \t\t CREDIT \t\t REGISTERED AS\n&quot;);</span>
-<span class="fc bfc" id="L206" title="All 2 branches covered.">        while (rs.next()){</span>
-<span class="fc" id="L207">            myWriter.write(</span>
-<span class="fc" id="L208">                    rs.getString(1) + &quot; \t\t &quot; +</span>
-<span class="fc" id="L209">                            rs.getString(2) + &quot; \t\t &quot; +</span>
-<span class="fc" id="L210">                            rs.getString(3) + &quot; \t\t &quot; +</span>
-<span class="fc" id="L211">                            rs.getString(4) + &quot; \t\t\t &quot; +</span>
-<span class="fc" id="L212">                            rs.getString(5) + &quot; \t\t\t &quot; +</span>
-<span class="fc" id="L213">                            rs.getString(6) + &quot;\n&quot;</span>
+<span class="nc" id="L199">        String fileName = UserID+&quot;_transcript.txt&quot;;</span>
+<span class="nc" id="L200">        FileWriter myWriter = new FileWriter(&quot;D:/Java/AIMS_Portal_CS305/Files/Transcripts/&quot;+fileName);</span>
+<span class="nc" id="L201">        myWriter.write(&quot;Indian Institute of Technology, Ropar\n\n&quot;);</span>
+<span class="nc" id="L202">        myWriter.write(&quot;B.Tech Transcript\n&quot;);</span>
+<span class="nc" id="L203">        myWriter.write(&quot;Entry No = &quot;+UserID+&quot;\n\n&quot;);</span>
+<span class="nc" id="L204">        myWriter.write(&quot;(Grade -1 means the course has not been graded yet)\n&quot;);</span>
+<span class="nc" id="L205">        myWriter.write(&quot;COURSE \t\t YEAR \t\t SEM \t\t GRADE \t\t CREDIT \t\t REGISTERED AS\n&quot;);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">        while (rs.next()){</span>
+<span class="nc" id="L207">            myWriter.write(</span>
+<span class="nc" id="L208">                    rs.getString(1) + &quot; \t\t &quot; +</span>
+<span class="nc" id="L209">                            rs.getString(2) + &quot; \t\t &quot; +</span>
+<span class="nc" id="L210">                            rs.getString(3) + &quot; \t\t &quot; +</span>
+<span class="nc" id="L211">                            rs.getString(4) + &quot; \t\t\t &quot; +</span>
+<span class="nc" id="L212">                            rs.getString(5) + &quot; \t\t\t &quot; +</span>
+<span class="nc" id="L213">                            rs.getString(6) + &quot;\n&quot;</span>
             );
         }
-<span class="fc" id="L216">        myWriter.close();</span>
-<span class="fc" id="L217">        st.close();</span>
-<span class="fc" id="L218">        conn.close();</span>
-<span class="fc" id="L219">        return 1;</span>
+<span class="nc" id="L216">        myWriter.close();</span>
+<span class="nc" id="L217">        st.close();</span>
+<span class="nc" id="L218">        conn.close();</span>
+<span class="nc" id="L219">        return 1;</span>
 
 //        System.out.println(&quot;(Grade -1 means the course has not been graded yet)&quot;);
     }
     public String checkDegree() throws SQLException, ClassNotFoundException {
-<span class="fc" id="L224">        makeConnection();</span>
-<span class="fc" id="L225">        Float pc = 0f;</span>
-<span class="fc" id="L226">        Float ec = 0f;</span>
+<span class="nc" id="L224">        makeConnection();</span>
+<span class="nc" id="L225">        Float pc = 0f;</span>
+<span class="nc" id="L226">        Float ec = 0f;</span>
 
-<span class="fc" id="L228">        String getCredit = &quot;Select credit,coursetype from student_&quot;+UserID+&quot; where grade&gt;0;&quot;;</span>
-<span class="fc" id="L229">        ResultSet r = st.executeQuery(getCredit);</span>
-<span class="fc bfc" id="L230" title="All 2 branches covered.">        while(r.next()){</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">            if(r.getString(2).equals(&quot;core&quot;)){</span>
-<span class="fc" id="L232">                pc += (r.getFloat(1));</span>
+<span class="nc" id="L228">        String getCredit = &quot;Select credit,coursetype from student_&quot;+UserID+&quot; where grade&gt;0;&quot;;</span>
+<span class="nc" id="L229">        ResultSet r = st.executeQuery(getCredit);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">        while(r.next()){</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">            if(r.getString(2).equals(&quot;core&quot;)){</span>
+<span class="nc" id="L232">                pc += (r.getFloat(1));</span>
             }
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">            else if(r.getString(2).equals(&quot;elective&quot;)){</span>
-<span class="fc" id="L235">                ec += (r.getFloat(1));</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">            else if(r.getString(2).equals(&quot;elective&quot;)){</span>
+<span class="nc" id="L235">                ec += (r.getFloat(1));</span>
             }
         }
 
-<span class="fc" id="L239">        Float programCredit = 20f;</span>
-<span class="fc" id="L240">        Float electiveCredit = 10f;</span>
+<span class="nc" id="L239">        Float programCredit = 20f;</span>
+<span class="nc" id="L240">        Float electiveCredit = 10f;</span>
 
-<span class="fc" id="L242">        st.close();</span>
-<span class="fc" id="L243">        conn.close();</span>
-<span class="fc bfc" id="L244" title="All 4 branches covered.">        if(pc&lt;programCredit &amp;&amp; ec&lt;electiveCredit){</span>
-<span class="fc" id="L245">            return &quot;Both Program and Elective credits are not completed.&quot;;</span>
-<span class="pc bpc" id="L246" title="1 of 4 branches missed.">        } else if (pc&lt;programCredit &amp;&amp; ec&gt;=electiveCredit) {</span>
-<span class="fc" id="L247">            return &quot;Program credits are not completed&quot;;</span>
-<span class="pc bpc" id="L248" title="1 of 4 branches missed.">        } else if (pc&gt;=programCredit &amp;&amp; ec&lt;electiveCredit) {</span>
-<span class="fc" id="L249">            return &quot;Elective credits are not completed&quot;;</span>
-<span class="pc bpc" id="L250" title="2 of 4 branches missed.">        } else if (pc&gt;=programCredit &amp;&amp; ec&gt;=electiveCredit) {</span>
-<span class="fc" id="L251">            return &quot;All credits are completed.&quot;;</span>
+<span class="nc" id="L242">        st.close();</span>
+<span class="nc" id="L243">        conn.close();</span>
+<span class="nc bnc" id="L244" title="All 4 branches missed.">        if(pc&lt;programCredit &amp;&amp; ec&lt;electiveCredit){</span>
+<span class="nc" id="L245">            return &quot;Both Program and Elective credits are not completed.&quot;;</span>
+<span class="nc bnc" id="L246" title="All 4 branches missed.">        } else if (pc&lt;programCredit &amp;&amp; ec&gt;=electiveCredit) {</span>
+<span class="nc" id="L247">            return &quot;Program credits are not completed&quot;;</span>
+<span class="nc bnc" id="L248" title="All 4 branches missed.">        } else if (pc&gt;=programCredit &amp;&amp; ec&lt;electiveCredit) {</span>
+<span class="nc" id="L249">            return &quot;Elective credits are not completed&quot;;</span>
+<span class="nc bnc" id="L250" title="All 4 branches missed.">        } else if (pc&gt;=programCredit &amp;&amp; ec&gt;=electiveCredit) {</span>
+<span class="nc" id="L251">            return &quot;All credits are completed.&quot;;</span>
         } else {
 <span class="nc" id="L253">            return &quot;&quot;;</span>
         }
@@ -279,15 +279,15 @@ public class Student extends User{
 <span class="fc" id="L279">        return credit;</span>
     }
     private Float avgOfPrevSems() throws SQLException {
-<span class="fc" id="L282">        Integer pyear = null;</span>
-<span class="fc" id="L283">        Integer ppyear = null;</span>
-<span class="fc" id="L284">        Integer psem = null;</span>
-<span class="fc" id="L285">        Integer ppsem = null;</span>
-<span class="pc bpc" id="L286" title="1 of 2 branches missed.">        if(currSem==1){</span>
-<span class="fc" id="L287">            psem = 2;</span>
-<span class="fc" id="L288">            ppsem = 1;</span>
-<span class="fc" id="L289">            pyear = currYear-1;</span>
-<span class="fc" id="L290">            ppyear = currYear-1;</span>
+<span class="nc" id="L282">        Integer pyear = null;</span>
+<span class="nc" id="L283">        Integer ppyear = null;</span>
+<span class="nc" id="L284">        Integer psem = null;</span>
+<span class="nc" id="L285">        Integer ppsem = null;</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        if(currSem==1){</span>
+<span class="nc" id="L287">            psem = 2;</span>
+<span class="nc" id="L288">            ppsem = 1;</span>
+<span class="nc" id="L289">            pyear = currYear-1;</span>
+<span class="nc" id="L290">            ppyear = currYear-1;</span>
         }
 <span class="nc bnc" id="L292" title="All 2 branches missed.">        else if(currSem==2){</span>
 <span class="nc" id="L293">            psem = 1;</span>
@@ -296,19 +296,19 @@ public class Student extends User{
 <span class="nc" id="L296">            ppyear = currYear-1;</span>
         }
 
-<span class="fc" id="L299">        Float credit = 0f;</span>
-<span class="fc" id="L300">        Integer n = 0;</span>
+<span class="nc" id="L299">        Float credit = 0f;</span>
+<span class="nc" id="L300">        Integer n = 0;</span>
 
-<span class="fc" id="L302">        String getQuery = &quot;select credit,year,sem from student_&quot;+UserID+&quot;;&quot;;</span>
-<span class="fc" id="L303">        ResultSet rs =st.executeQuery(getQuery);</span>
-<span class="fc bfc" id="L304" title="All 2 branches covered.">        while (rs.next()){</span>
-<span class="pc bpc" id="L305" title="1 of 8 branches missed.">            if((rs.getInt(2)==pyear &amp;&amp; rs.getInt(3)==psem) || (rs.getInt(2)==ppyear &amp;&amp; rs.getInt(3)==ppsem)){</span>
-<span class="fc" id="L306">                credit+=(rs.getInt(1));</span>
-<span class="fc" id="L307">                n++;</span>
+<span class="nc" id="L302">        String getQuery = &quot;select credit,year,sem from student_&quot;+UserID+&quot;;&quot;;</span>
+<span class="nc" id="L303">        ResultSet rs =st.executeQuery(getQuery);</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">        while (rs.next()){</span>
+<span class="nc bnc" id="L305" title="All 8 branches missed.">            if((rs.getInt(2)==pyear &amp;&amp; rs.getInt(3)==psem) || (rs.getInt(2)==ppyear &amp;&amp; rs.getInt(3)==ppsem)){</span>
+<span class="nc" id="L306">                credit+=(rs.getInt(1));</span>
+<span class="nc" id="L307">                n++;</span>
             }
         }
 
-<span class="fc" id="L311">        return 1.25f*(credit/n);</span>
+<span class="nc" id="L311">        return 1.25f*(credit/n);</span>
 
     }
     private String getCourseType(String cid) throws SQLException {
@@ -319,11 +319,11 @@ public class Student extends User{
 <span class="fc" id="L319">        String[] core = rs.getString(1).split(&quot;,&quot;);</span>
 <span class="fc" id="L320">        String[] elec = rs.getString(2).split(&quot;,&quot;);</span>
 <span class="fc" id="L321">        String branch = UserID.substring(0,2);</span>
-<span class="fc bfc" id="L322" title="All 2 branches covered.">        if(Arrays.asList(core).contains(branch)){</span>
-<span class="fc" id="L323">            type = &quot;core&quot;;</span>
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">        if(Arrays.asList(core).contains(branch)){</span>
+<span class="nc" id="L323">            type = &quot;core&quot;;</span>
         }
-<span class="fc bfc" id="L325" title="All 2 branches covered.">        else if(Arrays.asList(elec).contains(branch)){</span>
-<span class="fc" id="L326">            type = &quot;elective&quot;;</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">        else if(Arrays.asList(elec).contains(branch)){</span>
+<span class="nc" id="L326">            type = &quot;elective&quot;;</span>
         }
 <span class="fc" id="L328">        return type;</span>
     }
@@ -348,28 +348,28 @@ public class Student extends User{
 
     }
     private Boolean preReqSatisfy(String cid) throws SQLException, ClassNotFoundException {
-<span class="fc" id="L351">        String getPreReq = &quot;select prereq from coursecatalog where courseid = '&quot;+cid+&quot;';&quot;;</span>
-<span class="fc" id="L352">        ResultSet rs = st.executeQuery(getPreReq);</span>
-<span class="fc" id="L353">        rs.next();</span>
-<span class="fc" id="L354">        String prereq = rs.getString(1);</span>
-<span class="fc bfc" id="L355" title="All 2 branches covered.">        if (prereq.equals(&quot;-&quot;)){</span>
-<span class="fc" id="L356">            return true;</span>
+<span class="nc" id="L351">        String getPreReq = &quot;select prereq from coursecatalog where courseid = '&quot;+cid+&quot;';&quot;;</span>
+<span class="nc" id="L352">        ResultSet rs = st.executeQuery(getPreReq);</span>
+<span class="nc" id="L353">        rs.next();</span>
+<span class="nc" id="L354">        String prereq = rs.getString(1);</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">        if (prereq.equals(&quot;-&quot;)){</span>
+<span class="nc" id="L356">            return true;</span>
         }
         else {
-<span class="fc" id="L359">            String tokens[] = prereq.split(&quot;,&quot;);</span>
-<span class="fc" id="L360">            ArrayList&lt;String&gt; tokens_aslist= new ArrayList&lt;String&gt;(Arrays.asList(tokens));</span>
-<span class="fc" id="L361">            ArrayList&lt;String&gt; done = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L362">            String coursesDone = &quot;select courseid from student_&quot;+UserID+&quot; where grade&gt;0;&quot;;</span>
-<span class="fc" id="L363">            rs = st.executeQuery(coursesDone);</span>
-<span class="fc bfc" id="L364" title="All 2 branches covered.">            while (rs.next()){</span>
-<span class="fc" id="L365">                done.add(rs.getString(1));</span>
+<span class="nc" id="L359">            String tokens[] = prereq.split(&quot;,&quot;);</span>
+<span class="nc" id="L360">            ArrayList&lt;String&gt; tokens_aslist= new ArrayList&lt;String&gt;(Arrays.asList(tokens));</span>
+<span class="nc" id="L361">            ArrayList&lt;String&gt; done = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L362">            String coursesDone = &quot;select courseid from student_&quot;+UserID+&quot; where grade&gt;0;&quot;;</span>
+<span class="nc" id="L363">            rs = st.executeQuery(coursesDone);</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">            while (rs.next()){</span>
+<span class="nc" id="L365">                done.add(rs.getString(1));</span>
             }
-<span class="fc bfc" id="L367" title="All 2 branches covered.">            for(int i=0;i&lt;tokens_aslist.size();i++){</span>
-<span class="fc bfc" id="L368" title="All 2 branches covered.">                if(!done.contains(tokens_aslist.get(i))){</span>
-<span class="fc" id="L369">                    return false;</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">            for(int i=0;i&lt;tokens_aslist.size();i++){</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">                if(!done.contains(tokens_aslist.get(i))){</span>
+<span class="nc" id="L369">                    return false;</span>
                 }
             }
-<span class="fc" id="L372">            return true;</span>
+<span class="nc" id="L372">            return true;</span>
         }
     }
     private void initiate() throws SQLException, ClassNotFoundException {
