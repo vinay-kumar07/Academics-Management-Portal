@@ -208,4 +208,14 @@ class AdminTest {
         TestStatement.close();
         TestConnection.close();
     }
+
+    @Test
+    void coverCatalogandOfferings() throws SQLException, ClassNotFoundException, IOException {
+        makeConnetion();
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.viewCourseOffering();
+        admin.viewCourseCatalog();
+        TestStatement.close();
+        TestConnection.close();
+    }
 }

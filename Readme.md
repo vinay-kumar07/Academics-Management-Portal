@@ -66,6 +66,6 @@
 * All testing files are present in **_AIMS_Portal_CS305\src\test\java_**
 * Database code is present in **_AIMS_Portal_CS305\Postgres\database.sql_**
 * All UML diagrams are present in **_AIMS_Portal_CS305\Diagrams\_**
-* Code Coverage file will be present in **_AIMS_Portal_CS305\build\jacocoHtml\index.html_**
+* Code Coverage file will be present in **_AIMS_Portal_CS305\Jacoco Code Coverage Report\index.html_**
 * All csv files to update grades should be present in **_AIMS_Portal_CS305\Files\CSV Files_**
 * The generated transcripts will be present in **_AIMS_Portal_CS305\Files\Transcripts_**

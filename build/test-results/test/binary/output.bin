@@ -10,3 +10,31 @@
 TS2 	 2022 	 8
 TS3 	 2022 	 8
 Choose a valid course.
+	!COURSEID 	 CG REQ 	 YEAR 	 SEM 
+	cs201 	 6.5 	 2022 	 2
+	ma201 	 6.5 	 2022 	 2
+	cs101 	 7 	 2022 	 1
+	ma201 	 6.5 	 2022 	 1
+	MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
+	#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
+	(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
+	:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
+	+ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
+5(Grade -1 means the course has not been graded yet)
+#COURSE 	 ENROLLMENT YEAR 	 GRADE 
+TS1 	 2022 	 8
+TS2 	 2022 	 8
+TS3 	 2022 	 8
+Choose a valid course.
+MCOURSEID 	 L 	 T 	 P 	 PREREQUISITE 	 OFFERED AS CORE 	 OFFERED AS ELECTIVE
+#cs101 	 3 	 0 	 0 	 - 	 cs,mc 	 -
+(cs201 	 4 	 0 	 0 	 ge103 	 cs,mc 	 ee
+:ma201 	 3 	 1 	 0 	 ma101 	 cs,mc,ee,me,ep,ch,ce,mme 	 -
++ee201 	 3 	 1 	 0 	 ge104 	 ee,mc,cs 	 ep
+!COURSEID 	 CG REQ 	 YEAR 	 SEM 
+5(Grade -1 means the course has not been graded yet)
+6COURSE 	 YEAR 	 SEM 	 GRADE 	 CREDIT 	 REGISTERED AS
+TC3 	 2022 	 1 	 -1 	 3 	 
+TC1 	 2022 	 1 	 8 	 3 	 
+TC2 	 2022 	 1 	 7 	 4 	 
+ 6The following courses are available for enrollment: 

@@ -609,4 +609,24 @@ class StudentTest {
         TestStatement.close();
         TestConnection.close();
     }
+
+    @Test
+    void coverOffering() throws SQLException, IOException, ClassNotFoundException {
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
+        admin.createAccount("TS1","student","iit",2022);
+
+        Student student = new Student("TS1","student","iit",2022);
+        student.viewCourseOfferings();
+
+        String s1 = "Drop table student_TS1;";
+        String s2 = "Delete from users where userid = 'TS1';";
+
+        makeConnetion();
+        TestStatement.executeUpdate(s1);
+        TestStatement.executeUpdate(s2);
+
+        TestStatement.close();
+        TestConnection.close();
+    }
 }

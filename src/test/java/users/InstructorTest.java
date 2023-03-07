@@ -201,4 +201,25 @@ class InstructorTest {
         TestConnection.close();
 
     }
+
+    @Test
+    void coverCatalogandOfferings() throws SQLException, ClassNotFoundException, IOException {
+        makeConnetion();
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
+        admin.createAccount("TF1","faculty","iit",2020);
+
+        Instructor instructor = new Instructor ("TF1","faculty","iit",2020);
+        instructor.viewCourseCatalog();
+        instructor.viewCourseOffering();
+
+        String s1 = "Drop table faculty_TF1;";
+        String s2 = "Delete from users where userid = 'TF1';";
+
+        TestStatement.executeUpdate(s1);
+        TestStatement.executeUpdate(s2);
+
+        TestStatement.close();
+        TestConnection.close();
+    }
 }
