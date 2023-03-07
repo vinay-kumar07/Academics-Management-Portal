@@ -23,13 +23,10 @@ public class Student extends User{
         conn = DriverManager.getConnection(url, username, password);
         st = conn.createStatement();
     }
-
     public String courseRegister(String optedCourse) throws SQLException, ClassNotFoundException {
 
         makeConnection();
         initiate();
-
-        viewCourseOfferings();
 
         ArrayList<String> courses = new ArrayList<String>();
 
@@ -116,7 +113,6 @@ public class Student extends User{
             return "Choose a valid course.";
         }
     }
-
     public String courseWithdraw(String selectedCourse) throws SQLException, ClassNotFoundException {
         makeConnection();
         initiate();
@@ -145,8 +141,8 @@ public class Student extends User{
             return "Please Choose a valid course";
         }
     }
-
-    public void viewCourseOfferings() throws SQLException {
+    public void viewCourseOfferings() throws SQLException, ClassNotFoundException {
+        makeConnection();
         String selectQuery = "Select * from courseOffering where year = "+currYear+" and sem = "+currSem+";";
         System.out.println("The following courses are available for enrollment: ");
         ResultSet rs = st.executeQuery(selectQuery);
@@ -154,9 +150,11 @@ public class Student extends User{
             String course = rs.getString(1);
             System.out.println(course);
         }
+        st.close();
+        conn.close();
     }
-
     public Float computeCPGA() throws SQLException, ClassNotFoundException {
+        makeConnection();
         Float cg = 0*1.f;
         Float totalcredit = 0*1.f;
         String getCredit = "Select credit,grade from student_"+UserID+";";
@@ -173,7 +171,6 @@ public class Student extends User{
         if(totalcredit!=0) ans = cg/totalcredit;
         return ans;
     }
-
     public Integer viewGrades() throws SQLException, ClassNotFoundException {
         makeConnection();
         String fetchGrades = "Select * from student_"+UserID+";";
@@ -190,9 +187,10 @@ public class Student extends User{
                     rs.getString(6)
             );
         }
+        st.close();
+        conn.close();
         return 1;
     }
-
     public Integer generateTranscript() throws SQLException, ClassNotFoundException, IOException {
         makeConnection();
         String fetchGrades = "Select * from student_"+UserID+";";
@@ -216,12 +214,12 @@ public class Student extends User{
             );
         }
         myWriter.close();
-        System.out.println("Successfully wrote to the file.");
+        st.close();
+        conn.close();
         return 1;
 
 //        System.out.println("(Grade -1 means the course has not been graded yet)");
     }
-
     public String checkDegree() throws SQLException, ClassNotFoundException {
         makeConnection();
         Float pc = 0f;
@@ -241,6 +239,8 @@ public class Student extends User{
         Float programCredit = 20f;
         Float electiveCredit = 10f;
 
+        st.close();
+        conn.close();
         if(pc<programCredit && ec<electiveCredit){
             return "Both Program and Elective credits are not completed.";
         } else if (pc<programCredit && ec>=electiveCredit) {
@@ -253,7 +253,6 @@ public class Student extends User{
             return "";
         }
     }
-
     private Float calRegCredit() throws SQLException {
 
         Float redcr = 0*1.f;
@@ -266,7 +265,6 @@ public class Student extends User{
 
         return redcr;
     }
-
     private Float calculateCredit(String cId) throws SQLException {
         Float credit = null;
 
@@ -280,7 +278,6 @@ public class Student extends User{
 
         return credit;
     }
-
     private Float avgOfPrevSems() throws SQLException {
         Integer pyear = null;
         Integer ppyear = null;
@@ -314,7 +311,6 @@ public class Student extends User{
         return 1.25f*(credit/n);
 
     }
-
     private String getCourseType(String cid) throws SQLException {
         String type = "";
         String fetchCourse = "select core,elective from coursecatalog where courseid = '"+cid+"';";
@@ -331,7 +327,6 @@ public class Student extends User{
         }
         return type;
     }
-
     private Integer yearInfo() throws SQLException {
 
         String info = "select curryear from info;";
@@ -342,7 +337,6 @@ public class Student extends User{
         return y;
 
     }
-
     private Integer semInfo() throws SQLException {
 
         String info = "select currsem from info;";
@@ -353,7 +347,6 @@ public class Student extends User{
         return s;
 
     }
-
     private Boolean preReqSatisfy(String cid) throws SQLException, ClassNotFoundException {
         String getPreReq = "select prereq from coursecatalog where courseid = '"+cid+"';";
         ResultSet rs = st.executeQuery(getPreReq);
@@ -379,13 +372,11 @@ public class Student extends User{
             return true;
         }
     }
-
     private void initiate() throws SQLException, ClassNotFoundException {
         CGPA = computeCPGA();
         currYear = yearInfo();
         currSem = semInfo();
     }
-
 }
 
 

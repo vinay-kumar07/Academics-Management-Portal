@@ -25,7 +25,6 @@ public class Instructor extends User{
         conn = DriverManager.getConnection(url, username, password);
         st = conn.createStatement();
     }
-
     public String floatCourse(String course, Float cg, String batch) throws SQLException, IOException, ClassNotFoundException {
         if(getInfo()==0){
             return "Course add is off. Contact Admin.";
@@ -55,7 +54,6 @@ public class Instructor extends User{
             return "Course Offered Successfully.";
         }
     }
-
     public String deFloatCourse(String CID, Integer y, Integer s) throws SQLException, ClassNotFoundException {
         if(getInfo()==0){
             return "Course delete is off. Contact Admin.";
@@ -82,7 +80,6 @@ public class Instructor extends User{
             return "Course Removed Successfully from Offerings.";
         }
     }
-
     public String updateGrades(String CID, String name) throws SQLException, ClassNotFoundException {
         getInfo();
         makeConnection();
@@ -113,10 +110,10 @@ public class Instructor extends User{
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
-
+        st.close();
+        conn.close();
         return "Grades Updated Successfully";
     }
-
     public Integer viewGrades(String CID, Integer y, Integer s) throws SQLException, ClassNotFoundException, IOException {
         makeConnection();
 
@@ -125,6 +122,8 @@ public class Instructor extends User{
         rs.next();
         if (rs.getInt(1) == 0){
             System.out.println("Choose a valid course.");
+            st.close();
+            conn.close();
             return 0;
         }
 
@@ -139,24 +138,12 @@ public class Instructor extends User{
                     rs.getString(3)
             );
         }
-        return 1;
-    }
-
-    private Integer getInfo() throws SQLException, ClassNotFoundException {
-        makeConnection();
-        Integer bool = null;
-        String info = "Select * from info;";
-        ResultSet rs = st.executeQuery(info);
-        rs.next();
-        currYear = rs.getInt(1);
-        currSem = rs.getInt(2);
-        bool = rs.getInt(3);
         st.close();
         conn.close();
-        return bool;
+        return 1;
     }
-
-    public void viewCourseCatalog() throws SQLException, IOException{
+    public void viewCourseCatalog() throws SQLException, IOException, ClassNotFoundException {
+        makeConnection();
         String viewQuery = "select * from coursecatalog;";
         ResultSet rs = st.executeQuery(viewQuery);
         System.out.println("COURSEID \t L \t T \t P \t PREREQUISITE \t OFFERED AS CORE \t OFFERED AS ELECTIVE");
@@ -171,8 +158,11 @@ public class Instructor extends User{
                             rs.getString(7)
             );
         }
+        st.close();
+        conn.close();
     }
-    public void viewCourseOffering() throws SQLException, IOException{
+    public void viewCourseOffering() throws SQLException, IOException, ClassNotFoundException {
+        makeConnection();
         String viewQuery = "select courseid,cgcriteria,year,sem from courseoffering where facultyid = '"+UserID+"';";
         ResultSet rs = st.executeQuery(viewQuery);
         System.out.println("COURSEID \t CG REQ \t YEAR \t SEM ");
@@ -184,8 +174,22 @@ public class Instructor extends User{
                 rs.getString(4)
             );
         }
+        st.close();
+        conn.close();
     }
-
+    private Integer getInfo() throws SQLException, ClassNotFoundException {
+        makeConnection();
+        Integer bool = null;
+        String info = "Select * from info;";
+        ResultSet rs = st.executeQuery(info);
+        rs.next();
+        currYear = rs.getInt(1);
+        currSem = rs.getInt(2);
+        bool = rs.getInt(3);
+        st.close();
+        conn.close();
+        return bool;
+    }
     private Float calculateCredit(String cId) throws SQLException {
         Float credit = null;
 

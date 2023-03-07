@@ -13,7 +13,7 @@ public class Instuctor_UI {
         System.out.print("Course ID: "); String course = sc.nextLine();
         System.out.print("CGPA Requirement: "); Float cg = sc.nextFloat(); String garbage = sc.nextLine();
         System.out.print("Allowed Batches: "); String batch = sc.nextLine();
-        instructor.floatCourse(course,cg,batch);
+        System.out.println(instructor.floatCourse(course,cg,batch));
     }
 
     public void callDefloatCourse() throws SQLException, IOException, ClassNotFoundException {
@@ -24,7 +24,7 @@ public class Instuctor_UI {
         System.out.print("Course ID: "); String CID = sc.nextLine();
         System.out.print("Year: "); Integer y = sc.nextInt();
         System.out.print("Sem: "); Integer s = sc.nextInt();
-        instructor.deFloatCourse(CID,y,s);
+        System.out.println(instructor.deFloatCourse(CID,y,s));
     }
 
     public void callUpdateGrades() throws SQLException, ClassNotFoundException, IOException {
@@ -34,8 +34,17 @@ public class Instuctor_UI {
         Scanner sc = new Scanner(System.in);
         System.out.print("Course ID: "); String CID = sc.nextLine();
         System.out.print("CSV File Name: "); String name = sc.nextLine();
-        instructor.updateGrades(CID,name);
+        System.out.println(instructor.updateGrades(CID,name));
     }
 
-
+    public void callViewGrades() throws SQLException, IOException, ClassNotFoundException {
+        Instructor instructor = new Instructor ("TS1","faculty","iit",2020);
+        instructor.viewCourseOffering();
+        System.out.println("Enter Course ID:-");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Course ID: "); String CID = sc.nextLine();
+        System.out.print("Year: "); Integer y = sc.nextInt();
+        System.out.println("Sem: "); Integer s = sc.nextInt();
+        instructor.viewGrades(CID,y,s);
+    }
 }

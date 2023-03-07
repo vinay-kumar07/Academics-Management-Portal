@@ -13,7 +13,7 @@ import java.util.Scanner;
 <span class="nc" id="L13">        System.out.print(&quot;Course ID: &quot;); String course = sc.nextLine();</span>
 <span class="nc" id="L14">        System.out.print(&quot;CGPA Requirement: &quot;); Float cg = sc.nextFloat(); String garbage = sc.nextLine();</span>
 <span class="nc" id="L15">        System.out.print(&quot;Allowed Batches: &quot;); String batch = sc.nextLine();</span>
-<span class="nc" id="L16">        instructor.floatCourse(course,cg,batch);</span>
+<span class="nc" id="L16">        System.out.println(instructor.floatCourse(course,cg,batch));</span>
 <span class="nc" id="L17">    }</span>
 
     public void callDefloatCourse() throws SQLException, IOException, ClassNotFoundException {
@@ -24,7 +24,7 @@ import java.util.Scanner;
 <span class="nc" id="L24">        System.out.print(&quot;Course ID: &quot;); String CID = sc.nextLine();</span>
 <span class="nc" id="L25">        System.out.print(&quot;Year: &quot;); Integer y = sc.nextInt();</span>
 <span class="nc" id="L26">        System.out.print(&quot;Sem: &quot;); Integer s = sc.nextInt();</span>
-<span class="nc" id="L27">        instructor.deFloatCourse(CID,y,s);</span>
+<span class="nc" id="L27">        System.out.println(instructor.deFloatCourse(CID,y,s));</span>
 <span class="nc" id="L28">    }</span>
 
     public void callUpdateGrades() throws SQLException, ClassNotFoundException, IOException {
@@ -34,9 +34,18 @@ import java.util.Scanner;
 <span class="nc" id="L34">        Scanner sc = new Scanner(System.in);</span>
 <span class="nc" id="L35">        System.out.print(&quot;Course ID: &quot;); String CID = sc.nextLine();</span>
 <span class="nc" id="L36">        System.out.print(&quot;CSV File Name: &quot;); String name = sc.nextLine();</span>
-<span class="nc" id="L37">        instructor.updateGrades(CID,name);</span>
+<span class="nc" id="L37">        System.out.println(instructor.updateGrades(CID,name));</span>
 <span class="nc" id="L38">    }</span>
 
-
+    public void callViewGrades() throws SQLException, IOException, ClassNotFoundException {
+<span class="nc" id="L41">        Instructor instructor = new Instructor (&quot;TS1&quot;,&quot;faculty&quot;,&quot;iit&quot;,2020);</span>
+<span class="nc" id="L42">        instructor.viewCourseOffering();</span>
+<span class="nc" id="L43">        System.out.println(&quot;Enter Course ID:-&quot;);</span>
+<span class="nc" id="L44">        Scanner sc = new Scanner(System.in);</span>
+<span class="nc" id="L45">        System.out.print(&quot;Course ID: &quot;); String CID = sc.nextLine();</span>
+<span class="nc" id="L46">        System.out.print(&quot;Year: &quot;); Integer y = sc.nextInt();</span>
+<span class="nc" id="L47">        System.out.println(&quot;Sem: &quot;); Integer s = sc.nextInt();</span>
+<span class="nc" id="L48">        instructor.viewGrades(CID,y,s);</span>
+<span class="nc" id="L49">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

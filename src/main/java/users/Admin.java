@@ -52,8 +52,6 @@ public class Admin extends User{
         conn.close();
         return "User with ID = "+ID+" registered successfully.";
     }
-
-
     public String changeAcademicYearSem(Integer y, Integer s, Integer o) throws SQLException, ClassNotFoundException {
         makeConnection();
         String clear = "truncate table info;";
@@ -64,7 +62,6 @@ public class Admin extends User{
         conn.close();
         return "Updated";
     }
-
     public String addcourse(String course, String lpt, String prereq, String core, String elec) throws SQLException, IOException, ClassNotFoundException {
         makeConnection();
 
@@ -85,7 +82,6 @@ public class Admin extends User{
         conn.close();
         return "Course Added Successfully";
     }
-
     public String deletecourse(String course) throws SQLException, IOException, ClassNotFoundException {
         makeConnection();
 
@@ -102,7 +98,6 @@ public class Admin extends User{
 
         return "Course Deleted Successfully";
     }
-
     public String editcourse(String course, String updatedcore) throws SQLException, IOException, ClassNotFoundException {
         //give more edit access to admin
         makeConnection();
@@ -120,24 +115,6 @@ public class Admin extends User{
 
         return "Course Updated Successfully.";
     }
-
-    public void viewCourseCatalog() throws SQLException, IOException{
-        String viewQuery = "select * from coursecatalog;";
-        ResultSet rs = st.executeQuery(viewQuery);
-        System.out.println("COURSEID \t L \t T \t P \t PREREQUISITE \t OFFERED AS CORE \t OFFERED AS ELECTIVE");
-        while (rs.next()) {
-            System.out.println(
-                    rs.getString(1) + " \t " +
-                            rs.getString(2) + " \t " +
-                            rs.getString(3) + " \t " +
-                            rs.getString(4) + " \t " +
-                            rs.getString(5) + " \t " +
-                            rs.getString(6) + " \t " +
-                            rs.getString(7)
-            );
-        }
-    }
-
     public Integer viewGradesStudent(String uid) throws SQLException, ClassNotFoundException {
         makeConnection();
 
@@ -146,6 +123,8 @@ public class Admin extends User{
         rs.next();
         if (rs.getInt(1) == 0){
             System.out.println("Choose a valid student");
+            st.close();
+            conn.close();
             return 0;
         }
 
@@ -163,6 +142,8 @@ public class Admin extends User{
                             rs.getString(6)
             );
         }
+        st.close();
+        conn.close();
         return 1;
     }
     public Integer viewGradesCourse(String CID, Integer y, Integer s) throws SQLException, ClassNotFoundException {
@@ -173,6 +154,8 @@ public class Admin extends User{
         rs.next();
         if (rs.getInt(1) == 0){
             System.out.println("Choose a valid course.");
+            st.close();
+            conn.close();
             return 0;
         }
 
@@ -187,10 +170,31 @@ public class Admin extends User{
                             rs.getString(3)
             );
         }
+        st.close();
+        conn.close();
         return 1;
     }
-
-    public void viewCourseOffering() throws SQLException, IOException{
+    public void viewCourseCatalog() throws SQLException, IOException, ClassNotFoundException {
+        makeConnection();
+        String viewQuery = "select * from coursecatalog;";
+        ResultSet rs = st.executeQuery(viewQuery);
+        System.out.println("COURSEID \t L \t T \t P \t PREREQUISITE \t OFFERED AS CORE \t OFFERED AS ELECTIVE");
+        while (rs.next()) {
+            System.out.println(
+                    rs.getString(1) + " \t " +
+                            rs.getString(2) + " \t " +
+                            rs.getString(3) + " \t " +
+                            rs.getString(4) + " \t " +
+                            rs.getString(5) + " \t " +
+                            rs.getString(6) + " \t " +
+                            rs.getString(7)
+            );
+        }
+        st.close();
+        conn.close();
+    }
+    public void viewCourseOffering() throws SQLException, IOException, ClassNotFoundException {
+        makeConnection();
         String viewQuery = "select courseid,cgcriteria,year,sem from courseoffering;";
         ResultSet rs = st.executeQuery(viewQuery);
         System.out.println("COURSEID \t CG REQ \t YEAR \t SEM ");
@@ -202,5 +206,7 @@ public class Admin extends User{
                             rs.getString(4)
             );
         }
+        st.close();
+        conn.close();
     }
 }

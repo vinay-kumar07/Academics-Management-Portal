@@ -2,11 +2,11 @@
 
 import users.Student;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-<span class="nc" id="L8">public class Student_UI {</span>
-
+<span class="nc" id="L9">public class Student_UI {</span>
     public void callCourseRegister() throws SQLException, ClassNotFoundException {
 <span class="nc" id="L11">        Student vinay = new Student (&quot;cs1141&quot;,&quot;student&quot;,&quot;iit&quot;,2022);</span>
 <span class="nc" id="L12">        vinay.viewCourseOfferings();</span>
@@ -14,19 +14,32 @@ import java.util.Scanner;
 <span class="nc" id="L14">        Scanner sc=new Scanner(System.in);</span>
 <span class="nc" id="L15">        System.out.print(&quot;Opt Course: &quot;);</span>
 <span class="nc" id="L16">        String optedCourse = sc.nextLine();</span>
-<span class="nc" id="L17">        vinay.courseRegister(optedCourse);</span>
+<span class="nc" id="L17">        System.out.println(vinay.courseRegister(optedCourse));</span>
 <span class="nc" id="L18">    }</span>
-
     public void callCourseWithdraw() throws SQLException, ClassNotFoundException {
-<span class="nc" id="L21">        Student vinay = new Student (&quot;cs1141&quot;,&quot;student&quot;,&quot;iit&quot;,2022);</span>
-<span class="nc" id="L22">        vinay.viewCourseOfferings();</span>
+<span class="nc" id="L20">        Student vinay = new Student (&quot;cs1141&quot;,&quot;student&quot;,&quot;iit&quot;,2022);</span>
+<span class="nc" id="L21">        vinay.viewCourseOfferings();</span>
 
-<span class="nc" id="L24">        System.out.println(&quot;Select the course&quot;);</span>
-<span class="nc" id="L25">        Scanner sc = new Scanner(System.in);</span>
-<span class="nc" id="L26">        String selectedCourse = sc.nextLine();</span>
-<span class="nc" id="L27">        vinay.courseWithdraw(selectedCourse);</span>
-<span class="nc" id="L28">    }</span>
-
-
+<span class="nc" id="L23">        System.out.print(&quot;Select the course: &quot;);</span>
+<span class="nc" id="L24">        Scanner sc = new Scanner(System.in);</span>
+<span class="nc" id="L25">        String selectedCourse = sc.nextLine();</span>
+<span class="nc" id="L26">        System.out.println(vinay.courseWithdraw(selectedCourse));</span>
+<span class="nc" id="L27">    }</span>
+    public void callComputerCGPA() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L29">        Student vinay = new Student (&quot;cs1141&quot;,&quot;student&quot;,&quot;iit&quot;,2022);</span>
+<span class="nc" id="L30">        System.out.println(&quot;Your current CGPA is: &quot;+ vinay.computeCPGA());</span>
+<span class="nc" id="L31">    }</span>
+    public void callViewGrades() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L33">        Student vinay = new Student (&quot;cs1141&quot;,&quot;student&quot;,&quot;iit&quot;,2022);</span>
+<span class="nc" id="L34">        vinay.viewGrades();</span>
+<span class="nc" id="L35">    }</span>
+    public void callGenerateTranscript() throws SQLException, IOException, ClassNotFoundException {
+<span class="nc" id="L37">        Student vinay = new Student (&quot;cs1141&quot;,&quot;student&quot;,&quot;iit&quot;,2022);</span>
+<span class="nc" id="L38">        vinay.generateTranscript();</span>
+<span class="nc" id="L39">    }</span>
+    public void callCheckDegree() throws SQLException, ClassNotFoundException {
+<span class="nc" id="L41">        Student vinay = new Student (&quot;cs1141&quot;,&quot;student&quot;,&quot;iit&quot;,2022);</span>
+<span class="nc" id="L42">        System.out.println(vinay.checkDegree());</span>
+<span class="nc" id="L43">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
