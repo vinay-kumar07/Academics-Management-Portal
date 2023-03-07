@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="users.StudentTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2023-03-07T12:16:24" hostname="DESKTOP-Q07AVCP" time="19.303">
+<testsuite name="users.StudentTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2023-03-07T13:15:41" hostname="DESKTOP-Q07AVCP" time="37.102">
   <properties/>
-  <testcase name="generateTranscript()" classname="users.StudentTest" time="3.178"/>
-  <testcase name="registerCourseAsCoreOrELective()" classname="users.StudentTest" time="1.506"/>
-  <testcase name="courseWithdraw()" classname="users.StudentTest" time="0.74"/>
-  <testcase name="viewgrades()" classname="users.StudentTest" time="1.873"/>
-  <testcase name="preReqNotSatisfied()" classname="users.StudentTest" time="2.227"/>
-  <testcase name="creditLimitExceedsAvg()" classname="users.StudentTest" time="2.165"/>
-  <testcase name="cgReqNotSatisfied()" classname="users.StudentTest" time="1.969"/>
-  <testcase name="bothCreditsNotCompleted()" classname="users.StudentTest" time="0.186"/>
-  <testcase name="creditLimitExceeds21()" classname="users.StudentTest" time="0.971"/>
-  <testcase name="electiveCreditsNotCompleted()" classname="users.StudentTest" time="1.192"/>
-  <testcase name="allCreditsNotCompleted()" classname="users.StudentTest" time="1.814"/>
-  <testcase name="programCreditsNotCompleted()" classname="users.StudentTest" time="1.243"/>
-  <testcase name="InvalidCourseRegister()" classname="users.StudentTest" time="0.225"/>
+  <testcase name="generateTranscript()" classname="users.StudentTest" time="5.442"/>
+  <testcase name="registerCourseAsCoreOrELective()" classname="users.StudentTest" time="2.101"/>
+  <testcase name="courseWithdraw()" classname="users.StudentTest" time="1.354"/>
+  <testcase name="viewgrades()" classname="users.StudentTest" time="3.148"/>
+  <testcase name="preReqNotSatisfied()" classname="users.StudentTest" time="4.76"/>
+  <testcase name="creditLimitExceedsAvg()" classname="users.StudentTest" time="4.993"/>
+  <testcase name="cgReqNotSatisfied()" classname="users.StudentTest" time="4.316"/>
+  <testcase name="bothCreditsNotCompleted()" classname="users.StudentTest" time="0.373"/>
+  <testcase name="creditLimitExceeds21()" classname="users.StudentTest" time="2.213"/>
+  <testcase name="electiveCreditsNotCompleted()" classname="users.StudentTest" time="2.658"/>
+  <testcase name="allCreditsNotCompleted()" classname="users.StudentTest" time="3.049"/>
+  <testcase name="programCreditsNotCompleted()" classname="users.StudentTest" time="2.314"/>
+  <testcase name="InvalidCourseRegister()" classname="users.StudentTest" time="0.356"/>
   <system-out><![CDATA[(Grade -1 means the course has not been graded yet)
 COURSE 	 YEAR 	 SEM 	 GRADE 	 CREDIT 	 REGISTERED AS
 TC3 	 2022 	 1 	 -1 	 3 	 

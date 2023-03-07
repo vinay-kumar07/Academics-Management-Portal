@@ -1,117 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">AIMS_Portal_CS305</a> &gt; <a href="index.source.html" class="el_package">org.CS305</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package org.CS305;
 
-import users.Admin;
-import users.Instructor;
-import users.Student;
-import users.User;
+import users.Interface.Admin_UI;
+import users.Interface.Instuctor_UI;
+import users.Interface.Student_UI;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 import java.sql.*;
 
-<span class="nc" id="L13">public class Main {</span>
-<span class="nc" id="L14">    public static Connection conn = null;</span>
-<span class="nc" id="L15">    public static Statement st = null;</span>
-<span class="nc" id="L16">    public static Integer currentSem = 2;</span>
-<span class="nc" id="L17">    public static Integer currentYear = 2022;</span>
-
+<span class="nc" id="L12">public class Main {</span>
     public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-        try{
-<span class="nc" id="L21">            System.out.println(&quot;Trying to connect..&quot;);</span>
-<span class="nc" id="L22">            String url = &quot;jdbc:postgresql://localhost:5433/&quot;;</span>
-<span class="nc" id="L23">            String username = &quot;postgres&quot;;</span>
-<span class="nc" id="L24">            String password = &quot;dbms&quot;;</span>
-<span class="nc" id="L25">            Class.forName(&quot;org.postgresql.Driver&quot;);</span>
-<span class="nc" id="L26">            conn = DriverManager.getConnection(url, username, password);</span>
-<span class="nc" id="L27">            st = conn.createStatement();</span>
-<span class="nc" id="L28">            System.out.println(&quot;Connected To Database :)&quot;);</span>
+<span class="nc" id="L14">        System.out.println(&quot;--Welcome to Academic Management Portal--&quot;);</span>
+
+<span class="nc" id="L16">        Scanner sc = new Scanner(System.in);</span>
+<span class="nc" id="L17">        System.out.println(&quot;Please Enter Your Role.&quot;);</span>
+<span class="nc" id="L18">        System.out.println(&quot;1. Admin&quot;);</span>
+<span class="nc" id="L19">        System.out.println(&quot;2. Instructor&quot;);</span>
+<span class="nc" id="L20">        System.out.println(&quot;3. Student&quot;);</span>
+
+<span class="nc" id="L22">        System.out.print(&quot;Enter choice: &quot;); Integer loginChoice = sc.nextInt(); String garbage = sc.nextLine();</span>
+<span class="nc bnc" id="L23" title="All 4 branches missed.">        if(loginChoice&lt;=0 || loginChoice&gt;=4)    {</span>
+<span class="nc" id="L24">            System.out.println(&quot;Not a valid choice&quot;);</span>
         }
-<span class="nc" id="L30">        catch (Exception e){</span>
-<span class="nc" id="L31">            System.out.println(e);</span>
-<span class="nc" id="L32">        }</span>
+        else {
+<span class="nc" id="L27">            System.out.println(&quot;Enter ID: &quot;); String id = sc.nextLine();</span>
+<span class="nc" id="L28">            System.out.println(&quot;Enter Password: &quot;); String pass = sc.nextLine();</span>
+<span class="nc" id="L29">            Login login = new Login();</span>
+<span class="nc" id="L30">            Integer l = login.enter(id,pass);</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">            if(l==0){</span>
+<span class="nc" id="L32">                System.out.println(&quot;Not a valid user&quot;);</span>
+<span class="nc" id="L33">                return;</span>
+            }
+            else {
 
-//        {
-//            Admin admin = new Admin (&quot;Admin&quot;,&quot;Admin&quot;,&quot;admin&quot;,2008);
-//            System.out.println(admin.createAccount(&quot;TS1&quot;,&quot;student&quot;,&quot;iit&quot;,2020));
-////            admin.createAccount();
-//            return;
-//        }
+<span class="nc bnc" id="L37" title="All 2 branches missed.">                if (loginChoice==1){</span>
+<span class="nc" id="L38">                    System.out.println(&quot;Choose What Do You Want To Do&quot;);</span>
+<span class="nc" id="L39">                    System.out.println(&quot;1. Create Account&quot;);</span>
+<span class="nc" id="L40">                    System.out.println(&quot;2. Edit Course Catalog&quot;);</span>
+<span class="nc" id="L41">                    System.out.println(&quot;3. Change Academic Year&quot;);</span>
+<span class="nc" id="L42">                    System.out.println(&quot;4. View Grades&quot;);</span>
+<span class="nc" id="L43">                    Admin_UI ui = new Admin_UI();</span>
+<span class="nc" id="L44">                    Integer adminChoice = sc.nextInt(); garbage = sc.nextLine();</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                    if(adminChoice==1){</span>
+<span class="nc" id="L46">                        ui.callCreateAccount();</span>
+                    }
+<span class="nc bnc" id="L48" title="All 2 branches missed.">                    else if(adminChoice==2){</span>
+<span class="nc" id="L49">                        ui.callEditCourseCatalog();</span>
+                    }
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                    else if(adminChoice==3){</span>
+<span class="nc" id="L52">                        ui.callChangeAcademicYearSem();</span>
+                    }
+<span class="nc bnc" id="L54" title="All 2 branches missed.">                    else if(adminChoice==4){</span>
+<span class="nc" id="L55">                        ui.callViewGrades();</span>
+                    }
+                    else {
+<span class="nc" id="L58">                        System.out.println(&quot;Not a valid choice&quot;);</span>
+                    }
+<span class="nc" id="L60">                }</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">                else if (loginChoice==2){</span>
+<span class="nc" id="L62">                    System.out.println(&quot;Choose What Do You Want To Do&quot;);</span>
+<span class="nc" id="L63">                    System.out.println(&quot;1. Float Course&quot;);</span>
+<span class="nc" id="L64">                    System.out.println(&quot;2. Remove Course&quot;);</span>
+<span class="nc" id="L65">                    System.out.println(&quot;3. Update Grades&quot;);</span>
+<span class="nc" id="L66">                    System.out.println(&quot;4. View Grades&quot;);</span>
+<span class="nc" id="L67">                    Instuctor_UI ui = new Instuctor_UI();</span>
+<span class="nc" id="L68">                    Integer instructorChoice = sc.nextInt(); garbage = sc.nextLine();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                    if(instructorChoice==1){</span>
+<span class="nc" id="L70">                        ui.callFloatCourse(id,pass,l);</span>
+                    }
+<span class="nc bnc" id="L72" title="All 2 branches missed.">                    else if(instructorChoice==2){</span>
+<span class="nc" id="L73">                        ui.callDefloatCourse(id,pass,l);</span>
+                    }
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                    else if(instructorChoice==3){</span>
+<span class="nc" id="L76">                        ui.callUpdateGrades(id,pass,l);</span>
+                    }
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                    else if(instructorChoice==4){</span>
+<span class="nc" id="L79">                        ui.callViewGrades(id,pass,l);</span>
+                    }
+                    else {
+<span class="nc" id="L82">                        System.out.println(&quot;Not a valid choice&quot;);</span>
+                    }
+<span class="nc" id="L84">                }</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                else if(loginChoice==3){</span>
+<span class="nc" id="L86">                    System.out.println(&quot;Choose What Do You Want To Do&quot;);</span>
+<span class="nc" id="L87">                    System.out.println(&quot;1. Course Registration&quot;);</span>
+<span class="nc" id="L88">                    System.out.println(&quot;2. Course Withdraw&quot;);</span>
+<span class="nc" id="L89">                    System.out.println(&quot;3. Compute CGPA&quot;);</span>
+<span class="nc" id="L90">                    System.out.println(&quot;4. View Grades&quot;);</span>
+<span class="nc" id="L91">                    System.out.println(&quot;5. Generate Transcript&quot;);</span>
+<span class="nc" id="L92">                    System.out.println(&quot;6. Degree Check&quot;);</span>
+<span class="nc" id="L93">                    Student_UI ui = new Student_UI();</span>
+<span class="nc" id="L94">                    Integer studentChoice = sc.nextInt(); garbage = sc.nextLine();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                    if(studentChoice==1){</span>
+<span class="nc" id="L96">                        ui.callCourseRegister(id,pass,l);</span>
+                    }
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                    else if(studentChoice==2){</span>
+<span class="nc" id="L99">                        ui.callCourseWithdraw(id,pass,l);</span>
+                    }
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                    else if(studentChoice==3){</span>
+<span class="nc" id="L102">                        ui.callComputerCGPA(id,pass,l);</span>
+                    }
+<span class="nc bnc" id="L104" title="All 2 branches missed.">                    else if(studentChoice==4){</span>
+<span class="nc" id="L105">                        ui.callViewGrades(id,pass,l);</span>
+                    }
+<span class="nc bnc" id="L107" title="All 2 branches missed.">                    else if(studentChoice==5){</span>
+<span class="nc" id="L108">                        ui.callGenerateTranscript(id,pass,l);</span>
+                    }
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                    else if(studentChoice==6){</span>
+<span class="nc" id="L111">                        ui.callCheckDegree(id,pass,l);</span>
+                    }
+                    else {
+<span class="nc" id="L114">                        System.out.println(&quot;Not a valid choice&quot;);</span>
+                    }
+                }
 
-//        {
-//            Instructor balwinder = new Instructor (&quot;cs001&quot;,&quot;faculty&quot;,&quot;iit&quot;,2015);
-//            balwinder.updateGrades();
-//            return;
-//        }
-
-        {
-<span class="nc" id="L48">            Student vinay = new Student (&quot;mc001&quot;,&quot;student&quot;,&quot;iit&quot;,2022);</span>
-<span class="nc" id="L49">            System.out.println(vinay.checkDegree());;</span>
-<span class="nc" id="L50">            return;</span>
+            }
         }
 
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println(&quot;Please what is your role: &quot;);
-//        Integer loginChoice = sc.nextInt(); String garbage = sc.nextLine();
-//        if(loginChoice==1){
-//            System.out.println(&quot;give id&quot;);
-//            String inputID = sc.nextLine();
-//            System.out.println(&quot;give password&quot;);
-//            String inputPass = sc.nextLine();
-//
-//            String check_query = &quot;Select * from Users;&quot;;
-//            try {
-//                ResultSet rs = st.executeQuery(check_query);
-//                while(rs.next()){
-//                    String user = rs.getString(1);
-//                    String code = rs.getString(3);
-//                    if(user.equals(inputID) &amp;&amp; code.equals(inputPass)){
-//                        System.out.println(&quot;Logged in Successfully :)&quot;);
-//                        break;
-//                    }
-//                    else{
-//                        return;
-//                    }
-//                }
-//            }
-//            catch (SQLException e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//            System.out.println(&quot;What do you want to do?&quot;);
-//            System.out.println(&quot;1. Create users account&quot;);
-//            System.out.println(&quot;2. Edit Course Catalog&quot;);
-//            System.out.println(&quot;3. View Grades&quot;);
-//            System.out.println(&quot;4. Generate Transcript&quot;);
-//            System.out.println(&quot;5. LogOut&quot;);
-//
-//            Admin admin = new Admin (inputID,&quot;Admin&quot;,&quot;Admin&quot;,2008);
-//            Integer Choice = sc.nextInt(); garbage = sc.nextLine();
-//            if(Choice==1){
-//                admin.createAccount();
-//                //hello
-//            }
-//            else if(Choice==2){
-//                admin.editCourseCatalog();
-//            }
-//            else if(Choice==5){
-//                return;
-//            }
-//            else{
-//                System.out.println(&quot;Please Choose a valid choice!!&quot;);
-//            }
-//
-//        }
-//        else if(loginChoice==2){
-//            //faculty
-//        }
-//        else if(loginChoice==3){
-//            //student
-//        }
-//        else{
-//            System.out.println(&quot;Please enter a valid choice!!&quot;);
-//        }
-
-    }
+<span class="nc" id="L121">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
