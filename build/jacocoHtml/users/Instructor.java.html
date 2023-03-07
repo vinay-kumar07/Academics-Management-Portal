@@ -37,7 +37,7 @@ public class Instructor extends User{
 <span class="fc" id="L37">            String check = &quot;select count(*) from courseoffering where courseid = '&quot;+course+&quot;' and year = &quot;+currYear+&quot; and sem = &quot;+currSem+&quot;;&quot;;</span>
 <span class="fc" id="L38">            ResultSet rs = st.executeQuery(check);</span>
 <span class="fc" id="L39">            rs.next();</span>
-<span class="pc bpc" id="L40" title="1 of 2 branches missed.">            if(rs.getInt(1)==1) return &quot;The course has been already offered.&quot;;</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            if(rs.getInt(1)==1) return &quot;The course has been already offered.&quot;;</span>
 
 <span class="fc" id="L42">            String addQuery = &quot;insert into courseoffering values('&quot;+course+&quot;','&quot;+UserID+&quot;',&quot;+cg+&quot;,&quot;+currYear+&quot;,&quot;+currSem+&quot;,'&quot;+batch+&quot;');&quot;;</span>
 <span class="fc" id="L43">            st.executeUpdate(addQuery);</span>
@@ -65,7 +65,7 @@ public class Instructor extends User{
 <span class="fc" id="L65">            String check = &quot;select count(*) from courseoffering where courseid = '&quot; + CID + &quot;' and year = &quot; + y + &quot; and sem = &quot; + s + &quot;;&quot;;</span>
 <span class="fc" id="L66">            ResultSet rs = st.executeQuery(check);</span>
 <span class="fc" id="L67">            rs.next();</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">            if (rs.getInt(1) == 0) return &quot;Choose a valid course to delete.&quot;;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            if (rs.getInt(1) == 0) return &quot;Choose a valid course to delete.&quot;;</span>
 
 <span class="fc" id="L70">            String deleteTable = &quot;drop table &quot; + CID + &quot;_&quot; + y + &quot;_&quot; + s + &quot;;&quot;;</span>
 <span class="fc" id="L71">            st.executeUpdate(deleteTable);</span>
@@ -118,28 +118,28 @@ public class Instructor extends User{
     }
 
     public Integer viewGrades(String CID, Integer y, Integer s) throws SQLException, ClassNotFoundException, IOException {
-<span class="nc" id="L121">        makeConnection();</span>
+<span class="fc" id="L121">        makeConnection();</span>
 
-<span class="nc" id="L123">        String check = &quot;select count(*) from courseoffering where courseid = '&quot; + CID + &quot;' and year = &quot; + y + &quot; and sem = &quot; + s + &quot;;&quot;;</span>
-<span class="nc" id="L124">        ResultSet rs = st.executeQuery(check);</span>
-<span class="nc" id="L125">        rs.next();</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (rs.getInt(1) == 0){</span>
-<span class="nc" id="L127">            System.out.println(&quot;Choose a valid course.&quot;);</span>
-<span class="nc" id="L128">            return 0;</span>
+<span class="fc" id="L123">        String check = &quot;select count(*) from courseoffering where courseid = '&quot; + CID + &quot;' and year = &quot; + y + &quot; and sem = &quot; + s + &quot;;&quot;;</span>
+<span class="fc" id="L124">        ResultSet rs = st.executeQuery(check);</span>
+<span class="fc" id="L125">        rs.next();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (rs.getInt(1) == 0){</span>
+<span class="fc" id="L127">            System.out.println(&quot;Choose a valid course.&quot;);</span>
+<span class="fc" id="L128">            return 0;</span>
         }
 
-<span class="nc" id="L131">        String fetchGrades = &quot;Select * from &quot;+CID+&quot;_&quot;+y+&quot;_&quot;+s+&quot;;&quot;;</span>
-<span class="nc" id="L132">        rs = st.executeQuery(fetchGrades);</span>
-<span class="nc" id="L133">        System.out.println(&quot;(Grade -1 means the course has not been graded yet)&quot;);</span>
-<span class="nc" id="L134">        System.out.println(&quot;COURSE \t ENROLLMENT YEAR \t GRADE &quot;);</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">        while (rs.next()){</span>
-<span class="nc" id="L136">            System.out.println(</span>
-<span class="nc" id="L137">                    rs.getString(1) + &quot; \t &quot; +</span>
-<span class="nc" id="L138">                    rs.getString(2) + &quot; \t &quot; +</span>
-<span class="nc" id="L139">                    rs.getString(3)</span>
+<span class="fc" id="L131">        String fetchGrades = &quot;Select * from &quot;+CID+&quot;_&quot;+y+&quot;_&quot;+s+&quot;;&quot;;</span>
+<span class="fc" id="L132">        rs = st.executeQuery(fetchGrades);</span>
+<span class="fc" id="L133">        System.out.println(&quot;(Grade -1 means the course has not been graded yet)&quot;);</span>
+<span class="fc" id="L134">        System.out.println(&quot;COURSE \t ENROLLMENT YEAR \t GRADE &quot;);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        while (rs.next()){</span>
+<span class="fc" id="L136">            System.out.println(</span>
+<span class="fc" id="L137">                    rs.getString(1) + &quot; \t &quot; +</span>
+<span class="fc" id="L138">                    rs.getString(2) + &quot; \t &quot; +</span>
+<span class="fc" id="L139">                    rs.getString(3)</span>
             );
         }
-<span class="nc" id="L142">        return 1;</span>
+<span class="fc" id="L142">        return 1;</span>
     }
 
     private Integer getInfo() throws SQLException, ClassNotFoundException {

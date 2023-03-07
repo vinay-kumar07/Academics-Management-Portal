@@ -343,8 +343,61 @@ class StudentTest {
     }
 
     @Test
-    void generateTranscript(){
+    void generateTranscript() throws SQLException, IOException, ClassNotFoundException {
+        makeConnetion();
+        Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
+        admin.addcourse("TC1","3-0-0","-","cs,mc","ee,me");
+        admin.addcourse("TC2","4-0-0","-","cs,mc","ee,me");
+        admin.addcourse("TC3","3-0-0","-","cs,mc","ee,me");
+        admin.createAccount("TF1","faculty","iit",2020);
+        admin.createAccount("TS1","student","iit",2022);
 
+        Instructor instructor = new Instructor ("TF1","faculty","iit",2020);
+        Student student = new Student("TS1","student","iit",2022);
+
+        instructor.floatCourse("TC1",6f,"2022");
+        student.courseRegister("TC1");
+        admin.changeAcademicYearSem(2022,2,1);
+        instructor.floatCourse("TC2",6.5f,"2022");
+        student.courseRegister("TC2");
+        admin.changeAcademicYearSem(2023,1,1);
+        instructor.floatCourse("TC3",7f,"2022");
+        student.courseRegister("TC3");
+
+        String s1 = "Update student_TS1 set grade = 8 where courseid = 'TC1' and year = 2022 and sem = 1;";
+        String s2 = "Update student_TS1 set grade = 7 where courseid = 'TC2' and year = 2022 and sem = 2;";
+        String s3 = "Update student_TS1 set grade = 7 where courseid = 'TC3' and year = 2023 and sem = 1;";
+        TestStatement.executeUpdate(s1);
+        TestStatement.executeUpdate(s2);
+        TestStatement.executeUpdate(s3);
+
+        Integer r1 = student.generateTranscript();
+        assertEquals(1,r1);
+
+        student.courseWithdraw("TC3");
+        admin.changeAcademicYearSem(2022,2,1);
+        student.courseWithdraw("TC2");
+        admin.changeAcademicYearSem(2022,1,1);
+        student.courseWithdraw("TC1");
+        instructor.deFloatCourse("TC1",2022,1);
+        instructor.deFloatCourse("TC2",2022,2);
+        instructor.deFloatCourse("TC3",2023,1);
+        admin.deletecourse("TC1");
+        admin.deletecourse("TC2");
+        admin.deletecourse("TC3");
+        String s4 = "Drop table faculty_TF1;";
+        String s5 = "Delete from users where userid = 'TF1';";
+        String s6 = "Drop table student_TS1;";
+        String s7 = "Delete from users where userid = 'TS1';";
+
+        TestStatement.executeUpdate(s4);
+        TestStatement.executeUpdate(s5);
+        TestStatement.executeUpdate(s6);
+        TestStatement.executeUpdate(s7);
+
+        TestStatement.close();
+        TestConnection.close();
     }
     @Test
     void courseWithdraw() throws SQLException, IOException, ClassNotFoundException {

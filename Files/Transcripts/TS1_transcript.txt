@@ -1,0 +1,8 @@
+Indian Institute of Technology, Ropar
+
+B.Tech Transcript
+Entry No = TS1
+
+(Grade -1 means the course has not been graded yet)
+COURSE 		 YEAR 		 SEM 		 GRADE 		 CREDIT 		 REGISTERED AS
+TC1 		 2022 		 1 		 8 			 3 			 

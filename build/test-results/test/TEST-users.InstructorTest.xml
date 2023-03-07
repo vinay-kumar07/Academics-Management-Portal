@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="users.InstructorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-03-07T09:16:20" hostname="DESKTOP-Q07AVCP" time="3.06">
+  <properties/>
+  <testcase name="updateGrades()" classname="users.InstructorTest" time="0.038"/>
+  <testcase name="viewGradesValidCourse()" classname="users.InstructorTest" time="1.869"/>
+  <testcase name="viewGradesInvalidCourse()" classname="users.InstructorTest" time="0.224"/>
+  <testcase name="deFloatCourse()" classname="users.InstructorTest" time="0.474"/>
+  <testcase name="floatCourse()" classname="users.InstructorTest" time="0.447"/>
+  <system-out><![CDATA[2022 1 1
+The following courses are available for enrollment: 
+cs101
+ma201
+TC1
+The following courses are available for enrollment: 
+cs101
+ma201
+TC1
+The following courses are available for enrollment: 
+cs101
+ma201
+TC1
+(Grade -1 means the course has not been graded yet)
+COURSE 	 ENROLLMENT YEAR 	 GRADE 
+TS1 	 2022 	 8
+TS2 	 2022 	 8
+TS3 	 2022 	 8
+2022 1 1
+Choose a valid course.
+2022 1 1
+2022 1 1
+2022 1 1
+2022 1 1
+2022 1 1
+2022 1 1
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

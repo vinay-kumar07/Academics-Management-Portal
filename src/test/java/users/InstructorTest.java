@@ -27,6 +27,7 @@ class InstructorTest {
     void floatCourse() throws SQLException, IOException, ClassNotFoundException {
 
         Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
         admin.addcourse("TC1","3-0-0","TC2","cs,mc","ee,me");
         admin.createAccount("TF1","faculty","iit",2020);
 
@@ -36,7 +37,7 @@ class InstructorTest {
         String r2 = instructor.floatCourse("TC1",6.5f,"2022,2021");
         assertEquals("The course has been already offered.",r2);
 
-        instructor.deFloatCourse("TC1",2020,1);
+        instructor.deFloatCourse("TC1",2022,1);
         admin.deletecourse("TC1");
         String s1 = "Drop table faculty_TF1;";
         String s2 = "Delete from users where userid = 'TF1';";
@@ -54,6 +55,7 @@ class InstructorTest {
     void deFloatCourse() throws SQLException, IOException, ClassNotFoundException {
 
         Admin admin = new Admin ("Admin","Admin","admin",2008);
+        admin.changeAcademicYearSem(2022,1,1);
         admin.addcourse("TC1","3-0-0","TC2","cs,mc","ee,me");
         admin.createAccount("TF1","faculty","iit",2020);
 
@@ -61,7 +63,7 @@ class InstructorTest {
         String r1 = instructor.deFloatCourse("TC1",2020,1);
         assertEquals("Choose a valid course to delete.",r1);
         instructor.floatCourse("TC1",6.5f,"2022,2021");
-        String r2 = instructor.deFloatCourse("TC1",2020,1);
+        String r2 = instructor.deFloatCourse("TC1",2022,1);
         assertEquals("Course Removed Successfully from Offerings.",r2);
 
         admin.deletecourse("TC1");
