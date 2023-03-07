@@ -1,0 +1,9 @@
+Indian Institute of Technology, Ropar
+
+B.Tech Transcript
+Entry No = mc001
+
+(Grade -1 means the course has not been graded yet)
+COURSE 		 YEAR 		 SEM 		 GRADE 		 CREDIT 		 REGISTERED AS
+cs101 		 2022 		 1 		 9 			 3 			 core
+ma201 		 2022 		 1 		 7 			 3 			 core

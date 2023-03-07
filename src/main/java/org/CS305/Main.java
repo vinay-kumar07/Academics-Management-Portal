@@ -44,11 +44,11 @@ public class Main {
 //            return;
 //        }
 
-//        {
-//            Student vinay = new Student ("cs1135","student","iit",2022);
-//            vinay.viewGrades();
-//            return;
-//        }
+        {
+            Student vinay = new Student ("mc001","student","iit",2022);
+            vinay.generateTranscript();
+            return;
+        }
 
 //        Scanner sc = new Scanner(System.in);
 //        System.out.println("Please what is your role: ");

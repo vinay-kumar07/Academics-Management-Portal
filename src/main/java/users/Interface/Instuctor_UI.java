@@ -1,7 +1,5 @@
 package users.Interface;
-
 import users.Instructor;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -9,6 +7,7 @@ import java.util.Scanner;
 public class Instuctor_UI {
     public void callFloatCourse() throws SQLException, IOException, ClassNotFoundException {
         Instructor instructor = new Instructor ("TS1","faculty","iit",2020);
+        instructor.viewCourseCatalog();
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter course details:-");
         System.out.print("Course ID: "); String course = sc.nextLine();
@@ -19,6 +18,7 @@ public class Instuctor_UI {
 
     public void callDefloatCourse() throws SQLException, IOException, ClassNotFoundException {
         Instructor instructor = new Instructor ("TS1","faculty","iit",2020);
+        instructor.viewCourseOffering();
         System.out.println("Enter details of the course you want to delete:-");
         Scanner sc = new Scanner(System.in);
         System.out.print("Course ID: "); String CID = sc.nextLine();
@@ -27,8 +27,9 @@ public class Instuctor_UI {
         instructor.deFloatCourse(CID,y,s);
     }
 
-    public void callUpdateGrades() throws SQLException, ClassNotFoundException {
+    public void callUpdateGrades() throws SQLException, ClassNotFoundException, IOException {
         Instructor instructor = new Instructor ("TS1","faculty","iit",2020);
+        instructor.viewCourseOffering();
         System.out.println("Enter Course ID:-");
         Scanner sc = new Scanner(System.in);
         System.out.print("Course ID: "); String CID = sc.nextLine();

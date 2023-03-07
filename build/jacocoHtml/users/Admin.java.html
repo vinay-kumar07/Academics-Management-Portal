@@ -137,5 +137,71 @@ public class Admin extends User{
             );
         }
 <span class="nc" id="L139">    }</span>
+
+    public Integer viewGradesStudent(String uid) throws SQLException, ClassNotFoundException {
+<span class="nc" id="L142">        makeConnection();</span>
+
+<span class="nc" id="L144">        String check = &quot;select count(*) from users where userid = '&quot; + uid + &quot;';&quot;;</span>
+<span class="nc" id="L145">        ResultSet rs = st.executeQuery(check);</span>
+<span class="nc" id="L146">        rs.next();</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (rs.getInt(1) == 0){</span>
+<span class="nc" id="L148">            System.out.println(&quot;Choose a valid student&quot;);</span>
+<span class="nc" id="L149">            return 0;</span>
+        }
+
+<span class="nc" id="L152">        String fetchGrades = &quot;Select * from student_&quot;+uid+&quot;;&quot;;</span>
+<span class="nc" id="L153">        rs = st.executeQuery(fetchGrades);</span>
+<span class="nc" id="L154">        System.out.println(&quot;(Grade -1 means the course has not been graded yet)&quot;);</span>
+<span class="nc" id="L155">        System.out.println(&quot;COURSE \t YEAR \t SEM \t GRADE \t CREDIT \t REGISTERED AS&quot;);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        while (rs.next()){</span>
+<span class="nc" id="L157">            System.out.println(</span>
+<span class="nc" id="L158">                    rs.getString(1) + &quot; \t &quot; +</span>
+<span class="nc" id="L159">                            rs.getString(2) + &quot; \t &quot; +</span>
+<span class="nc" id="L160">                            rs.getString(3) + &quot; \t &quot; +</span>
+<span class="nc" id="L161">                            rs.getString(4) + &quot; \t &quot; +</span>
+<span class="nc" id="L162">                            rs.getString(5) + &quot; \t &quot; +</span>
+<span class="nc" id="L163">                            rs.getString(6)</span>
+            );
+        }
+<span class="nc" id="L166">        return 1;</span>
+    }
+    public Integer viewGradesCourse(String CID, Integer y, Integer s) throws SQLException, ClassNotFoundException {
+<span class="fc" id="L169">        makeConnection();</span>
+
+<span class="fc" id="L171">        String check = &quot;select count(*) from courseoffering where courseid = '&quot; + CID + &quot;' and year = &quot; + y + &quot; and sem = &quot; + s + &quot;;&quot;;</span>
+<span class="fc" id="L172">        ResultSet rs = st.executeQuery(check);</span>
+<span class="fc" id="L173">        rs.next();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        if (rs.getInt(1) == 0){</span>
+<span class="fc" id="L175">            System.out.println(&quot;Choose a valid course.&quot;);</span>
+<span class="fc" id="L176">            return 0;</span>
+        }
+
+<span class="fc" id="L179">        String fetchGrades = &quot;Select * from &quot;+CID+&quot;_&quot;+y+&quot;_&quot;+s+&quot;;&quot;;</span>
+<span class="fc" id="L180">        rs = st.executeQuery(fetchGrades);</span>
+<span class="fc" id="L181">        System.out.println(&quot;(Grade -1 means the course has not been graded yet)&quot;);</span>
+<span class="fc" id="L182">        System.out.println(&quot;COURSE \t ENROLLMENT YEAR \t GRADE &quot;);</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        while (rs.next()){</span>
+<span class="fc" id="L184">            System.out.println(</span>
+<span class="fc" id="L185">                    rs.getString(1) + &quot; \t &quot; +</span>
+<span class="fc" id="L186">                            rs.getString(2) + &quot; \t &quot; +</span>
+<span class="fc" id="L187">                            rs.getString(3)</span>
+            );
+        }
+<span class="fc" id="L190">        return 1;</span>
+    }
+
+    public void viewCourseOffering() throws SQLException, IOException{
+<span class="nc" id="L194">        String viewQuery = &quot;select courseid,cgcriteria,year,sem from courseoffering;&quot;;</span>
+<span class="nc" id="L195">        ResultSet rs = st.executeQuery(viewQuery);</span>
+<span class="nc" id="L196">        System.out.println(&quot;COURSEID \t CG REQ \t YEAR \t SEM &quot;);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        while (rs.next()) {</span>
+<span class="nc" id="L198">            System.out.println(</span>
+<span class="nc" id="L199">                    rs.getString(1) + &quot; \t &quot; +</span>
+<span class="nc" id="L200">                            rs.getString(2) + &quot; \t &quot; +</span>
+<span class="nc" id="L201">                            rs.getString(3) + &quot; \t &quot; +</span>
+<span class="nc" id="L202">                            rs.getString(4)</span>
+            );
+        }
+<span class="nc" id="L205">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

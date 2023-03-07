@@ -33,7 +33,6 @@ public class Instructor extends User{
 
         else {
             makeConnection();
-            viewCourseCatalog();
 
             String check = "select count(*) from courseoffering where courseid = '"+course+"' and year = "+currYear+" and sem = "+currSem+";";
             ResultSet rs = st.executeQuery(check);
@@ -63,15 +62,8 @@ public class Instructor extends User{
         }
         else {
             makeConnection();
-            System.out.println("These are the courses you have floated:-");
-            String fetchQuery = "Select courseid from courseoffering where facultyid = '" + UserID + "';";
-            ResultSet rs = st.executeQuery(fetchQuery);
-            while (rs.next()) {
-                System.out.println(rs.getString(1));
-            }
-
             String check = "select count(*) from courseoffering where courseid = '" + CID + "' and year = " + y + " and sem = " + s + ";";
-            rs = st.executeQuery(check);
+            ResultSet rs = st.executeQuery(check);
             rs.next();
             if (rs.getInt(1) == 0) return "Choose a valid course to delete.";
 
@@ -94,15 +86,9 @@ public class Instructor extends User{
     public String updateGrades(String CID, String name) throws SQLException, ClassNotFoundException {
         getInfo();
         makeConnection();
-        System.out.println("These are the courses you have floated:-");
-        String fetchQuery = "Select courseid from courseoffering where facultyid = '" + UserID + "';";
-        ResultSet rs = st.executeQuery(fetchQuery);
-        while (rs.next()) {
-            System.out.println(rs.getString(1));
-        }
 
         String check = "select count(*) from courseoffering where courseid = '" + CID + "' and year = " + currYear + " and sem = " + currSem + ";";
-        rs = st.executeQuery(check);
+        ResultSet rs = st.executeQuery(check);
         rs.next();
         if (rs.getInt(1) == 0) return "Choose a valid course.";
 
@@ -131,6 +117,31 @@ public class Instructor extends User{
         return "Grades Updated Successfully";
     }
 
+    public Integer viewGrades(String CID, Integer y, Integer s) throws SQLException, ClassNotFoundException, IOException {
+        makeConnection();
+
+        String check = "select count(*) from courseoffering where courseid = '" + CID + "' and year = " + y + " and sem = " + s + ";";
+        ResultSet rs = st.executeQuery(check);
+        rs.next();
+        if (rs.getInt(1) == 0){
+            System.out.println("Choose a valid course.");
+            return 0;
+        }
+
+        String fetchGrades = "Select * from "+CID+"_"+y+"_"+s+";";
+        rs = st.executeQuery(fetchGrades);
+        System.out.println("(Grade -1 means the course has not been graded yet)");
+        System.out.println("COURSE \t ENROLLMENT YEAR \t GRADE ");
+        while (rs.next()){
+            System.out.println(
+                    rs.getString(1) + " \t " +
+                    rs.getString(2) + " \t " +
+                    rs.getString(3)
+            );
+        }
+        return 1;
+    }
+
     private Integer getInfo() throws SQLException, ClassNotFoundException {
         makeConnection();
         Integer bool = null;
@@ -146,7 +157,7 @@ public class Instructor extends User{
         return bool;
     }
 
-    private void viewCourseCatalog() throws SQLException, IOException{
+    public void viewCourseCatalog() throws SQLException, IOException{
         String viewQuery = "select * from coursecatalog;";
         ResultSet rs = st.executeQuery(viewQuery);
         System.out.println("COURSEID \t L \t T \t P \t PREREQUISITE \t OFFERED AS CORE \t OFFERED AS ELECTIVE");
@@ -159,6 +170,19 @@ public class Instructor extends User{
                             rs.getString(5) + " \t " +
                             rs.getString(6) + " \t " +
                             rs.getString(7)
+            );
+        }
+    }
+    public void viewCourseOffering() throws SQLException, IOException{
+        String viewQuery = "select courseid,cgcriteria,year,sem from courseoffering where facultyid = '"+UserID+"';";
+        ResultSet rs = st.executeQuery(viewQuery);
+        System.out.println("COURSEID \t CG REQ \t YEAR \t SEM ");
+        while (rs.next()) {
+            System.out.println(
+                rs.getString(1) + " \t " +
+                rs.getString(2) + " \t " +
+                rs.getString(3) + " \t " +
+                rs.getString(4)
             );
         }
     }

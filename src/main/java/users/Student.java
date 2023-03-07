@@ -1,5 +1,7 @@
 package users;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
@@ -189,6 +191,35 @@ public class Student extends User{
             );
         }
         return 1;
+    }
+
+    public Integer generateTranscript() throws SQLException, ClassNotFoundException, IOException {
+        makeConnection();
+        String fetchGrades = "Select * from student_"+UserID+";";
+        ResultSet rs = st.executeQuery(fetchGrades);
+
+        String fileName = UserID+"_transcript.txt";
+        FileWriter myWriter = new FileWriter("D:/Java/AIMS_Portal_CS305/Files/Transcripts/"+fileName);
+        myWriter.write("Indian Institute of Technology, Ropar\n\n");
+        myWriter.write("B.Tech Transcript\n");
+        myWriter.write("Entry No = "+UserID+"\n\n");
+        myWriter.write("(Grade -1 means the course has not been graded yet)\n");
+        myWriter.write("COURSE \t\t YEAR \t\t SEM \t\t GRADE \t\t CREDIT \t\t REGISTERED AS\n");
+        while (rs.next()){
+            myWriter.write(
+                    rs.getString(1) + " \t\t " +
+                            rs.getString(2) + " \t\t " +
+                            rs.getString(3) + " \t\t " +
+                            rs.getString(4) + " \t\t\t " +
+                            rs.getString(5) + " \t\t\t " +
+                            rs.getString(6) + "\n"
+            );
+        }
+        myWriter.close();
+        System.out.println("Successfully wrote to the file.");
+        return 1;
+
+//        System.out.println("(Grade -1 means the course has not been graded yet)");
     }
 
     private Float calRegCredit() throws SQLException {

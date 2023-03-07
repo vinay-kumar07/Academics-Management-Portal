@@ -341,6 +341,11 @@ class StudentTest {
         TestStatement.close();
         TestConnection.close();
     }
+
+    @Test
+    void generateTranscript(){
+
+    }
     @Test
     void courseWithdraw() throws SQLException, IOException, ClassNotFoundException {
 

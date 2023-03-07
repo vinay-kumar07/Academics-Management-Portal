@@ -137,4 +137,70 @@ public class Admin extends User{
             );
         }
     }
+
+    public Integer viewGradesStudent(String uid) throws SQLException, ClassNotFoundException {
+        makeConnection();
+
+        String check = "select count(*) from users where userid = '" + uid + "';";
+        ResultSet rs = st.executeQuery(check);
+        rs.next();
+        if (rs.getInt(1) == 0){
+            System.out.println("Choose a valid student");
+            return 0;
+        }
+
+        String fetchGrades = "Select * from student_"+uid+";";
+        rs = st.executeQuery(fetchGrades);
+        System.out.println("(Grade -1 means the course has not been graded yet)");
+        System.out.println("COURSE \t YEAR \t SEM \t GRADE \t CREDIT \t REGISTERED AS");
+        while (rs.next()){
+            System.out.println(
+                    rs.getString(1) + " \t " +
+                            rs.getString(2) + " \t " +
+                            rs.getString(3) + " \t " +
+                            rs.getString(4) + " \t " +
+                            rs.getString(5) + " \t " +
+                            rs.getString(6)
+            );
+        }
+        return 1;
+    }
+    public Integer viewGradesCourse(String CID, Integer y, Integer s) throws SQLException, ClassNotFoundException {
+        makeConnection();
+
+        String check = "select count(*) from courseoffering where courseid = '" + CID + "' and year = " + y + " and sem = " + s + ";";
+        ResultSet rs = st.executeQuery(check);
+        rs.next();
+        if (rs.getInt(1) == 0){
+            System.out.println("Choose a valid course.");
+            return 0;
+        }
+
+        String fetchGrades = "Select * from "+CID+"_"+y+"_"+s+";";
+        rs = st.executeQuery(fetchGrades);
+        System.out.println("(Grade -1 means the course has not been graded yet)");
+        System.out.println("COURSE \t ENROLLMENT YEAR \t GRADE ");
+        while (rs.next()){
+            System.out.println(
+                    rs.getString(1) + " \t " +
+                            rs.getString(2) + " \t " +
+                            rs.getString(3)
+            );
+        }
+        return 1;
+    }
+
+    public void viewCourseOffering() throws SQLException, IOException{
+        String viewQuery = "select courseid,cgcriteria,year,sem from courseoffering;";
+        ResultSet rs = st.executeQuery(viewQuery);
+        System.out.println("COURSEID \t CG REQ \t YEAR \t SEM ");
+        while (rs.next()) {
+            System.out.println(
+                    rs.getString(1) + " \t " +
+                            rs.getString(2) + " \t " +
+                            rs.getString(3) + " \t " +
+                            rs.getString(4)
+            );
+        }
+    }
 }
